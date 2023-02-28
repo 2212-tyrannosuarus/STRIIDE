@@ -20,7 +20,7 @@ export const Home = props => {
       {products && products.length? (
         products.map(product => {
           return (
-            <div key={product.id}>{product.username}</div>
+            <div key={product.id}>Product: {product.name} {product.description} {product.price}</div>
           )
         })
       ):null}
