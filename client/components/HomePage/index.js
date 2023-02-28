@@ -1,15 +1,29 @@
-import React from 'react'
-import {connect} from 'react-redux'
+import React, { useEffect } from 'react'
+import {connect, useDispatch, useSelector} from 'react-redux'
+import { selectAllProducts, fetchAllProducts } from '../../reducers/homePageSlice'
 
 /**
  * COMPONENT
  */
 export const Home = props => {
   const {username} = props
+  const products = useSelector(selectAllProducts);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchAllProducts());
+  },[dispatch]);
 
   return (
     <div>
       <h3>Welcome, {username}</h3>
+      {products && products.length? (
+        products.map(product => {
+          return (
+            <div key={product.id}>{product.username}</div>
+          )
+        })
+      ):null}
     </div>
   )
 }
