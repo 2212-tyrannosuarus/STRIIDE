@@ -34,10 +34,10 @@ Order_Detail.belongsTo(Order_Summary);
 Cart.hasMany(Cart_Item);
 Cart_Item.belongsTo(Cart);
 
-Product.hasOne(Cart_Item);
+Product.hasMany(Cart_Item);
 Cart_Item.belongsTo(Product);
 
-Product.hasOne(Order_Detail);
+Product.hasMany(Order_Detail);
 Order_Detail.belongsTo(Product);
 
 Product.hasOne(Inventory);
