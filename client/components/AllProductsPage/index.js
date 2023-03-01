@@ -1,4 +1,4 @@
-import "./allProducts.css";
+import "./AllProductsPag.css";
 
 import React, { useEffect } from "react";
 import { connect, useDispatch, useSelector } from "react-redux";
