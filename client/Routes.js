@@ -8,7 +8,7 @@ import SingleProductPage, {
   singleProductPage,
 } from "./components/SingleProductPage";
 import ShoppingCart from "./components/ShoppingCart";
-
+import AdminDashBoardPage from "./components/AdminDashboard";
 import { me } from "./store";
 
 /**
@@ -30,6 +30,7 @@ class Routes extends Component {
           <Route path="/allproduct" component={AllProductsPage} />
           <Route path="/singleproduct" component={singleProductPage} />
           <Route path="/shoppingcart" component={ShoppingCart} />
+          <Route path="/adminpage" component={AdminDashBoardPage} />
 
           {/* <Redirect to="/allproduct" /> */}
         </Switch>
