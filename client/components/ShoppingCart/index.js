@@ -40,9 +40,10 @@ export const ShoppingCart = (props) => {
   };
 
   return (
-    <div>
-      <h3>Welcome to the shopping cart </h3>
-      <div>
+    <div className="shopping-cart-container">
+      <div className="dummy-products">
+        <h3>Welcome to the shopping cart </h3>
+        <div>
         <h2>"Air Jordan"</h2>
         <img
           src="https://images.unsplash.com/photo-1525547719571-a2d4ac8945e2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8bGFwdG9wfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60"
@@ -52,7 +53,9 @@ export const ShoppingCart = (props) => {
         <button onClick={() => handleAddToCart("Air Jordan", 1, 25)}>
           Add to cart
         </button>
+        </div>
 
+        <div>
         <h2>"Pegasus"</h2>
         <img
           src="https://images.unsplash.com/photo-1525547719571-a2d4ac8945e2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8bGFwdG9wfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60"
@@ -62,32 +65,38 @@ export const ShoppingCart = (props) => {
         <button onClick={() => handleAddToCart("Pegasus", 2, 35)}>
           Add to cart
         </button>
+        </div>
       </div>
 
-      <div>Total Price: {totalPrice}</div>
-      <div>Total Quantity: {totalQuantity}</div>
-      {cartItems && cartItems.length
-        ? cartItems.map((product) => {
-            return (
-              <div>
-                <div key={product.id}>
-                  Product Name: {product.name} Quantity: {product.quantity}{" "}
-                  Product Total: {product.totalPrice}
+      <div className="cart-items">
+        {cartItems && cartItems.length
+          ? cartItems.map((product) => {
+              return (
+                <div className="cart-item">
+                  <div key={product.id}>
+                    Product Name: {product.name} Quantity: {product.quantity}{" "}
+                    Product Total: {product.totalPrice}
+                  </div>
+                  <button
+                    onClick={() =>
+                      handleAddToCart(product.name, product.id, product.price)
+                    }
+                  >
+                    +
+                  </button>
+                  <button onClick={() => handleRemoveFromCart(product.id)}>
+                    -
+                  </button>
                 </div>
-                <button
-                  onClick={() =>
-                    handleAddToCart(product.name, product.id, product.price)
-                  }
-                >
-                  +
-                </button>
-                <button onClick={() => handleRemoveFromCart(product.id)}>
-                  -
-                </button>
-              </div>
-            );
-          })
-        : null}
+              );
+            })
+          : null}
+      </div>
+
+      <div className="cart-summary">
+        <div>Total Price: {totalPrice}</div>
+        <div>Total Quantity: {totalQuantity}</div>
+      </div>
     </div>
   );
 };
