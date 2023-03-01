@@ -29,7 +29,7 @@ class Routes extends Component {
           {/* <Redirect to="/home" /> */}
           <Route path="/men" component={AllProductsPage} />
           <Route path="/women" component={AllProductsPage} />
-          <Route path="/singleproduct" component={singleProductPage} />
+          <Route path="/singleproduct/:id" component={singleProductPage} />
           <Route path="/shoppingcart" component={ShoppingCart} />
           <Route path="/adminpage" component={AdminDashBoardPage} />
 

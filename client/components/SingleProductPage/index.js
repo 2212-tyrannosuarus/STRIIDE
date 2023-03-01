@@ -10,15 +10,16 @@ import {
   addToCart,
   selectTotalQuantity,
 } from "../../reducers/shoppingCartSlice";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 export const singleProductPage = (props) => {
+  const { id } = useParams();
   const singleProduct = useSelector(selectSingleProduct);
   const dispatch = useDispatch();
   const cartItemsQuantity = useSelector(selectTotalQuantity);
   //{id} = props
   useEffect(() => {
-    dispatch(fetchSingleProduct(1));
+    dispatch(fetchSingleProduct(id));
   }, [dispatch]);
 
   const handleAddToCart = (name, id, price) => {
