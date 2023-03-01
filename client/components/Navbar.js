@@ -1,49 +1,38 @@
-import React from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { logout } from "../store";
-import { makeStyles } from "@material-ui/core/styles";
-import Button from "@material-ui/core/Button";
 
-const Navbar = ({ handleClick, isLoggedIn }) => (
-  <div>
-    <h1>FS-App-Template</h1>
-    <nav>
-      {isLoggedIn ? (
-        <div>
-          {/* The navbar will show these links after you log in */}
-          <Link to="/home">Home</Link>
-          <a href="#" onClick={handleClick}>
-            Logout
-          </a>
-        </div>
-      ) : (
-        <div>
-          {/* The navbar will show these links before you log in */}
-          <Link to="/login">Login</Link>
-          <Link to="/signup">Sign Up</Link>
-        </div>
-      )}
-    </nav>
-    <hr />
-  </div>
-);
+const Navbar = () => {
+  const [searchInput, setSearchInput] = useState("");
 
-/**
- * CONTAINER
- */
-const mapState = (state) => {
-  return {
-    isLoggedIn: !!state.auth.id,
+  const handleChange = (e) => {
+    e.preventDefault();
+    setSearchInput(e.target.value);
   };
+
+  return (
+    <div className="navbar">
+      <h1>OUR WEBSITE</h1>
+      <div className="wrapper">
+        <div className="left">
+          <div className="item">
+            <Link to="PATH TO MENS PRODUCT PAGE">Mens</Link>
+            <Link to="PATH TO WOMENS PRODUCT PAGE">Womens</Link>
+            <Link to="/home">Home</Link>
+            <input
+              type="text"
+              placeholder="Search here"
+              onChange={handleChange}
+              value={searchInput}
+            />
+            <Link to="PATH TO SHOPPING CART">Shopping Cart</Link>
+            <Link to="PATH TO USER LOGIN">Login</Link>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 };
 
-const mapDispatch = (dispatch) => {
-  return {
-    handleClick() {
-      dispatch(logout());
-    },
-  };
-};
-
-export default connect(mapState, mapDispatch)(Navbar);
+export default Navbar;
