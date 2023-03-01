@@ -17,45 +17,52 @@ const {
   },
 } = require("../server/db");
 
+const { faker } = require("@faker-js/faker");
+
 /**
  * seed - this function clears the database, updates tables to
  *      match the models, and populates the database.
  */
 async function seed() {
+  const seededUsers = [...Array(100)].map((user) => ({
+    password: faker.internet.password(8),
+    firstname: faker.name.firstName(),
+    lastname: faker.name.lastName(),
+    username: faker.internet.userName(),
+    email: faker.internet.email(),
+    phone_number: faker.phone.number(),
+  }));
+
+  const seededProductsWomen = [...Array(50)].map((product) => ({
+    name: faker.commerce.product(8),
+    description: faker.commerce.productDescription(),
+    image: faker.image.abstract(),
+    price: faker.commerce.price(),
+    product_category: faker.commerce.department(),
+    color_category: faker.color.human(),
+    gender: "Women",
+  }));
+  const seededProductsMen = [...Array(50)].map((product) => ({
+    name: faker.commerce.product(8),
+    description: faker.commerce.productDescription(),
+    image: faker.image.abstract(),
+    price: faker.commerce.price(),
+    product_category: faker.commerce.department(),
+    color_category: faker.color.human(),
+    gender: "Men",
+  }));
+
+  const allSeededProducts = [];
+  allSeededProducts.push(...seededProductsMen);
+  allSeededProducts.push(...seededProductsWomen);
+
+  console.log(seededUsers);
   await db.sync({ force: true }); // clears db and matches models to tables
   console.log("db synced!");
-
   //*******START OF DEMO DATA */
   // Creating Users
-  const users = await Promise.all([
-    User.create({
-      username: "cody",
-      password: "123",
-      firstname: "Mock",
-      lastname: "mock",
-      email: "mock@gmail.com",
-      phone_number: "9179284092",
-      isAdmin: false,
-    }),
-    User.create({
-      username: "murphy",
-      password: "123",
-      firstname: "Mock2",
-      lastname: "mock2",
-      email: "mock2@gmail.com",
-      phone_number: "9179284092",
-      isAdmin: false,
-    }),
-  ]);
-
-  const products = await Promise.all([
-    Product.create({
-      name: "Buckley",
-      price: 150.0,
-      product_category: "walking",
-      color_category: "brown",
-    }),
-  ]);
+  const users = await User.bulkCreate(seededUsers);
+  const products = await Product.bulkCreate(allSeededProducts);
 
   const shippinginfos = await Promise.all([
     Shipping_Info.create({
@@ -146,13 +153,9 @@ async function seed() {
   // FOR(let product# = 0; product.legth > product#; product#){}
 
   console.log(`seeded ${users.length} users`);
+  console.log(`seeded ${products.length} products`);
   console.log(`seeded successfully`);
-  return {
-    users: {
-      cody: users[0],
-      murphy: users[1],
-    },
-  };
+  return;
 }
 
 /*
