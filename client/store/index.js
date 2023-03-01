@@ -2,7 +2,7 @@
 // import {createLogger} from 'redux-logger'
 // import thunkMiddleware from 'redux-thunk'
 // import {composeWithDevTools} from 'redux-devtools-extension'
-import auth from './auth'
+import auth from "./auth";
 
 // const reducer = combineReducers({ auth })
 // const middleware = composeWithDevTools(
@@ -11,7 +11,7 @@ import auth from './auth'
 // const store = createStore(reducer, middleware)
 
 // export default store
-export * from './auth'
+export * from "./auth";
 
 //STORE
 
@@ -21,8 +21,7 @@ import allProductsPageSlice from "../reducers/allProductsPageSlice";
 import singleProductPageSlice from "../reducers/singleProductPageSlice";
 import shoppingCartSlice from "../reducers/shoppingCartSlice";
 import checkoutSlice from "../reducers/checkoutSlice";
-
-
+import adminSlice from "../reducers/adminPageSlice";
 
 export const store = configureStore({
   reducer: {
@@ -31,8 +30,9 @@ export const store = configureStore({
     singleProductsPage: singleProductPageSlice,
     shoppingCart: shoppingCartSlice,
     checkout: checkoutSlice,
-    auth: auth
-  }
+    auth: auth,
+    admin: adminSlice,
+  },
 });
 
 export default store;

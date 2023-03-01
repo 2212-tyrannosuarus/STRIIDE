@@ -6,6 +6,7 @@ import HomePage from "./components/HomePage";
 import AllProductsPage from "./components/AllProductsPage";
 import SingleProductPage from "./components/SingleProductPage";
 import ShoppingCart from "./components/ShoppingCart";
+
 import { me } from "./store";
 
 /**
@@ -27,6 +28,7 @@ class Routes extends Component {
           <Route path="/allproduct" component={AllProductsPage} />
           <Route path="/singleproduct" component={SingleProductPage} />
           <Route path="/shoppingcart" component={ShoppingCart} />
+
           {/* <Redirect to="/allproduct" /> */}
         </Switch>
         {isLoggedIn ? (
