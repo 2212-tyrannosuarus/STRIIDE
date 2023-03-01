@@ -64,36 +64,6 @@ async function seed() {
   const users = await User.bulkCreate(seededUsers);
   const products = await Product.bulkCreate(allSeededProducts);
 
-  // const users = await Promise.all([
-  //   User.create({
-  //     username: "cody",
-  //     password: "123",
-  //     firstname: "Mock",
-  //     lastname: "mock",
-  //     email: "mock@gmail.com",
-  //     phone_number: "9179284092",
-  //     isAdmin: false,
-  //   }),
-  //   User.create({
-  //     username: "murphy",
-  //     password: "123",
-  //     firstname: "Mock2",
-  //     lastname: "mock2",
-  //     email: "mock2@gmail.com",
-  //     phone_number: "9179284092",
-  //     isAdmin: false,
-  //   }),
-  // ]);
-
-  // const products = await Promise.all([
-  //   Product.create({
-  //     name: "Buckley",
-  //     price: 150.0,
-  //     product_category: "walking",
-  //     color_category: "brown",
-  //   }),
-  // ]);
-
   const shippinginfos = await Promise.all([
     Shipping_Info.create({
       address1: "Avenue of Americas",
