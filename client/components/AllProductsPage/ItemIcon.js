@@ -11,7 +11,7 @@ export default function ItemIcon(props) {
         <h2>{product.name}</h2>
         <p>{product.product_category}</p>
         //Colorway -- needs inventory chart or something
-        <p>{product.price}</p>
+        <p>${product.price}</p>
         //remove line below - not necessary - for testing only
         <p>{product.gender}</p>
       </div>
