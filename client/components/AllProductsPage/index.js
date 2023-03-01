@@ -14,10 +14,19 @@ export const allProducts = (props) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    filters.resetState();
     dispatch(fetchAllProductsPage());
+    const handleGender = async (filter) => {
+      const action = filters.genderFilter(filter);
+      await dispatch(action);
+    };
+
     let string = "";
     if (window.location.pathname === "/women") {
       string = "Women";
+    }
+    if (window.location.pathname === "/men") {
+      string = "Men";
     }
     console.log("this is", string);
     handleGender(string);
@@ -26,11 +35,6 @@ export const allProducts = (props) => {
 
   const handleFilter = (filter) => {
     const action = filters.categoryFilter(filter);
-    dispatch(action);
-  };
-
-  const handleGender = (filter) => {
-    const action = filters.genderFilter(filter);
     dispatch(action);
   };
 

@@ -30,6 +30,11 @@ export const allProductsPageSlice = createSlice({
       );
       state.displayProductsArr = state.allProducts;
     },
+    resetState(state) {
+      state.allProducts = [];
+      state.displayProductsArr = [];
+      state.errorMsg = "";
+    },
   },
   extraReducers: (build) => {
     build.addCase(fetchAllProductsPage.fulfilled, (state, action) => {
