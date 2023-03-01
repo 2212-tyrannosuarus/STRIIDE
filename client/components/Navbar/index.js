@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { logout } from "../store";
+import { logout } from "../../store";
 
 const Navbar = () => {
   const [searchInput, setSearchInput] = useState("");
