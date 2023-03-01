@@ -1,4 +1,4 @@
-import "./AllProductsPag.css";
+import "./AllProductsPage.css";
 
 import React, { useEffect } from "react";
 import { connect, useDispatch, useSelector } from "react-redux";
@@ -22,22 +22,64 @@ export const allProducts = (props) => {
     dispatch(action);
   };
 
+  const handleGender = (filter) => {
+    const action = filters.genderFilter(filter);
+    dispatch(action);
+  };
+
   return (
-    <div>
+    <div className="allproducts-container">
       <div id="left">
         <div id="left-top">
-          <button onClick={() => handleFilter("walking")}>Walking </button>
-          <button onClick={() => handleFilter("running")}>Running </button>
+          <button onClick={() => handleFilter("Grocery")}>Grocery </button>
+          <button onClick={() => handleFilter("Outdoors")}>Outdoors </button>
+          <button onClick={() => handleFilter("Electronics")}>
+            Electronics{" "}
+          </button>
+          <button onClick={() => handleFilter("Health")}>Health </button>
+          <button onClick={() => handleFilter("Toys")}>Toys </button>
+          <button onClick={() => handleFilter("Jewelery")}>Jewelery </button>
+          <button onClick={() => handleGender("Men")}>Men </button>
+          <button onClick={() => handleGender("Women")}>Women </button>
+          <hr></hr>
         </div>
-        <div id="left-top">
-          <div id="size-filter"></div>
-          <div id="color-filter"></div>
+        <div id="left-bottom">
+          <div id="size-filter">
+            <h3>Sizes</h3>
+            <button>7</button>
+            <button>8</button>
+            <button>9</button>
+            <button>10</button>
+            <button>11</button>
+            <button>12</button>
+            <button>13</button>
+            <button>14</button>
+            <hr></hr>
+          </div>
+          <div id="color-filter">
+            <h3>Color</h3>
+            <button>⬛️</button>
+            <button>⬜️</button>
+            <button>🟦</button>
+            <button>🟥</button>
+            <button>🟩</button>
+            <hr></hr>
+          </div>
+          <div id="sort-filter">
+            <h3>Sort</h3>
+            <button>Featured</button>
+            <button>Newest</button>
+            <button>Price: High-Low</button>
+            <button>Price: Low-High</button>
+
+            <hr></hr>
+          </div>
         </div>
       </div>
       <div id="right">
         {products && products.length
           ? products.map((product) => {
-              return <ItemIcon key={product.key} product={product} />;
+              return <ItemIcon key={product.id} product={product} />;
             })
           : null}
       </div>
