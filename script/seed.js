@@ -33,12 +33,36 @@ async function seed() {
     phone_number: faker.phone.number(),
   }));
 
+  const seededProductsWomen = [...Array(50)].map((product) => ({
+    name: faker.commerce.product(8),
+    description: faker.commerce.productDescription(),
+    image: faker.image.abstract(),
+    price: faker.commerce.price(),
+    product_category: faker.commerce.department(),
+    color_category: faker.color.human(),
+    gender: "Women",
+  }));
+  const seededProductsMen = [...Array(50)].map((product) => ({
+    name: faker.commerce.product(8),
+    description: faker.commerce.productDescription(),
+    image: faker.image.abstract(),
+    price: faker.commerce.price(),
+    product_category: faker.commerce.department(),
+    color_category: faker.color.human(),
+    gender: "Men",
+  }));
+
+  const allSeededProducts = [];
+  allSeededProducts.push(...seededProductsMen);
+  allSeededProducts.push(...seededProductsWomen);
+
   console.log(seededUsers);
   await db.sync({ force: true }); // clears db and matches models to tables
   console.log("db synced!");
   //*******START OF DEMO DATA */
   // Creating Users
   const users = await User.bulkCreate(seededUsers);
+  const products = await Product.bulkCreate(allSeededProducts);
 
   // const users = await Promise.all([
   //   User.create({
@@ -61,14 +85,14 @@ async function seed() {
   //   }),
   // ]);
 
-  const products = await Promise.all([
-    Product.create({
-      name: "Buckley",
-      price: 150.0,
-      product_category: "walking",
-      color_category: "brown",
-    }),
-  ]);
+  // const products = await Promise.all([
+  //   Product.create({
+  //     name: "Buckley",
+  //     price: 150.0,
+  //     product_category: "walking",
+  //     color_category: "brown",
+  //   }),
+  // ]);
 
   const shippinginfos = await Promise.all([
     Shipping_Info.create({
@@ -159,13 +183,9 @@ async function seed() {
   // FOR(let product# = 0; product.legth > product#; product#){}
 
   console.log(`seeded ${users.length} users`);
+  console.log(`seeded ${products.length} products`);
   console.log(`seeded successfully`);
-  return {
-    users: {
-      cody: users[0],
-      murphy: users[1],
-    },
-  };
+  return;
 }
 
 /*
