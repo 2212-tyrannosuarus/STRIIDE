@@ -19,7 +19,7 @@ export const allProductsPageSlice = createSlice({
   reducers: {
     categoryFilter(state, action) {
       let filter = action.payload;
-      state.displayProductsArr = state.displayProductsArr.filter(
+      state.displayProductsArr = state.allProducts.filter(
         (product) => product.product_category === filter
       );
     },
