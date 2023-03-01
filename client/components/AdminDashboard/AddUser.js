@@ -81,7 +81,7 @@ export default function AddUser() {
         <input
           name="status"
           value={status}
-          onChange={(e) => status(e.target.value)}
+          onChange={(e) => setStatus(e.target.value)}
         />
         <button type="submit">Submit</button>
         {/* <p>{error}</p> */}

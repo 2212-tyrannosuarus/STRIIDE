@@ -1,5 +1,6 @@
 import "./AllProductsPage.css";
 import React, { useEffect } from "react";
+import { useParams } from "react-router-dom";
 import { connect, useDispatch, useSelector } from "react-redux";
 import {
   selectAllProductsDisplay,
@@ -14,6 +15,13 @@ export const allProducts = (props) => {
 
   useEffect(() => {
     dispatch(fetchAllProductsPage());
+    let string = "";
+    if (window.location.pathname === "/women") {
+      string = "Women";
+    }
+    console.log("this is", string);
+    handleGender(string);
+    console.log("changed");
   }, [dispatch]);
 
   const handleFilter = (filter) => {
@@ -38,8 +46,8 @@ export const allProducts = (props) => {
           <button onClick={() => handleFilter("Health")}>Health </button>
           <button onClick={() => handleFilter("Toys")}>Toys </button>
           <button onClick={() => handleFilter("Jewelery")}>Jewelery </button>
-          <button onClick={() => handleGender("Men")}>Men </button>
-          <button onClick={() => handleGender("Women")}>Women </button>
+          {/* <button onClick={() => handleGender("Men")}>Men </button>
+          <button onClick={() => handleGender("Women")}>Women </button> */}
           <hr></hr>
         </div>
         <div id="left-bottom">
