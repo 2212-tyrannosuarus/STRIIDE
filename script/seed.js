@@ -17,36 +17,49 @@ const {
   },
 } = require("../server/db");
 
+const { faker } = require("@faker-js/faker");
+
 /**
  * seed - this function clears the database, updates tables to
  *      match the models, and populates the database.
  */
 async function seed() {
+  const seededUsers = [...Array(100)].map((user) => ({
+    password: faker.internet.password(8),
+    firstname: faker.name.firstName(),
+    lastname: faker.name.lastName(),
+    username: faker.internet.userName(),
+    email: faker.internet.email(),
+    phone_number: faker.phone.number(),
+  }));
+
+  console.log(seededUsers);
   await db.sync({ force: true }); // clears db and matches models to tables
   console.log("db synced!");
-
   //*******START OF DEMO DATA */
   // Creating Users
-  const users = await Promise.all([
-    User.create({
-      username: "cody",
-      password: "123",
-      firstname: "Mock",
-      lastname: "mock",
-      email: "mock@gmail.com",
-      phone_number: "9179284092",
-      isAdmin: false,
-    }),
-    User.create({
-      username: "murphy",
-      password: "123",
-      firstname: "Mock2",
-      lastname: "mock2",
-      email: "mock2@gmail.com",
-      phone_number: "9179284092",
-      isAdmin: false,
-    }),
-  ]);
+  const users = await User.bulkCreate(seededUsers);
+
+  // const users = await Promise.all([
+  //   User.create({
+  //     username: "cody",
+  //     password: "123",
+  //     firstname: "Mock",
+  //     lastname: "mock",
+  //     email: "mock@gmail.com",
+  //     phone_number: "9179284092",
+  //     isAdmin: false,
+  //   }),
+  //   User.create({
+  //     username: "murphy",
+  //     password: "123",
+  //     firstname: "Mock2",
+  //     lastname: "mock2",
+  //     email: "mock2@gmail.com",
+  //     phone_number: "9179284092",
+  //     isAdmin: false,
+  //   }),
+  // ]);
 
   const products = await Promise.all([
     Product.create({
