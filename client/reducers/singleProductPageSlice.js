@@ -18,12 +18,12 @@ export const singleProductPageSlice = createSlice({
   reducers: {},
   extraReducers: (build) => {
     build.addCase(fetchSingleProduct.fulfilled, (state, action) => {
-      console.log("action payload", action.payload);
       state.singleProduct = action.payload;
     });
   },
 });
 
-export const selectSingleProduct = (state) =>
-  state.singleProductPage.singleProduct;
+export const selectSingleProduct = (state) => {
+  return state.singleProductsPage.singleProduct;
+};
 export default singleProductPageSlice.reducer;

@@ -10,9 +10,9 @@ import {
 export const singleProductPage = (props) => {
   const singleProduct = useSelector(selectSingleProduct);
   const dispatch = useDispatch();
-
+  //{id} = props
   useEffect(() => {
-    dispatch(fetchSingleProduct());
+    dispatch(fetchSingleProduct(1));
   }, [dispatch]);
 
   const onSubmit = () => {
@@ -20,20 +20,24 @@ export const singleProductPage = (props) => {
   };
 
   return (
-    <div>
-      <div>
-        <img src={singleProduct.image} alt={singleProduct.name} />
-      </div>
-      <div>
-        <h2>{singleProduct.name}</h2>
-        <p>{singleProduct.description}</p>
-        <span>Color Category: {singleProduct.color_category}</span>
-        <span>Price: {singleProduct.price}</span>
-      </div>
-      <div>
-        <button type="submit">Add to Cart</button>
-      </div>
-    </div>
+    <>
+      {singleProduct && singleProduct.id ? (
+        <div>
+          <div>
+            <img src={singleProduct.image} alt={singleProduct.name} />
+          </div>
+          <div>
+            <h2>{singleProduct.name}</h2>
+            <p>{singleProduct.description}</p>
+            <span>Color Category: {singleProduct.color_category}</span>
+            <span>Price: {singleProduct.price}</span>
+          </div>
+          <div>
+            <button type="submit">Add to Cart</button>
+          </div>
+        </div>
+      ) : null}
+    </>
   );
 };
 
