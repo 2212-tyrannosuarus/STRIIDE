@@ -1,4 +1,4 @@
-import "./AllProductsPag.css";
+import "./AllProductsPage.css";
 
 import React, { useEffect } from "react";
 import { connect, useDispatch, useSelector } from "react-redux";
@@ -37,7 +37,7 @@ export const allProducts = (props) => {
       <div id="right">
         {products && products.length
           ? products.map((product) => {
-              return <ItemIcon key={product.key} product={product} />;
+              return <ItemIcon key={product.id} product={product} />;
             })
           : null}
       </div>

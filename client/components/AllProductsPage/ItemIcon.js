@@ -9,7 +9,7 @@ export default function ItemIcon(props) {
       </div>
       <div id="bottom">
         <h2>{product.name}</h2>
-        <p>{product_category}</p>
+        <p>{product.product_category}</p>
         //Colorway -- needs inventory chart or something
         <p>{product.price}</p>
       </div>
