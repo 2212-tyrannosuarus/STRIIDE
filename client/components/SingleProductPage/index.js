@@ -6,14 +6,27 @@ import {
   selectSingleProduct,
   fetchSingleProduct,
 } from "../../reducers/singleProductPageSlice";
+import {addToCart, selectTotalQuantity} from "../../reducers/shoppingCartSlice";
+import {Link} from "react-router-dom"
 
 export const singleProductPage = (props) => {
   const singleProduct = useSelector(selectSingleProduct);
   const dispatch = useDispatch();
+  const cartItemsQuantity = useSelector(selectTotalQuantity);
   //{id} = props
   useEffect(() => {
     dispatch(fetchSingleProduct(1));
   }, [dispatch]);
+
+  const handleAddToCart = (name, id, price) => {
+    dispatch(
+      addToCart({
+        id,
+        name,
+        price,
+      })
+    );
+  };
 
   const onSubmit = () => {
     //somehow add stuff to cart
@@ -33,8 +46,10 @@ export const singleProductPage = (props) => {
             <span>Price: {singleProduct.price}</span>
           </div>
           <div>
-            <button type="submit">Add to Cart</button>
+            <button onClick={() => handleAddToCart(singleProduct.id, singleProduct.name, singleProduct.price)}>Add to Cart</button>
           </div>
+          <div>Total Shopping cart quantity {cartItemsQuantity}</div>
+          <Link to="/shoppingcart"><div>Shopping Cart</div></Link>
         </div>
       ) : null}
     </>
