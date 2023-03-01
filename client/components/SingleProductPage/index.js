@@ -15,7 +15,7 @@ export const singleProductPage = (props) => {
   const cartItemsQuantity = useSelector(selectTotalQuantity);
   //{id} = props
   useEffect(() => {
-    dispatch(fetchSingleProduct(1));
+    dispatch(fetchSingleProduct(5));
   }, [dispatch]);
 
   const handleAddToCart = (name, id, price) => {
@@ -28,9 +28,9 @@ export const singleProductPage = (props) => {
     );
   };
 
-  const onSubmit = () => {
-    //somehow add stuff to cart
-  };
+  // const onSubmit = () => {
+  //   //somehow add stuff to cart
+  // };
 
   return (
     <>
@@ -46,7 +46,7 @@ export const singleProductPage = (props) => {
             <span>Price: {singleProduct.price}</span>
           </div>
           <div>
-            <button onClick={() => handleAddToCart(singleProduct.id, singleProduct.name, singleProduct.price)}>Add to Cart</button>
+            <button onClick={() => handleAddToCart(singleProduct.name, singleProduct.id, singleProduct.price)}>Add to Cart</button>
           </div>
           <div>Total Shopping cart quantity {cartItemsQuantity}</div>
           <Link to="/shoppingcart"><div>Shopping Cart</div></Link>
