@@ -56,7 +56,6 @@ async function seed() {
   allSeededProducts.push(...seededProductsMen);
   allSeededProducts.push(...seededProductsWomen);
 
-  console.log(seededUsers);
   await db.sync({ force: true }); // clears db and matches models to tables
   console.log("db synced!");
   //*******START OF DEMO DATA */
