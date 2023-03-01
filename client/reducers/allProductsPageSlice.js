@@ -23,6 +23,12 @@ export const allProductsPageSlice = createSlice({
         (product) => product.product_category === filter
       );
     },
+    genderFilter(state, action) {
+      let filter = action.payload;
+      state.displayProductsArr = state.allProducts.filter(
+        (product) => product.gender === filter
+      );
+    },
   },
   extraReducers: (build) => {
     build.addCase(fetchAllProductsPage.fulfilled, (state, action) => {
