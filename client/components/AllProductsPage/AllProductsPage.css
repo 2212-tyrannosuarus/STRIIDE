@@ -41,3 +41,8 @@
 .product-icon {
   width: 33%;
 }
+
+.bottom {
+  font-size: small;
+  line-height: 0.1em;
+}

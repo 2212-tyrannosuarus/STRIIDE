@@ -6,16 +6,16 @@ export default function ItemIcon(props) {
 
   return (
     <div className="product-icon">
-      <div id="top">
+      <div className="top">
         <Link to={`/singleproduct/${product.id}`}>
           {" "}
           <img src={product.image} width="200" height="200"></img>
         </Link>
       </div>
-      <div id="bottom">
+      <div className="bottom">
         <h2>{product.name}</h2>
         <p>{product.product_category}</p>
-        //Colorway -- needs inventory chart or something
+        [colorway - pending inventory]
         <p>${product.price}</p>
       </div>
     </div>

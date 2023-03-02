@@ -1,5 +1,7 @@
+import { assert } from "chai";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { createProduct } from "../../reducers/adminPageSlice";
 
 export default function AddProduct() {
   const dispatch = useDispatch();
@@ -12,29 +14,20 @@ export default function AddProduct() {
   const [gender, setGender] = useState("");
 
   const handleSubmit = async (event) => {
-    // event.preventDefault();
-    // if (image === "") {
-    //   await dispatcher(
-    //     createThatCampusThunk({
-    //       name: campusName,
-    //       address: address,
-    //       description: description,
-    //     })
-    //   );
-    // } else {
-    //   await dispatcher(
-    //     createThatCampusThunk({
-    //       name: campusName,
-    //       imageUrl: image,
-    //       address: address,
-    //       description: description,
-    //     })
-    //   );
-    // }
-    // setCampusName("");
-    // setAddress("");
-    // setImage("");
-    // setDescription("");
+    event.preventDefault();
+    let intPrice = parseInt(price);
+    await dispatch(
+      createProduct({
+        name,
+        description,
+        image,
+        price,
+        //drop downs
+        product_category,
+        color_category,
+        gender,
+      })
+    );
   };
 
   return (
