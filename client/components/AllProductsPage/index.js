@@ -78,7 +78,7 @@ export const allProducts = (props) => {
           </div>
         </div>
       </div>
-      <div className="right">
+      <div className="allproducts-right">
         {products && products.length
           ? products.map((product) => {
               return <ItemIcon key={product.id} product={product} />;

@@ -20,18 +20,31 @@ export default function ManageUser(props) {
   }, [window.location.pathname]);
 
   return (
-    <div>
-      <div>Manage User # {id} [to be deleted]</div>
-      <div>
-        <p>{user.username}</p>
-        <p>{user.password}</p>
-        <p>{user.firstname}</p>
-        <p>{user.lastname}</p>
-        <p>{user.email}</p>
-        <p>{user.phone_number}</p>
-        <p>{user.status}</p>
+    <div className="admin-management-page">
+      <div className="admin-management-page-left">
+        <p>
+          Username: <em>{user.username}</em>
+        </p>
+        <p>
+          Password: <em>{user.password}</em>
+        </p>
+        <p>
+          First name: <em>{user.firstname}</em>
+        </p>
+        <p>
+          Last name: <em>{user.lastname}</em>
+        </p>
+        <p>
+          Email: <em>{user.email}</em>
+        </p>
+        <p>
+          Phone#: <em>{user.phone_number}</em>
+        </p>
+        <p>
+          Status: <em>{user.status}</em>
+        </p>
       </div>
-      <div>
+      <div className="admin-management-page-right">
         <UpdateUser />
       </div>
     </div>

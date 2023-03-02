@@ -21,18 +21,27 @@ export default function ManageProduct(props) {
   }, [window.location.pathname]);
 
   return (
-    <div>
-      <div>Manage Product # {id} [to be deleted]</div>
-      <div>
-        <img src={product.image} width="100" height="100"></img>
-        <p>{product.name}</p>
-        <p>{product.description}</p>
-        <p>${product.price}</p>
-        <p>{product.product_category}</p>
-        <p>{product.color_category}</p>
-        <p>{product.gender}</p>
+    <div className="admin-management-page">
+      <div className="admin-management-page-left">
+        <img src={product.image} width="100%" height="150"></img>
+        <h4> {product.name}</h4>
+        <p>
+          <em>{product.description}</em>
+        </p>
+        <p>
+          Price: $<em>{product.price}</em>
+        </p>
+        <p>
+          Category: <em>{product.product_category}</em>
+        </p>
+        <p>
+          Color: <em>{product.color_category}</em>
+        </p>
+        <p>
+          Gender: <em>{product.gender}</em>
+        </p>
       </div>
-      <div>
+      <div className="admin-management-page-right">
         <UpdateProduct />
       </div>
     </div>
