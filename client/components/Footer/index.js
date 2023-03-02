@@ -4,12 +4,10 @@ import Typography from "@material-ui/core/Typography";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    backgroundColor: "#f0f0f0",
-    padding: theme.spacing(3),
-    marginTop: "auto",
-  },
-  link: {
-    marginLeft: theme.spacing(1),
+    bottom: 0,
+    width: "100%",
+    backgroundColor: theme.palette.background.paper,
+    padding: theme.spacing(4),
   },
 }));
 
@@ -20,7 +18,7 @@ function Footer() {
     <footer className={classes.root}>
       <Typography variant="body2" color="textSecondary" align="center">
         {"Copyright "}
-        <Typography color="inherit">THIS IS OUR WEBSITE NAME</Typography>
+        {"THIS IS OUR WEBSITE NAME"}
         {new Date().getFullYear()}
         {"."}
       </Typography>
