@@ -24,6 +24,11 @@ export const createProduct = createAsyncThunk(
   }
 );
 
+export const createUser = createAsyncThunk("campuses/addUser", async (body) => {
+  const { data } = await axios.post(`/api/users`, body);
+  return data;
+});
+
 export const adminSlice = createSlice({
   name: "adminPage",
   initialState: {

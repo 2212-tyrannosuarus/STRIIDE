@@ -10,10 +10,11 @@ import {
   selectOneAdminUser,
   adminReduce,
 } from "../../reducers/adminPageSlice";
-import ItemIcon from "../AllProductsPage/ItemIcon";
+
 import UserIcon from "./UserIcon";
 import AddProduct from "./AddProduct";
 import AddUser from "./AddUser";
+import ProductIcon from "./ProductIcon";
 
 export default function AdminDashBoardPage(props) {
   const dispatch = useDispatch();
@@ -41,8 +42,8 @@ export default function AdminDashBoardPage(props) {
   };
 
   return (
-    <div className="allproducts-container">
-      <div id="left">
+    <div className="adminpage-container">
+      <div className="adminpage-left">
         <div id="left-top">
           User
           <hr></hr>
@@ -56,11 +57,11 @@ export default function AdminDashBoardPage(props) {
           <button onClick={handleAddProduct}>Add Product</button>
         </div>
       </div>
-      <div id="right">
+      <div className="adminpage-right">
         {display !== "none" ? (
           display === "products" ? (
             products.map((product) => {
-              return <ItemIcon key={product.id} product={product} />;
+              return <ProductIcon key={product.id} product={product} />;
             })
           ) : display === "users" ? (
             users.map((user) => {
