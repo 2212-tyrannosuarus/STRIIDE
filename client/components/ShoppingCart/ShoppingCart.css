@@ -1,0 +1,27 @@
+.shopping-cart-container {
+    display: flex;
+    /* flex-direction: column; */
+    gap: 20px;
+}
+
+h3 {
+    color: red;
+}
+
+.dummy-products {
+    display: flex;
+    flex-direction: column;
+}
+
+.cart-summary {
+    display: flex;
+}
+
+.cart-items {
+    display: flex;
+    flex-direction: column;
+}
+
+.cart-item {
+    display: block;
+}
