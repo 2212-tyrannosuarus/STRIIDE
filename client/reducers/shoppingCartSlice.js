@@ -24,21 +24,21 @@ export const shoppingCartSlice = createSlice({
     addToCart(state, action) {
       const newItem = action.payload;
       const existingItem = state.itemsList.find(
-        (item) => item.id === newItem.id
+        (item) => item.id === newItem.id && item.size === newItem.size && item.color === newItem.color
       );
       if (existingItem) {
-        existingItem.quantity++;
+        existingItem.quantity+= newItem.quantity;
         existingItem.totalPrice += newItem.price;
       } else {
         state.itemsList.push({
           id: newItem.id,
           price: newItem.price,
-          quantity: 1,
+          quantity: newItem.quantity,
           totalPrice: newItem.price,
           name: newItem.name,
-          imageUrl:
-            "https://images.unsplash.com/photo-1525547719571-a2d4ac8945e2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8bGFwdG9wfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60",
-          color: "Blue",
+          imageUrl: newItem.image,
+          color: newItem.color,
+          size: newItem.size
         });
       }
       state.totalQuantity++;
@@ -47,8 +47,11 @@ export const shoppingCartSlice = createSlice({
       window.localStorage.setItem("cart", JSON.stringify(state.itemsList));
     },
     removeFromCart(state, action) {
-      const id = action.payload;
-      const existingItem = state.itemsList.find((item) => item.id === id);
+      console.log('action.payload inside remove from cart ', action.payload);
+      const id = action.payload.id;
+      const color = action.payload.color;
+      const size = action.payload.size;
+      const existingItem = state.itemsList.find((item) => item.id === id && item.size === size && item.color === color);
       if (existingItem.quantity === 1) {
         state.itemsList = state.itemsList.filter((item) => item.id !== id);
         state.totalQuantity--;

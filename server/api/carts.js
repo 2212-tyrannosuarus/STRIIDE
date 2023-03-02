@@ -17,33 +17,34 @@ module.exports = router;
 // });
 
 // GET api/carts/:id
-// router.get("/:userId", async (req, res, next) => {
-//     try {
-//       const cart = await Cart.findOne({
-//         where: {
-//             id: req.params.userId,
-//         },
-//         include: [Cart_Item]
-//       });
-//       let cartItems = []
-//       for (let item of cart.cartitems) {
-//         let product = await Product.findByPk(item.productId);
-//         let cartItem = {
-//             id: product.id,
-//             name: product.name,
-//             price: product.price,
-//             image: product.image,
-//             color: item.color,
-//             size: item.size
-//         }
-//         cartItems.push(cartItem)
-//       }
+router.get("/:userId", async (req, res, next) => {
+    try {
+      const cart = await Cart.findOne({
+        where: {
+            id: req.params.userId,
+        },
+        include: [Cart_Item]
+      });
+      let cartItems = []
+      for (let item of cart.cartitems) {
+        let product = await Product.findByPk(item.productId);
+        let cartItem = {
+            id: product.id,
+            name: product.name,
+            price: product.price,
+            image: product.image,
+            color: item.color,
+            size: item.size,
+            quantity: item.quantity
+        }
+        cartItems.push(cartItem)
+      }
       
-//       res.json(cartItems);
-//     } catch (err) {
-//       next(err);
-//     }
-//   });
+      res.json(cartItems);
+    } catch (err) {
+      next(err);
+    }
+  });
 
 
 
