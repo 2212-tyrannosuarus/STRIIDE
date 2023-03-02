@@ -33,6 +33,15 @@ export const allProducts = (props) => {
     dispatch(action);
   };
 
+  const handleSortLH = () => {
+    const action = filters.sortPriceLH();
+    dispatch(action);
+  };
+  const handleSortHL = () => {
+    const action = filters.sortPriceHL();
+    dispatch(action);
+  };
+
   return (
     <div className="allproducts-container">
       <div className="allproduct-left">
@@ -75,8 +84,8 @@ export const allProducts = (props) => {
             <h3>Sort</h3>
             <button>Featured</button>
             <button>Newest</button>
-            <button>Price: High-Low</button>
-            <button>Price: Low-High</button>
+            <button onClick={() => handleSortHL()}>Price: High-Low</button>
+            <button onClick={() => handleSortLH()}>Price: Low-High</button>
 
             <hr></hr>
           </div>

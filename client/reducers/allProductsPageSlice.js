@@ -43,6 +43,16 @@ export const allProductsPageSlice = createSlice({
       state.displayProductsArr = [];
       state.errorMsg = "";
     },
+    sortPriceLH(state) {
+      state.displayProductsArr = state.displayProductsArr.sort(
+        (a, b) => a.price - b.price
+      );
+    },
+    sortPriceHL(state) {
+      state.displayProductsArr = state.displayProductsArr.sort(
+        (a, b) => b.price - a.price
+      );
+    },
   },
   extraReducers: (build) => {
     build
