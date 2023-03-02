@@ -5,6 +5,7 @@ import {
   fetchSingleProduct,
   selectOneAdminProduct,
 } from "../../reducers/adminPageSlice";
+import UpdateProduct from "./UpdateProduct";
 
 export default function ManageProduct(props) {
   const { id } = useParams();
@@ -31,7 +32,9 @@ export default function ManageProduct(props) {
         <p>{product.color_category}</p>
         <p>{product.gender}</p>
       </div>
-      <div>User Update</div>
+      <div>
+        <UpdateProduct />
+      </div>
     </div>
   );
 }

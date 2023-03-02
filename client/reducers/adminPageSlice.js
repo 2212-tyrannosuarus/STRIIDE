@@ -33,7 +33,7 @@ export const fetchSingleUser = createAsyncThunk(
 );
 
 export const createProduct = createAsyncThunk(
-  "campuses/addProduct",
+  "admin/addProduct",
   async (body) => {
     const { data } = await axios.post(`/api/products`, body);
     return data;
@@ -44,6 +44,24 @@ export const createUser = createAsyncThunk("campuses/addUser", async (body) => {
   const { data } = await axios.post(`/api/users`, body);
   return data;
 });
+
+export const updateUser = createAsyncThunk(
+  "admin/updateUser",
+  async ({ id, body }) => {
+    await axios.put(`/api/users/${id}`, body);
+    const { data } = await axios.get(`/api/users/${id}`);
+    return data;
+  }
+);
+
+export const updateProduct = createAsyncThunk(
+  "admin/updateProduct",
+  async ({ id, body }) => {
+    await axios.put(`/api/products/${id}`, body);
+    const { data } = await axios.get(`/api/products/${id}`);
+    return data;
+  }
+);
 
 export const adminSlice = createSlice({
   name: "adminPage",
@@ -76,6 +94,12 @@ export const adminSlice = createSlice({
       })
       .addCase(fetchSingleUser.fulfilled, (state, action) => {
         state.manageUser = action.payload;
+      })
+      .addCase(updateUser.fulfilled, (state, action) => {
+        state.manageUser = action.payload;
+      })
+      .addCase(updateProduct.fulfilled, (state, action) => {
+        state.manageProduct = action.payload;
       });
   },
 });

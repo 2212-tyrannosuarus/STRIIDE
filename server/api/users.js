@@ -34,3 +34,12 @@ router.get("/:id", async (req, res, next) => {
     next(err);
   }
 });
+
+router.put("/:id", async (req, res, next) => {
+  try {
+    const user = await User.findByPk(req.params.id);
+    res.send(await user.update(req.body));
+  } catch (e) {
+    next(e);
+  }
+});

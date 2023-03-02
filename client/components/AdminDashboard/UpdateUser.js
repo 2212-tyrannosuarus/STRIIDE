@@ -1,8 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { createUser } from "../../reducers/adminPageSlice";
-export default function AddUser() {
+import { useParams } from "react-router-dom";
+import { updateUser } from "../../reducers/adminPageSlice";
+import { selectOneAdminUser } from "../../reducers/adminPageSlice";
+
+export default function UpdateUser() {
   const dispatch = useDispatch();
+  const { id } = useParams();
+  const user = useSelector(selectOneAdminUser);
+
   const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [firstname, setFirstName] = useState("");
@@ -11,25 +17,38 @@ export default function AddUser() {
   const [phone_number, setPhone_number] = useState("");
   const [status, setStatus] = useState("guess");
 
-  const handleSubmit = async (event) => {
+  useEffect(() => {
+    setUserName(user.username || "");
+    setPassword(user.password || "");
+    setFirstName(user.firstname || "");
+    setLastName(user.lastname || "");
+    setEmail(user.email || "");
+    setPhone_number(user.phone_number || "");
+    setStatus(user.status || "guess");
+  }, [user]);
+
+  const handleUpdate = async (event) => {
     event.preventDefault();
     await dispatch(
-      createUser({
-        username,
-        password,
-        firstname,
-        lastname,
-        email,
-        phone_number,
-        status,
+      updateUser({
+        id: id,
+        body: {
+          username,
+          password,
+          firstname,
+          lastname,
+          email,
+          phone_number,
+          status,
+        },
       })
     );
   };
 
   return (
     <nav className="applicationnavBar">
-      <h1>Add User</h1>
-      <form onSubmit={handleSubmit}>
+      <h1>Update User #{user.id} </h1>
+      <form onSubmit={handleUpdate}>
         <label htmlFor="username">Username: </label>
         <input
           name="username"
@@ -75,7 +94,7 @@ export default function AddUser() {
           <option value="guess">Guess</option>
           <option value="admin">Admin</option>
         </select>
-        <button type="submit">Submit</button>
+        <button type="submit">Update</button>
         {/* <p>{error}</p> */}
       </form>
     </nav>

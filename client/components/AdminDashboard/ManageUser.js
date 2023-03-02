@@ -5,6 +5,7 @@ import {
   fetchSingleUser,
   selectOneAdminUser,
 } from "../../reducers/adminPageSlice";
+import UpdateUser from "./UpdateUser";
 
 export default function ManageUser(props) {
   const { id } = useParams();
@@ -30,7 +31,9 @@ export default function ManageUser(props) {
         <p>{user.phone_number}</p>
         <p>{user.status}</p>
       </div>
-      <div>User Update</div>
+      <div>
+        <UpdateUser />
+      </div>
     </div>
   );
 }
