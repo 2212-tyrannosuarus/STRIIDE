@@ -1,10 +1,14 @@
-import { assert } from "chai";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { createProduct } from "../../reducers/adminPageSlice";
+import { useParams } from "react-router-dom";
+import { updateProduct } from "../../reducers/adminPageSlice";
+import { selectOneAdminProduct } from "../../reducers/adminPageSlice";
 
-export default function AddProduct() {
+export default function UpdateProduct() {
   const dispatch = useDispatch();
+  const { id } = useParams();
+  const product = useSelector(selectOneAdminProduct);
+
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [image, setImage] = useState("");
@@ -13,27 +17,40 @@ export default function AddProduct() {
   const [color_category, setColor_category] = useState("Black");
   const [gender, setGender] = useState("Women");
 
-  const handleSubmit = async (event) => {
+  useEffect(() => {
+    setName(product.name || "");
+    setDescription(product.description || "");
+    setImage(product.image || "");
+    setPrice(product.price || "");
+    setProduct_category(product.product_category || "Grocery");
+    setColor_category(product.color_category || "Black");
+    setGender(product.setGender || "Women");
+  }, [product]);
+
+  const handleUpdate = async (event) => {
     event.preventDefault();
     let intPrice = parseInt(price);
     await dispatch(
-      createProduct({
-        name,
-        description,
-        image,
-        price,
-        //drop downs
-        product_category,
-        color_category,
-        gender,
+      updateProduct({
+        id: product.id,
+        body: {
+          name,
+          description,
+          image,
+          price,
+          //drop downs
+          product_category,
+          color_category,
+          gender,
+        },
       })
     );
   };
 
   return (
     <nav className="applicationnavBar">
-      <h1>Add Product</h1>
-      <form onSubmit={handleSubmit}>
+      <h1>Update Product #{product.id}</h1>
+      <form onSubmit={handleUpdate}>
         <label htmlFor="name">Product Name: </label>
         <input
           name="name"

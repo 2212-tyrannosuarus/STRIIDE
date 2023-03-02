@@ -29,7 +29,7 @@
   margin: 2px;
 }
 
-.right {
+.allproducts-right {
   width: 80%;
   display: flex;
   flex-wrap: wrap;
@@ -37,8 +37,18 @@
   justify-content: space-evenly;
 }
 
-.product-icon {
-  width: 33%;
+.allproducts-product-icon {
+  width: 30%;
+  word-wrap: break-word;
+  margin: 5px;
+  padding: 5px;
+  border-radius: 5px;
+  background: rgba(196, 196, 196, 0.2);
+  box-shadow: 8px 8px 12px #bbbbbb;
+}
+
+.allproducts-product-icon:hover {
+  box-shadow: 8px 8px 12px #3f1616;
 }
 
 .bottom {

@@ -1,5 +1,5 @@
 import "./AllProductsPage.css";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { connect, useDispatch, useSelector } from "react-redux";
 import {
@@ -13,19 +13,32 @@ import ItemIcon from "./ItemIcon";
 export const allProducts = (props) => {
   const products = useSelector(selectAllProductsDisplay);
   const dispatch = useDispatch();
+  const [sex, setSex] = useState("");
+  console.log("sex is on allpage", sex);
 
   useEffect(() => {
     let string = "";
     if (window.location.pathname === "/women") {
+      setSex("Women's");
       dispatch(fetchAllWomenProductsPage());
     }
     if (window.location.pathname === "/men") {
+      setSex("Men's");
       dispatch(fetchAllMenProductsPage());
     }
   }, [dispatch, window.location.pathname]);
 
   const handleFilter = (filter) => {
     const action = filters.categoryFilter(filter);
+    dispatch(action);
+  };
+
+  const handleSortLH = () => {
+    const action = filters.sortPriceLH();
+    dispatch(action);
+  };
+  const handleSortHL = () => {
+    const action = filters.sortPriceHL();
     dispatch(action);
   };
 
@@ -71,17 +84,17 @@ export const allProducts = (props) => {
             <h3>Sort</h3>
             <button>Featured</button>
             <button>Newest</button>
-            <button>Price: High-Low</button>
-            <button>Price: Low-High</button>
+            <button onClick={() => handleSortHL()}>Price: High-Low</button>
+            <button onClick={() => handleSortLH()}>Price: Low-High</button>
 
             <hr></hr>
           </div>
         </div>
       </div>
-      <div className="right">
+      <div className="allproducts-right">
         {products && products.length
           ? products.map((product) => {
-              return <ItemIcon key={product.id} product={product} />;
+              return <ItemIcon key={product.id} product={product} sex={sex} />;
             })
           : null}
       </div>
