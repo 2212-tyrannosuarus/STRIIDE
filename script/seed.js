@@ -56,12 +56,30 @@ async function seed() {
   allSeededProducts.push(...seededProductsMen);
   allSeededProducts.push(...seededProductsWomen);
 
-  await db.sync(); // clears db and matches models to tables
+  await db.sync({ force: true }); // clears db and matches models to tables
   console.log("db synced!");
   //*******START OF DEMO DATA */
   // Creating Users
   const users = await User.bulkCreate(seededUsers);
   const products = await Product.bulkCreate(allSeededProducts);
+  const realUsers = await Promise.all([
+    User.create({
+      password: faker.internet.password(8),
+      firstname: "Tasneem",
+      lastname: "Patrawala",
+      username: "tasneem.patrawala",
+      email: "tasneemp_sa@yahoo.com",
+      phone_number: faker.phone.number(),
+    }),
+    User.create({
+      password: faker.internet.password(8),
+      firstname: "Miro",
+      lastname: "Malebranche",
+      username: "miro.malebranche",
+      email: "miro.maleb@gmail.com",
+      phone_number: faker.phone.number(),
+    }),
+  ]);
 
   const shippinginfos = await Promise.all([
     Shipping_Info.create({
