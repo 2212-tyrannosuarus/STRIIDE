@@ -2,7 +2,8 @@ import "./AllProductsPage.css";
 import React from "react";
 import { Link } from "react-router-dom";
 export default function ItemIcon(props) {
-  const { product } = props;
+  const { product, sex } = props;
+  console.log("sex is ", sex);
 
   return (
     <div className="allproducts-product-icon">
@@ -14,7 +15,9 @@ export default function ItemIcon(props) {
       </div>
       <div className="bottom">
         <h2>{product.name}</h2>
-        <p>{product.product_category}</p>
+        <p>
+          {sex} {product.product_category} Shoe
+        </p>
         [colorway - pending inventory]
         <p>${product.price}</p>
       </div>
