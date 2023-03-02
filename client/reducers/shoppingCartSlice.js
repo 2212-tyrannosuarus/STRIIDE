@@ -1,6 +1,15 @@
 import axios from "axios";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
+export const fetchLoggedInUserCart = createAsyncThunk(
+  "cartLoggedInUser/fetch",
+  async (id) => {
+    const { data } = await axios.get(`/api/carts/${id}`);
+    return data;
+  }
+);
+
+
 export const shoppingCartSlice = createSlice({
   name: "cart",
   initialState: {
@@ -58,6 +67,12 @@ export const shoppingCartSlice = createSlice({
       state.showCart = true;
     },
   },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchLoggedInUserCart.fulfilled, (state, action) => {
+        state.itemsList = action.payload;
+      })
+    }
 });
 
 export const { addToCart, removeFromCart, setShowCart, setTotalQuantity } =

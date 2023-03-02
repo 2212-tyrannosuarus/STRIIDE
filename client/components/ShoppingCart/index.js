@@ -11,6 +11,7 @@ import {
 } from "../../reducers/shoppingCartSlice";
 import "./ShoppingCart.css";
 
+
 /**
  * COMPONENT
  */
@@ -52,6 +53,14 @@ export const ShoppingCart = (props) => {
   const handleRemoveFromCart = (id) => {
     dispatch(removeFromCart(id));
   };
+
+  const setToken = () => {
+    window.localStorage.setItem("token", "logged in");
+  }
+
+  const unsetToken = () => {
+    window.localStorage.removeItem("token")
+  }
 
   return (
     <div className="shopping-cart-container">
@@ -136,6 +145,8 @@ export const ShoppingCart = (props) => {
       </div>
 
       <div className="cart-summary">
+        <button onClick={() => setToken()}>Log In</button>
+        <button onClick={() => unsetToken()}>Log Out</button>
         <h2>Summary</h2>
         <table>
           <tr>
