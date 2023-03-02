@@ -4,7 +4,8 @@ import { useParams } from "react-router-dom";
 import { connect, useDispatch, useSelector } from "react-redux";
 import {
   selectAllProductsDisplay,
-  fetchAllProductsPage,
+  fetchAllMenProductsPage,
+  fetchAllWomenProductsPage,
   filters,
 } from "../../reducers/allProductsPageSlice";
 import ItemIcon from "./ItemIcon";
@@ -14,24 +15,14 @@ export const allProducts = (props) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    filters.resetState();
-    dispatch(fetchAllProductsPage());
-    const handleGender = async (filter) => {
-      const action = filters.genderFilter(filter);
-      await dispatch(action);
-    };
-
     let string = "";
     if (window.location.pathname === "/women") {
-      string = "Women";
+      dispatch(fetchAllWomenProductsPage());
     }
     if (window.location.pathname === "/men") {
-      string = "Men";
+      dispatch(fetchAllMenProductsPage());
     }
-    console.log("this is", string);
-    handleGender(string);
-    console.log("changed");
-  }, [dispatch]);
+  }, [dispatch, window.location.pathname]);
 
   const handleFilter = (filter) => {
     const action = filters.categoryFilter(filter);

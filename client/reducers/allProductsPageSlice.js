@@ -9,6 +9,21 @@ export const fetchAllProductsPage = createAsyncThunk(
   }
 );
 
+export const fetchAllMenProductsPage = createAsyncThunk(
+  "products/fetchAllMen",
+  async () => {
+    const { data } = await axios.get("/api/products/men");
+    return data;
+  }
+);
+export const fetchAllWomenProductsPage = createAsyncThunk(
+  "products/fetchAllWomen",
+  async () => {
+    const { data } = await axios.get("/api/products/women");
+    return data;
+  }
+);
+
 export const allProductsPageSlice = createSlice({
   name: "allProductsPage",
   initialState: {
@@ -23,13 +38,6 @@ export const allProductsPageSlice = createSlice({
         (product) => product.product_category === filter
       );
     },
-    genderFilter(state, action) {
-      let filter = action.payload;
-      state.allProducts = state.allProducts.filter(
-        (product) => product.gender === filter
-      );
-      state.displayProductsArr = state.allProducts;
-    },
     resetState(state) {
       state.allProducts = [];
       state.displayProductsArr = [];
@@ -37,10 +45,19 @@ export const allProductsPageSlice = createSlice({
     },
   },
   extraReducers: (build) => {
-    build.addCase(fetchAllProductsPage.fulfilled, (state, action) => {
-      state.allProducts = action.payload;
-      state.displayProductsArr = action.payload;
-    });
+    build
+      .addCase(fetchAllProductsPage.fulfilled, (state, action) => {
+        state.allProducts = action.payload;
+        state.displayProductsArr = action.payload;
+      })
+      .addCase(fetchAllMenProductsPage.fulfilled, (state, action) => {
+        state.allProducts = action.payload;
+        state.displayProductsArr = action.payload;
+      })
+      .addCase(fetchAllWomenProductsPage.fulfilled, (state, action) => {
+        state.allProducts = action.payload;
+        state.displayProductsArr = action.payload;
+      });
   },
 });
 
