@@ -16,6 +16,13 @@ export const fetchAdminAllUsers = createAsyncThunk(
     return data;
   }
 );
+export const createProduct = createAsyncThunk(
+  "campuses/addProduct",
+  async (body) => {
+    const { data } = await axios.post(`/api/products`, body);
+    return data;
+  }
+);
 
 export const adminSlice = createSlice({
   name: "adminPage",
