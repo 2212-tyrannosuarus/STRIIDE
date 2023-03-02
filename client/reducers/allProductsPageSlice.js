@@ -25,9 +25,15 @@ export const allProductsPageSlice = createSlice({
     },
     genderFilter(state, action) {
       let filter = action.payload;
-      state.displayProductsArr = state.allProducts.filter(
+      state.allProducts = state.allProducts.filter(
         (product) => product.gender === filter
       );
+      state.displayProductsArr = state.allProducts;
+    },
+    resetState(state) {
+      state.allProducts = [];
+      state.displayProductsArr = [];
+      state.errorMsg = "";
     },
   },
   extraReducers: (build) => {

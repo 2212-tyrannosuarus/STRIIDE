@@ -1,5 +1,6 @@
 import "./AllProductsPage.css";
 import React, { useEffect } from "react";
+import { useParams } from "react-router-dom";
 import { connect, useDispatch, useSelector } from "react-redux";
 import {
   selectAllProductsDisplay,
@@ -13,16 +14,27 @@ export const allProducts = (props) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    filters.resetState();
     dispatch(fetchAllProductsPage());
+    const handleGender = async (filter) => {
+      const action = filters.genderFilter(filter);
+      await dispatch(action);
+    };
+
+    let string = "";
+    if (window.location.pathname === "/women") {
+      string = "Women";
+    }
+    if (window.location.pathname === "/men") {
+      string = "Men";
+    }
+    console.log("this is", string);
+    handleGender(string);
+    console.log("changed");
   }, [dispatch]);
 
   const handleFilter = (filter) => {
     const action = filters.categoryFilter(filter);
-    dispatch(action);
-  };
-
-  const handleGender = (filter) => {
-    const action = filters.genderFilter(filter);
     dispatch(action);
   };
 
@@ -38,8 +50,8 @@ export const allProducts = (props) => {
           <button onClick={() => handleFilter("Health")}>Health </button>
           <button onClick={() => handleFilter("Toys")}>Toys </button>
           <button onClick={() => handleFilter("Jewelery")}>Jewelery </button>
-          <button onClick={() => handleGender("Men")}>Men </button>
-          <button onClick={() => handleGender("Women")}>Women </button>
+          {/* <button onClick={() => handleGender("Men")}>Men </button>
+          <button onClick={() => handleGender("Women")}>Women </button> */}
           <hr></hr>
         </div>
         <div id="left-bottom">

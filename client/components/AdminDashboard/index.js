@@ -11,6 +11,9 @@ import {
   adminReduce,
 } from "../../reducers/adminPageSlice";
 import ItemIcon from "../AllProductsPage/ItemIcon";
+import UserIcon from "./UserIcon";
+import AddProduct from "./AddProduct";
+import AddUser from "./AddUser";
 
 export default function AdminDashBoardPage(props) {
   const dispatch = useDispatch();
@@ -28,11 +31,13 @@ export default function AdminDashBoardPage(props) {
     await dispatch(fetchAdminAllUsers());
     setDisplay("users");
   };
-  const handleGetProduct = async (event) => {
+  const handleAddProduct = async (event) => {
     dispatch(adminReduce.clearState());
+    setDisplay("addproduct");
   };
-  const handleGetUser = async (event) => {
+  const handleAddUser = async (event) => {
     dispatch(adminReduce.clearState());
+    setDisplay("adduser");
   };
 
   return (
@@ -42,25 +47,31 @@ export default function AdminDashBoardPage(props) {
           User
           <hr></hr>
           <button onClick={handleGetUsers}>Manage Users</button>
-          <button>Add Users</button>
+          <button onClick={handleAddUser}>Add Users</button>
         </div>
         <div id="left-bottom">
           Product Management
           <hr></hr>
           <button onClick={handleGetProducts}>Manage Products</button>
-          <button>Add Product</button>
+          <button onClick={handleAddProduct}>Add Product</button>
         </div>
       </div>
       <div id="right">
-        {display !== "none"
-          ? display === "products"
-            ? products.map((product) => {
-                return <ItemIcon key={product.id} product={product} />;
-              })
-            : users.map((user) => {
-                return <div key={user.id}>{user.name}</div>;
-              })
-          : null}
+        {display !== "none" ? (
+          display === "products" ? (
+            products.map((product) => {
+              return <ItemIcon key={product.id} product={product} />;
+            })
+          ) : display === "users" ? (
+            users.map((user) => {
+              return <UserIcon key={user.id} user={user} />;
+            })
+          ) : display === "adduser" ? (
+            <AddUser />
+          ) : (
+            <AddProduct />
+          )
+        ) : null}
       </div>
     </div>
   );
