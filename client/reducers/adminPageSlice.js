@@ -16,6 +16,22 @@ export const fetchAdminAllUsers = createAsyncThunk(
     return data;
   }
 );
+
+export const fetchSingleProduct = createAsyncThunk(
+  "admin/fetchSingleProduct",
+  async (id) => {
+    const { data } = await axios.get(`/api/products/${id}`);
+    return data;
+  }
+);
+export const fetchSingleUser = createAsyncThunk(
+  "admin/fetchSingleUser",
+  async (id) => {
+    const { data } = await axios.get(`/api/users/${id}`);
+    return data;
+  }
+);
+
 export const createProduct = createAsyncThunk(
   "campuses/addProduct",
   async (body) => {
@@ -54,6 +70,12 @@ export const adminSlice = createSlice({
       })
       .addCase(fetchAdminAllUsers.fulfilled, (state, action) => {
         state.allUsers = action.payload;
+      })
+      .addCase(fetchSingleProduct.fulfilled, (state, action) => {
+        state.manageProduct = action.payload;
+      })
+      .addCase(fetchSingleUser.fulfilled, (state, action) => {
+        state.manageUser = action.payload;
       });
   },
 });

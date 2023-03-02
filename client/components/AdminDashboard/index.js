@@ -10,11 +10,13 @@ import {
   selectOneAdminUser,
   adminReduce,
 } from "../../reducers/adminPageSlice";
-import { Redirect } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import UserIcon from "./UserIcon";
 import AddProduct from "./AddProduct";
 import AddUser from "./AddUser";
 import ProductIcon from "./ProductIcon";
+import ManageProduct from "./ManageProduct";
+import ManageUser from "./ManageUser";
 
 export default function AdminDashBoardPage(props) {
   const dispatch = useDispatch();
@@ -47,28 +49,48 @@ export default function AdminDashBoardPage(props) {
         <div id="left-top">
           User
           <hr></hr>
-          <button onClick={handleGetUsers}>Manage Users</button>
-          <button onClick={handleAddUser}>Add Users</button>
+          <button onClick={handleGetUsers}>
+            <Link to="/adminpage/users">Manage Users</Link>
+          </button>
+          <button onClick={handleAddUser}>
+            <Link to="/adminpage/addusers">Add Users</Link>
+          </button>
         </div>
         <div id="left-bottom">
           Product Management
           <hr></hr>
-          <button onClick={handleGetProducts}>Manage Products</button>
-          <button onClick={handleAddProduct}>Add Product</button>
+          <button onClick={handleGetProducts}>
+            <Link to="/adminpage/products">Manage Products</Link>
+          </button>
+          <button onClick={handleAddProduct}>
+            <Link to="/adminpage/addproducts">Add Users</Link>
+          </button>
         </div>
       </div>
       <div className="adminpage-right">
         {display !== "none" ? (
           display === "products" ? (
             products.map((product) => {
-              return <ProductIcon key={product.id} product={product} />;
+              return (
+                <ProductIcon
+                  key={product.id}
+                  product={product}
+                  setDisplay={setDisplay}
+                />
+              );
             })
           ) : display === "users" ? (
             users.map((user) => {
-              return <UserIcon key={user.id} user={user} />;
+              return (
+                <UserIcon key={user.id} user={user} setDisplay={setDisplay} />
+              );
             })
           ) : display === "adduser" ? (
             <AddUser />
+          ) : display === "manageproduct" ? (
+            <ManageProduct />
+          ) : display === "manageuser" ? (
+            <ManageUser />
           ) : (
             <AddProduct />
           )

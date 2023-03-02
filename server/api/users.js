@@ -25,3 +25,12 @@ router.post("/", async (req, res, next) => {
     next(e);
   }
 });
+
+router.get("/:id", async (req, res, next) => {
+  try {
+    const user = await User.findByPk(req.params.id);
+    res.json(user);
+  } catch (err) {
+    next(err);
+  }
+});
