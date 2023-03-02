@@ -9,9 +9,9 @@ export default function AddProduct() {
   const [description, setDescription] = useState("");
   const [image, setImage] = useState("");
   const [price, setPrice] = useState(0.0);
-  const [product_category, setProduct_category] = useState("");
-  const [color_category, setColor_category] = useState("");
-  const [gender, setGender] = useState("");
+  const [product_category, setProduct_category] = useState("Grocery");
+  const [color_category, setColor_category] = useState("Black");
+  const [gender, setGender] = useState("Women");
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -59,23 +59,34 @@ export default function AddProduct() {
           onChange={(e) => setPrice(e.target.value)}
         />
         <label htmlFor="product_category">Category: </label>
-        <input
+        <select
+          id="product_category"
           name="product_category"
-          value={product_category}
           onChange={(e) => setProduct_category(e.target.value)}
-        />
+        >
+          <option value="Grocery">Grocery</option>
+          <option value="Outdoors">Outdoors</option>
+          <option value="Electronics">Electronics</option>
+        </select>
         <label htmlFor="color_category">Color: </label>
-        <input
+        <select
+          id="color_category"
           name="color_category"
-          value={color_category}
           onChange={(e) => setColor_category(e.target.value)}
-        />
+        >
+          <option value="Black">Black</option>
+          <option value="White">White</option>
+          <option value="Blue">Blue</option>
+        </select>
         <label htmlFor="gender">Gender: </label>
-        <input
+        <select
+          id="gender"
           name="gender"
-          value={gender}
-          onChange={(e) => setGender(e.target.value)}
-        />
+          onClick={(e) => setGender(e.target.value)}
+        >
+          <option value="Women">Female</option>
+          <option value="Men">Male</option>
+        </select>
         <button type="submit">Submit</button>
         {/* <p>{error}</p> */}
       </form>

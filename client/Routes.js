@@ -9,6 +9,7 @@ import SingleProductPage, {
 } from "./components/SingleProductPage";
 import ShoppingCart from "./components/ShoppingCart";
 import AdminDashBoardPage from "./components/AdminDashboard";
+import Checkout from "./components/Checkout";
 import { me } from "./store";
 
 /**
@@ -29,9 +30,34 @@ class Routes extends Component {
           {/* <Redirect to="/home" /> */}
           <Route path="/men" component={AllProductsPage} />
           <Route path="/women" component={AllProductsPage} />
+          <Route path="/checkout" component={Checkout} />
           <Route path="/singleproduct/:id" component={singleProductPage} />
           <Route path="/shoppingcart" component={ShoppingCart} />
-          <Route path="/adminpage" component={AdminDashBoardPage} />
+          <Route exact path="/adminpage" component={AdminDashBoardPage} />
+          <Route exact path="/adminpage/users" component={AdminDashBoardPage} />
+          <Route
+            exact
+            path="/adminpage/addusers"
+            component={AdminDashBoardPage}
+          />
+          <Route
+            exact
+            path="/adminpage/addproducts"
+            component={AdminDashBoardPage}
+          />
+          <Route
+            exact
+            path="/adminpage/products"
+            component={AdminDashBoardPage}
+          />
+          <Route
+            path="/adminpage/manage_products/:id"
+            component={AdminDashBoardPage}
+          />
+          <Route
+            path="/adminpage/manage_users/:id"
+            component={AdminDashBoardPage}
+          />
 
           {/* <Redirect to="/allproduct" /> */}
         </Switch>

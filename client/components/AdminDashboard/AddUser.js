@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
+import { createUser } from "../../reducers/adminPageSlice";
 export default function AddUser() {
   const dispatch = useDispatch();
   const [username, setUserName] = useState("");
@@ -9,32 +9,21 @@ export default function AddUser() {
   const [lastname, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [phone_number, setPhone_number] = useState("");
-  const [status, setStatus] = useState("");
+  const [status, setStatus] = useState("guess");
 
   const handleSubmit = async (event) => {
-    // event.preventDefault();
-    // if (image === "") {
-    //   await dispatcher(
-    //     createThatCampusThunk({
-    //       name: campusName,
-    //       address: address,
-    //       description: description,
-    //     })
-    //   );
-    // } else {
-    //   await dispatcher(
-    //     createThatCampusThunk({
-    //       name: campusName,
-    //       imageUrl: image,
-    //       address: address,
-    //       description: description,
-    //     })
-    //   );
-    // }
-    // setCampusName("");
-    // setAddress("");
-    // setImage("");
-    // setDescription("");
+    event.preventDefault();
+    await dispatch(
+      createUser({
+        username,
+        password,
+        firstname,
+        lastname,
+        email,
+        phone_number,
+        status,
+      })
+    );
   };
 
   return (
@@ -78,11 +67,14 @@ export default function AddUser() {
           onChange={(e) => setPhone_number(e.target.value)}
         />
         <label htmlFor="status">Admin Status: </label>
-        <input
+        <select
+          id="status"
           name="status"
-          value={status}
           onChange={(e) => setStatus(e.target.value)}
-        />
+        >
+          <option value="guess">Guess</option>
+          <option value="admin">Admin</option>
+        </select>
         <button type="submit">Submit</button>
         {/* <p>{error}</p> */}
       </form>
