@@ -31,8 +31,8 @@ export const allProducts = (props) => {
 
   return (
     <div className="allproducts-container">
-      <div id="left">
-        <div id="left-top">
+      <div className="left">
+        <div className="left-top">
           <button onClick={() => handleFilter("Grocery")}>Grocery </button>
           <button onClick={() => handleFilter("Outdoors")}>Outdoors </button>
           <button onClick={() => handleFilter("Electronics")}>
@@ -46,8 +46,8 @@ export const allProducts = (props) => {
           <hr></hr>
         </div>
         <div id="left-bottom">
-          <div id="size-filter">
-            <h3>Sizes</h3>
+          <h3>Sizes</h3>
+          <div className="size-filter">
             <button>7</button>
             <button>8</button>
             <button>9</button>
@@ -58,8 +58,8 @@ export const allProducts = (props) => {
             <button>14</button>
             <hr></hr>
           </div>
-          <div id="color-filter">
-            <h3>Color</h3>
+          <h3>Color</h3>
+          <div className="color-filter">
             <button>⬛️</button>
             <button>⬜️</button>
             <button>🟦</button>
@@ -67,7 +67,7 @@ export const allProducts = (props) => {
             <button>🟩</button>
             <hr></hr>
           </div>
-          <div id="sort-filter">
+          <div className="sort-filter">
             <h3>Sort</h3>
             <button>Featured</button>
             <button>Newest</button>
@@ -78,7 +78,7 @@ export const allProducts = (props) => {
           </div>
         </div>
       </div>
-      <div id="right">
+      <div className="right">
         {products && products.length
           ? products.map((product) => {
               return <ItemIcon key={product.id} product={product} />;
