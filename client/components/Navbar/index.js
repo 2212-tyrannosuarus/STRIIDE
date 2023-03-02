@@ -17,8 +17,8 @@ const Navbar = () => {
       <div className="wrapper">
         <div className="left">
           <div className="item">
-            <Link to="PATH TO MENS PRODUCT PAGE">Mens</Link>
-            <Link to="PATH TO WOMENS PRODUCT PAGE">Womens</Link>
+            <Link to="/men">Mens</Link>
+            <Link to="/women">Womens</Link>
             <Link to="/home">Home</Link>
             <input
               type="text"
