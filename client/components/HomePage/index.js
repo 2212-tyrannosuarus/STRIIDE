@@ -1,42 +1,48 @@
-import React, { useEffect } from "react";
-import { connect, useDispatch, useSelector } from "react-redux";
-import {
-  selectAllProducts,
-  fetchAllProducts,
-} from "../../reducers/homePageSlice";
+// import React from "react";
+// import "./HomePage.css";
 
-export const Home = (props) => {
-  const { username } = props;
-  const products = useSelector(selectAllProducts);
-  const dispatch = useDispatch();
+// export const Home = () => {
+//   return (
+//     <div>
+//       <div>
+//         <section className="hero-section">
+//           <div>
+//             <h1 className="hero-title">Summer Collection</h1>
+//             <button className="hero-button">Shop Now</button>
+//           </div>
+//         </section>
+//       </div>
+//       <div>
+//         <section className="featured-products">
+//           <div></div>
+//         </section>
+//       </div>
+//     </div>
+//   );
+// };
 
-  useEffect(() => {
-    dispatch(fetchAllProducts());
-  }, [dispatch]);
+// export default Home;
 
+import React from "react";
+import "./HomePage.css";
+
+export const Home = () => {
   return (
     <div>
-      <h3>Welcome, {username}</h3>
-      {products && products.length
-        ? products.map((product) => {
-            return (
-              <div key={product.id}>
-                Product: {product.name} {product.description} {product.price}
-              </div>
-            );
-          })
-        : null}
+      <div>
+        <section className="hero-section">
+          <div className="hero-overlay"></div>
+          <h1 className="hero-title">Summer Collection</h1>
+          <button className="hero-button">Shop Now</button>
+        </section>
+      </div>
+      <div>
+        <section className="featured-section">
+          <h2>Featured Products Section</h2>
+        </section>
+      </div>
     </div>
   );
 };
 
-/**
- * CONTAINER
- */
-const mapState = (state) => {
-  return {
-    username: state.auth.username,
-  };
-};
-
-export default connect(mapState)(Home);
+export default Home;
