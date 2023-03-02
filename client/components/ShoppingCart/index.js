@@ -72,7 +72,7 @@ export const ShoppingCart = (props) => {
         {cartItems && cartItems.length
           ? cartItems.map((product) => {
               return (
-                <div className="cart-item">
+                <div className="cart-item" key={product.id}>
                   <div key={product.id}>
                     Product Name: {product.name} Quantity: {product.quantity}{" "}
                     Product Total: {product.totalPrice}
