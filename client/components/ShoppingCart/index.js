@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { connect, useDispatch, useSelector } from "react-redux";
 import {
   selectAllCartItems,
@@ -7,6 +7,7 @@ import {
   setShowCart,
   removeFromCart,
   selectTotalQuantity,
+  setTotalQuantity
 } from "../../reducers/shoppingCartSlice";
 import "./ShoppingCart.css";
 
@@ -16,14 +17,27 @@ import "./ShoppingCart.css";
 export const ShoppingCart = (props) => {
   //   const {username} = props
   const cartItems = useSelector(selectAllCartItems);
-  const totalQuantity = useSelector(selectTotalQuantity);
+  let totalQuantity = useSelector(selectTotalQuantity);
   console.log("cart items", cartItems);
   const dispatch = useDispatch();
-  let totalPrice = 0;
+  let subTotalPrice = 0;
+//   const [totalPrice, setTotalPrice] = useState(0);
 
   cartItems.forEach((item) => {
-    totalPrice += item.totalPrice;
+    subTotalPrice += item.totalPrice;
   });
+
+  let estimatedTax = 0.0625 * subTotalPrice;
+  let shippingAndHandling = 5;
+  let totalPrice = subTotalPrice + shippingAndHandling + estimatedTax;
+
+  if (window.localStorage.getItem("cart")) {
+    totalQuantity = 0;
+    cartItems.forEach(item => {
+        totalQuantity+= item.quantity;
+    })
+    dispatch(setTotalQuantity(totalQuantity));
+  }
 
   const handleAddToCart = (name, id, price) => {
     dispatch(
@@ -41,7 +55,7 @@ export const ShoppingCart = (props) => {
 
   return (
     <div className="shopping-cart-container">
-      <div className="dummy-products">
+      {/* <div className="dummy-products">
         <h3>Welcome to the shopping cart </h3>
         <div>
         <h2>"Air Jordan"</h2>
@@ -66,36 +80,84 @@ export const ShoppingCart = (props) => {
           Add to cart
         </button>
         </div>
-      </div>
-
-      <div className="cart-items">
-        {cartItems && cartItems.length
-          ? cartItems.map((product) => {
+      </div> */}
+      <div className="cart-left-column">
+        <h2>Shopping Cart {totalQuantity > 0 ? `(${totalQuantity})` : null}</h2>
+        <div className="cart-items">
+          {cartItems && cartItems.length ? (
+            cartItems.map((product) => {
               return (
-                <div className="cart-item" key={product.id}>
-                  <div key={product.id}>
-                    Product Name: {product.name} Quantity: {product.quantity}{" "}
-                    Product Total: {product.totalPrice}
+                <div className="cart-item-card" key={product.id}>
+                  <div className="cart-item-top">
+                    <div className="cart-item-left-col">
+                      <img src={product.imageUrl} className="cart-item-img" />
+                    </div>
+                    <div className="cart-item-right-col">
+                      <div className="item-details">
+                        <h3>{product.name}</h3>
+                        <div>{product.color}</div>
+                        <div>{product.size}</div>
+                        <div>{product.quantity}</div>
+                        <div>
+                        <button
+                        onClick={() =>
+                          handleAddToCart(
+                            product.name,
+                            product.id,
+                            product.price
+                          )
+                        }
+                      >
+                        +
+                      </button>
+                      <button onClick={() => handleRemoveFromCart(product.id)}>
+                        -
+                      </button>
+                      </div>
+                      </div>
+
+                      <div>${product.totalPrice.toFixed(2)}</div>
+                      
+                    </div>
                   </div>
-                  <button
-                    onClick={() =>
-                      handleAddToCart(product.name, product.id, product.price)
-                    }
-                  >
-                    +
-                  </button>
-                  <button onClick={() => handleRemoveFromCart(product.id)}>
-                    -
-                  </button>
+                  <div>
+                    <div>Shipping</div>
+                    <div>Arrives by Thu, Mar 9</div>
+                  </div>
                 </div>
               );
             })
-          : null}
+          ) : (
+            <div className="empty-cart">
+              There are no items in your shopping cart
+            </div>
+          )}
+        </div>
       </div>
 
       <div className="cart-summary">
-        <div>Total Price: {totalPrice}</div>
-        <div>Total Quantity: {totalQuantity}</div>
+        <h2>Summary</h2>
+        <table>
+          <tr>
+            <td className="data-col-left">Subtotal</td>
+            <td className="data-col-right">${subTotalPrice.toFixed(2)}</td>
+          </tr>
+          <tr>
+            <td className="data-col-left">Estimated Shipping and Handling</td>
+            <td className="data-col-right">${shippingAndHandling.toFixed(2)}</td>
+          </tr>
+          <tr>
+            <td className="data-col-left">Estimated Tax</td>
+            <td className="data-col-right">${estimatedTax.toFixed(2)}</td>
+          </tr>
+          <tr className="">
+            <td className="data-col-left total-row">Total</td>
+            <td className="data-col-right total-row">
+              ${totalPrice.toFixed(2)}
+            </td>
+          </tr>
+        </table>
+        <button className="checkout-btn">Checkout</button>
       </div>
     </div>
   );
