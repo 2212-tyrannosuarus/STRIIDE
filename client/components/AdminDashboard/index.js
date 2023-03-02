@@ -10,7 +10,7 @@ import {
   selectOneAdminUser,
   adminReduce,
 } from "../../reducers/adminPageSlice";
-
+import { Redirect } from "react-router-dom";
 import UserIcon from "./UserIcon";
 import AddProduct from "./AddProduct";
 import AddUser from "./AddUser";

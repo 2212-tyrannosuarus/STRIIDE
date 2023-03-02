@@ -6,7 +6,7 @@ export default function ProductIcon(props) {
   return (
     <div className="admin-product-icon">
       <div className="top">
-        <Link to={`/singleproduct/${product.id}`}>
+        <Link to={`/adminpage/manage_products/${product.id}`}>
           {" "}
           <img src={product.image} width="200" height="200"></img>
         </Link>
