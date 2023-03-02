@@ -31,7 +31,7 @@ export const allProducts = (props) => {
 
   return (
     <div className="allproducts-container">
-      <div className="left">
+      <div className="allproduct-left">
         <div className="left-top">
           <button onClick={() => handleFilter("Grocery")}>Grocery </button>
           <button onClick={() => handleFilter("Outdoors")}>Outdoors </button>
