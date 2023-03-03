@@ -11,8 +11,22 @@ import {
   selectTotalProducts,
 } from "../../reducers/allProductsPageSlice";
 import ItemIcon from "./ItemIcon";
+import { makeStyles } from "@material-ui/core/styles";
+import Button from "@material-ui/core/Button";
+
+const useStyles = makeStyles((theme) => ({
+  category: {
+    "& > *": {
+      margin: theme.spacing(1),
+      display: "flex",
+      alignItems: "center",
+      justify: "center",
+    },
+  },
+}));
 
 export const allProducts = (props) => {
+  const classes = useStyles();
   const { pagenumber } = useParams();
   const products = useSelector(selectPaginatedDisplay);
   const numProducts = useSelector(selectTotalProducts);
@@ -67,45 +81,49 @@ export const allProducts = (props) => {
     <div className="allproducts-container">
       <div className="allproduct-left">
         <div className="left-top">
-          <button onClick={() => handleFilter("Grocery")}>Grocery </button>
-          <button onClick={() => handleFilter("Outdoors")}>Outdoors </button>
-          <button onClick={() => handleFilter("Electronics")}>
-            Electronics{" "}
-          </button>
-          <button onClick={() => handleFilter("Health")}>Health </button>
-          <button onClick={() => handleFilter("Toys")}>Toys </button>
-          <button onClick={() => handleFilter("Jewelery")}>Jewelery </button>
-          <hr></hr>
+          <div className={classes.category}>
+            <Button onClick={() => handleFilter("Lifestyle")}>Lifestyle</Button>
+            <Button onClick={() => handleFilter("Running")}>Running</Button>
+            <Button onClick={() => handleFilter("Training")}>Training</Button>
+          </div>
         </div>
         <div id="left-bottom">
           <h3>Sizes</h3>
+
           <div className="size-filter">
-            <button>7</button>
-            <button>8</button>
-            <button>9</button>
-            <button>10</button>
-            <button>11</button>
-            <button>12</button>
-            <button>13</button>
-            <button>14</button>
-            <hr></hr>
+            <div className={classes.size}>
+              <Button>7</Button>
+              <Button>8</Button>
+              <Button>8.5</Button>
+              <Button>9</Button>
+              <Button>9.5</Button>
+              <Button>10</Button>
+              <Button>10.5</Button>
+              <Button>11</Button>
+              <Button>11.5</Button>
+              <Button>12</Button>
+              <Button>12.5</Button>
+              <Button>13</Button>
+              <Button>13.5</Button>
+              <Button>14</Button>
+            </div>
           </div>
           <h3>Color</h3>
           <div className="color-filter">
-            <button>⬛️</button>
-            <button>⬜️</button>
-            <button>🟦</button>
-            <button>🟥</button>
-            <button>🟩</button>
+            <Button>⬛️</Button>
+            <Button>⬜️</Button>
+            <Button>🟦</Button>
+            <Button>🟥</Button>
+            <Button>🟩</Button>
+            <Button>🩱</Button>
             <hr></hr>
           </div>
           <div className="sort-filter">
             <h3>Sort</h3>
-            <button>Featured</button>
-            <button onClick={() => handleSortNew()}>Newest</button>
-            <button onClick={() => handleSortHL()}>Price: High-Low</button>
-            <button onClick={() => handleSortLH()}>Price: Low-High</button>
-
+            <Button>Featured</Button>
+            <Button onClick={() => handleSortNew()}>Newest</Button>
+            <Button onClick={() => handleSortHL()}>High-Low</Button>
+            <Button onClick={() => handleSortLH()}>Low-High</Button>
             <hr></hr>
           </div>
         </div>

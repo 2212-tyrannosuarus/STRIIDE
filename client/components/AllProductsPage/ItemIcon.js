@@ -1,6 +1,7 @@
 import "./AllProductsPage.css";
 import React from "react";
 import { Link } from "react-router-dom";
+
 export default function ItemIcon(props) {
   const { product, sex } = props;
 
