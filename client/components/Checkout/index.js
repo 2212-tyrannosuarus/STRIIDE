@@ -13,6 +13,9 @@ import {
   addUserCart,
 } from "../../reducers/shoppingCartSlice";
 import "./Checkout.css";
+import ShippingType from "./ShippingType";
+import Payment from "./Payment";
+import ReviewOrder from "./ReviewOrder";
 
 /**
  * COMPONENT
@@ -29,10 +32,13 @@ export const Checkout = (props) => {
 
   const [showShipping, setShowShipping] = useState(false);
   const [showPayment, setShowPayment] = useState(false);
+  const [reviewOrder, setReviewOrder] = useState(false);
 
   const [cardNumber, setCardNumber] = useState("");
   const [expDate, setExpDate] = useState("");
   const [securityCode, setSecurityCode] = useState("");
+
+  let [shippingAndHandling, setShippingAndHandling] = useState(8);
 
   const cartItems = useSelector(selectAllCartItems);
   let totalQuantity = useSelector(selectTotalQuantity);
@@ -50,6 +56,9 @@ export const Checkout = (props) => {
     setPostalCode("");
     setEmail("");
     setPhoneNumber("");
+    setCardNumber("");
+    setExpDate("");
+    setSecurityCode("");
   };
 
   cartItems.forEach((item) => {
@@ -59,192 +68,157 @@ export const Checkout = (props) => {
   });
 
   let estimatedTax = 0.0625 * subTotalPrice;
-  let shippingAndHandling = 5;
   let totalPrice = subTotalPrice + shippingAndHandling + estimatedTax;
+
+  const handleShippingType = (e) => {
+    if (e.target.id.includes("8")) {
+      setShippingAndHandling(8);
+    } else if (e.target.id.includes("20")) {
+      setShippingAndHandling(20);
+    } else if (e.target.id.includes("30")) {
+      setShippingAndHandling(30);
+    }
+  };
 
   return (
     <div className="checkout-form">
-      <div className="form-container">
-        <form
-          id="checkout-form"
-          onSubmit={(evt) => handleSubmit(evt)}
-          className="column"
-        >
-          <h2 className="form-title">Shipping Address</h2>
-          <div className="form-field">
-            <input
-              value={firstName}
-              onChange={(evt) => setFirstName(evt.target.value)}
-              placeholder="First Name *"
-              className="checkout-form-input"
-              required
-            />
-
-            <input
-              value={lastName}
-              onChange={(evt) => setLastName(evt.target.value)}
-              placeholder="Last Name"
-              className="checkout-form-input"
-              required
-            />
-          </div>
-
-          <div className="form-field">
-            <input
-              value={address}
-              onChange={(evt) => setAddress(evt.target.value)}
-              placeholder="Address"
-              className="checkout-form-input"
-              required
-            />
-          </div>
-
-          <div className="form-field">
-            <input
-              value={city}
-              onChange={(evt) => setCity(evt.target.value)}
-              placeholder="City"
-              className="checkout-form-input"
-              required
-            />
-            <input
-              value={state}
-              onChange={(evt) => setState(evt.target.value)}
-              placeholder="State"
-              className="checkout-form-input"
-              required
-            />
-            <input
-              value={postalCode}
-              onChange={(evt) => setPostalCode(evt.target.value)}
-              placeholder="Postal Code"
-              className="checkout-form-input"
-              required
-            />
-          </div>
-
-          <div className="form-field">
-            <input
-              type="email"
-              value={email}
-              onChange={(evt) => setEmail(evt.target.value)}
-              placeholder="Email"
-              className="checkout-form-input"
-              required
-            />
-
-            <input
-              value={phoneNumber}
-              onChange={(evt) => setPhoneNumber(evt.target.value)}
-              placeholder="Phone Number"
-              className="checkout-form-input"
-              required
-            />
-          </div>
-
-          <div className="checkout-submit-button-container">
-            <button className="shipping-btn" onClick={() => setShowShipping(true)}>
-              Continue To Shipping
-            </button>
-
-            {/* SHIPPING */}
-          </div>
-          {showShipping ? (
-            <div className="shipping-container">
-          <div className="shipping-header">
-          <h2>Shipping</h2>
-          </div>
-          <div className="shipping-option selected-shipping-option">
-            <p className="shipping-detail">$8.00 Shipping</p>
-            <p className="shipping-detail">Arrives By Friday, March 10</p>
-          </div>
-          <div className="shipping-option">
-            <p className="shipping-detail">$20.00 Shipping</p>
-            <p className="shipping-detail">Arrives By Tuesday, March 7</p>
-          </div>
-          <div className="shipping-option">
-            <p className="shipping-detail">$30.00 Shipping</p>
-            <p className="shipping-detail">Arrives By Monday, March 6</p>
-          </div>
-
-          <div className="checkout-submit-button-container">
-            <button className="payment-btn" onClick={() => setShowPayment(true)}>
-              Continue To Payment
-            </button>
-          </div>
-        
-        </div>
-          ): (
-            <div className="shipping-header">
-            <h2>Shipping</h2>
-          </div>
-          )}
-
-          {/* PAYMENT */}
-          {showPayment ? (
-            <div className="payment-container">
-              <div className="payment-header">
-            <h2>Payment</h2>
-          </div>
-
-              <label htmlFor="fname">Accepted Cards</label>
-            <div className="payment-icon-container">
-              <i className="fa fa-cc-visa" style={{color: "navy"}}></i>
-              <i className="fa fa-cc-amex" style={{color: "blue"}}></i>
-              <i className="fa fa-cc-mastercard" style={{color:"red"}}></i>
-              <i className="fa fa-cc-discover" style={{color:"orange"}}></i>
-            </div>
-
-            <div className="credit-card-details">
-            <div className="form-field">
-              <label htmlFor="credit-card-number"></label>
-            <input
-            name="credit-card-number"
-              value={cardNumber}
-              onChange={(evt) => setCardNumber(evt.target.value)}
-              placeholder="Credit Card Number"
-              className="checkout-form-input"
-              required
-            />
-
-<label htmlFor="exp-date"></label>
-            <input
-            name="exp-date"
-              value={expDate}
-              onChange={(evt) => setExpDate(evt.target.value)}
-              placeholder="Expiration Date"
-              className="checkout-form-input"
-              required
-            />
-
-<label htmlFor="security-code"></label>
-            <input
-            name="security-code"
-              value={securityCode}
-              onChange={(evt) => setSecurityCode(evt.target.value)}
-              placeholder="Security Code"
-              className="checkout-form-input"
-              required
-            />
-          </div>
-
-            </div>
-              
-            </div>
-          ): (
-            <div className="payment-header">
-            <h2>Payment</h2>
-          </div>
-          )}
-          
-
+      {reviewOrder ? (
+        <div className="order-review-with-place-order-container">
+          <ReviewOrder
+            firstName={firstName}
+            lastName={lastName}
+            address={address}
+            city={city}
+            state={state}
+            postalCode={postalCode}
+            phoneNumber={phoneNumber}
+            email={email}
+          />
           <div className="checkout-submit-button-container">
             <button type="submit" className="submit-order-btn">
-              Submit Order
+              Place Order
             </button>
           </div>
-        </form>
-      </div>
+        </div>
+      ) : (
+        <div className="form-container">
+          <form
+            id="checkout-form"
+            onSubmit={(evt) => handleSubmit(evt)}
+            className="column"
+          >
+            <h2 className="form-title">Shipping Address</h2>
+            <div className="form-field">
+              <input
+                value={firstName}
+                onChange={(evt) => setFirstName(evt.target.value)}
+                placeholder="First Name *"
+                className="checkout-form-input"
+                required
+              />
+
+              <input
+                value={lastName}
+                onChange={(evt) => setLastName(evt.target.value)}
+                placeholder="Last Name *"
+                className="checkout-form-input"
+                required
+              />
+            </div>
+
+            <div className="form-field">
+              <input
+                value={address}
+                onChange={(evt) => setAddress(evt.target.value)}
+                placeholder="Address *"
+                className="checkout-form-input"
+                required
+              />
+            </div>
+
+            <div className="form-field">
+              <input
+                value={city}
+                onChange={(evt) => setCity(evt.target.value)}
+                placeholder="City *"
+                className="checkout-form-input"
+                required
+              />
+              <input
+                value={state}
+                onChange={(evt) => setState(evt.target.value)}
+                placeholder="State *"
+                className="checkout-form-input"
+                required
+              />
+              <input
+                value={postalCode}
+                onChange={(evt) => setPostalCode(evt.target.value)}
+                placeholder="Postal Code *"
+                className="checkout-form-input"
+                required
+              />
+            </div>
+
+            <div className="form-field">
+              <input
+                type="email"
+                value={email}
+                onChange={(evt) => setEmail(evt.target.value)}
+                placeholder="Email *"
+                className="checkout-form-input"
+                required
+              />
+
+              <input
+                value={phoneNumber}
+                onChange={(evt) => setPhoneNumber(evt.target.value)}
+                placeholder="Phone Number *"
+                className="checkout-form-input"
+                required
+              />
+            </div>
+
+            <div className="checkout-submit-button-container">
+              <button
+                className="shipping-btn"
+                onClick={() => setShowShipping(true)}
+              >
+                Continue To Shipping
+              </button>
+
+              {/* SHIPPING */}
+            </div>
+            {showShipping ? (
+              <ShippingType
+                setShowPayment={setShowPayment}
+                handleShippingType={handleShippingType}
+              />
+            ) : (
+              <div className="shipping-header">
+                <h2>Shipping</h2>
+              </div>
+            )}
+
+            {/* PAYMENT */}
+            {showPayment ? (
+              <Payment
+                setCardNumber={setCardNumber}
+                setExpDate={setExpDate}
+                setSecurityCode={setSecurityCode}
+                setReviewOrder={setReviewOrder}
+                cardNumber={cardNumber}
+                expDate={expDate}
+                securityCode={securityCode}
+              />
+            ) : (
+              <div className="payment-header">
+                <h2>Payment</h2>
+              </div>
+            )}
+          </form>
+        </div>
+      )}
 
       <div className="in-your-bag">
         <h2 className="form-title">In Your Bag</h2>
@@ -291,7 +265,10 @@ export const Checkout = (props) => {
                 >
                   <div className="cart-item-top">
                     <div className="cart-item-left-col">
-                      <img src={product.imageUrl} className="checkout-cart-item-img" />
+                      <img
+                        src={product.imageUrl}
+                        className="checkout-cart-item-img"
+                      />
                     </div>
                     <div className="cart-item-right-col">
                       <div className="item-details">

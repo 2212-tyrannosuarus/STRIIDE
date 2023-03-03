@@ -129,3 +129,21 @@
   border: 2px solid #cccccc;
   background-color: #f7f7f7;
 }
+
+.order-review-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.order-review-delivery {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+}
+
+.order-review-with-place-order-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
