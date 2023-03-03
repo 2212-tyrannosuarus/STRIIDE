@@ -50,10 +50,14 @@ export default function AdminDashBoardPage(props) {
   const users = useSelector(selectAllAdminUsers);
 
   const classes = useStyles();
-  const [open, setOpen] = React.useState(true);
+  const [openAdmin, setOpenAdmin] = React.useState(false);
+  const [openUser, setOpenUser] = React.useState(false);
 
-  const handleClick = () => {
-    setOpen(!open);
+  const handleClickAdmin = () => {
+    setOpenAdmin(!openAdmin);
+  };
+  const handleClickUser = () => {
+    setOpenUser(!openUser);
   };
 
   const handleGetProducts = async (event) => {
@@ -110,11 +114,83 @@ export default function AdminDashBoardPage(props) {
               );
             })
           ) : display === "users" ? (
-            users.map((user) => {
-              return (
-                <UserIcon key={user.id} user={user} setDisplay={setDisplay} />
-              );
-            })
+            <List
+              component="nav"
+              aria-labelledby="nested-list-subheader"
+              subheader={
+                <ListSubheader component="div" id="nested-list-subheader">
+                  {/* {placeholder for text} */}
+                </ListSubheader>
+              }
+              className={classes.root}
+            >
+              <ListItem button onClick={handleClickAdmin}>
+                <ListItemIcon>
+                  <InboxIcon />
+                </ListItemIcon>
+                <ListItemText primary="Admin Management" />
+                {openAdmin ? <ExpandLess /> : <ExpandMore />}
+              </ListItem>
+              <Collapse in={openAdmin} timeout="auto" unmountOnExit>
+                <List component="div" disablePadding>
+                  {users.map((user) => {
+                    if (user.status === "admin") {
+                      let fullname = user.firstname + " " + user.lastname;
+                      return (
+                        <ListItem
+                          key={user.id}
+                          button
+                          className={classes.nested}
+                        >
+                          <ListItemIcon>
+                            <StarBorder />
+                          </ListItemIcon>
+                          <Link
+                            to={`/adminpage/manage_users/${user.id}`}
+                            onClick={() => setDisplay("manageuser")}
+                          >
+                            <ListItemText primary={fullname} />
+                          </Link>
+                        </ListItem>
+                      );
+                    }
+                  })}
+                </List>
+              </Collapse>
+              <ListItem button onClick={handleClickUser}>
+                <ListItemIcon>
+                  <InboxIcon />
+                </ListItemIcon>
+                <ListItemText primary="User Management" />
+                {openUser ? <ExpandLess /> : <ExpandMore />}
+              </ListItem>
+              <Collapse in={openUser} timeout="auto" unmountOnExit>
+                <List component="div" disablePadding>
+                  {users.map((user) => {
+                    if (user.status === "guest") {
+                      let fullname = user.firstname + " " + user.lastname;
+                      return (
+                        <ListItem
+                          key={user.id}
+                          button
+                          className={classes.nested}
+                        >
+                          <ListItemIcon>
+                            <StarBorder />
+                          </ListItemIcon>
+                          <Link
+                            to={`/adminpage/manage_users/${user.id}`}
+                            onClick={() => setDisplay("manageuser")}
+                          >
+                            <ListItemText primary={fullname} />
+                          </Link>
+                        </ListItem>
+                      );
+                    }
+                  })}
+                </List>
+              </Collapse>
+            </List>
           ) : display === "adduser" ? (
             <AddUser />
           ) : display === "manageproduct" ? (
