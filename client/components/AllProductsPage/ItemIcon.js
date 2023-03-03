@@ -3,7 +3,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 export default function ItemIcon(props) {
   const { product, sex } = props;
-  console.log("sex is ", sex);
 
   return (
     <div className="allproducts-product-icon">
