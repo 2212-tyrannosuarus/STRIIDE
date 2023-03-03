@@ -1,32 +1,49 @@
 import "./AllProductsPage.css";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { connect, useDispatch, useSelector } from "react-redux";
 import {
   selectAllProductsDisplay,
+  selectPaginatedDisplay,
   fetchAllMenProductsPage,
   fetchAllWomenProductsPage,
   filters,
+  selectTotalProducts,
 } from "../../reducers/allProductsPageSlice";
 import ItemIcon from "./ItemIcon";
 
 export const allProducts = (props) => {
-  const products = useSelector(selectAllProductsDisplay);
+  const { pagenumber } = useParams();
+  const products = useSelector(selectPaginatedDisplay);
+  const numProducts = useSelector(selectTotalProducts);
   const dispatch = useDispatch();
   const [sex, setSex] = useState("");
-  console.log("sex is on allpage", sex);
+  const [path, setPath] = useState("");
 
   useEffect(() => {
     let string = "";
     if (window.location.pathname === "/women") {
       setSex("Women's");
+      setPath("/women/page/");
       dispatch(fetchAllWomenProductsPage());
     }
     if (window.location.pathname === "/men") {
+      setPath("/women/page/");
       setSex("Men's");
       dispatch(fetchAllMenProductsPage());
     }
   }, [dispatch, window.location.pathname]);
+
+  useEffect(() => {
+    const pagenum = parseInt(pagenumber);
+    dispatch(filters.changePage(pagenum));
+  }, [pagenumber]);
+
+  let paginationArr = [];
+  let maxPaginationNum = Math.ceil(numProducts / 9);
+  for (let i = 1; i <= maxPaginationNum; i++) {
+    paginationArr.push(i);
+  }
 
   const handleFilter = (filter) => {
     const action = filters.categoryFilter(filter);
@@ -91,12 +108,25 @@ export const allProducts = (props) => {
           </div>
         </div>
       </div>
-      <div className="allproducts-right">
-        {products && products.length
-          ? products.map((product) => {
-              return <ItemIcon key={product.id} product={product} sex={sex} />;
-            })
-          : null}
+      <div className="allproducts-right-outer">
+        <div className="allproducts-right">
+          {products && products.length
+            ? products.map((product) => {
+                return (
+                  <ItemIcon key={product.id} product={product} sex={sex} />
+                );
+              })
+            : null}
+        </div>
+        <div className="allproducts-right-lower">
+          {numProducts > 9
+            ? paginationArr.map((page) => (
+                <button key={page}>
+                  <Link to={path + page}>{page}</Link>
+                </button>
+              ))
+            : null}
+        </div>
       </div>
     </div>
   );
