@@ -45,7 +45,8 @@ export const ShoppingCart = (props) => {
   //     setIsToken(false);
   //   };
 
-  const handleAddToCart = (name, id, price, color, size, image, quantity) => {
+  const handleAddToCart = async (name, id, price, color, size, image, quantity) => {
+
     dispatch(
       addToCart({
         id,
@@ -57,20 +58,23 @@ export const ShoppingCart = (props) => {
         quantity,
       })
     );
+
+    if (isLoggedIn) {
+      await dispatch(deleteUserCart(1));
+    await dispatch(
+      addUserCart({ id: 1, total: totalPrice, cartItems: cartItems })
+    );
+    }
   };
 
-  const handleRemoveFromCart = (id, size, color) => {
-    console.log(
-      "cartItems inside remove ",
-      id,
-      " ",
-      size,
-      " ",
-      color,
-      " ",
-      cartItems
-    );
+  const handleRemoveFromCart = async (id, size, color) => {
     dispatch(removeFromCart({ id, size, color }));
+    if (isLoggedIn) {
+      await dispatch(deleteUserCart(1));
+    await dispatch(
+      addUserCart({ id: 1, total: totalPrice, cartItems: cartItems })
+    );
+    }
   };
 
   //   useEffect(() => {
@@ -101,15 +105,15 @@ export const ShoppingCart = (props) => {
 
   async function handleLoggedInUser() {
     setIsLoggedIn(true);
-    console.log("inseide handleLoggedInUser");
+    console.log("inside handleLoggedInUser");
     await getLogggedInUserCartItems();
   }
 
   async function handleLoggedOutUser() {
-    await dispatch(deleteUserCart(1));
-    await dispatch(
-      addUserCart({ id: 1, total: totalPrice, cartItems: cartItems })
-    );
+    // await dispatch(deleteUserCart(1));
+    // await dispatch(
+    //   addUserCart({ id: 1, total: totalPrice, cartItems: cartItems })
+    // );
     setIsLoggedIn(false);
   }
 
