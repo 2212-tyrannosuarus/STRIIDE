@@ -25,12 +25,16 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import Collapse from "@material-ui/core/Collapse";
 import InboxIcon from "@material-ui/icons/MoveToInbox";
-import DraftsIcon from "@material-ui/icons/Drafts";
-import SendIcon from "@material-ui/icons/Send";
+import SupervisorAccountIcon from "@material-ui/icons/SupervisorAccount";
 import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
 import StarBorder from "@material-ui/icons/StarBorder";
 import AddProduct from "./AddProduct";
+import PersonIcon from "@material-ui/icons/Person";
+import PersonAddIcon from "@material-ui/icons/PersonAdd";
+import AddIcon from "@material-ui/icons/Add";
+import AttachMoneyIcon from "@material-ui/icons/AttachMoney";
+import ShowChartIcon from "@material-ui/icons/ShowChart";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -85,19 +89,34 @@ export default function AdminDashBoardPage(props) {
         <div id="left-top">
           <hr></hr>
           <Button onClick={handleGetUsers}>
+            <PersonIcon />
             <Link to="/adminpage/users">Manage Users</Link>
           </Button>
           <Button onClick={handleAddUser}>
+            <PersonAddIcon />
             <Link to="/adminpage/addusers">Add Users</Link>
           </Button>
         </div>
         <div id="left-bottom">
           <hr></hr>
           <Button onClick={handleGetProducts}>
+            <InboxIcon />
             <Link to="/adminpage/products">Manage Products</Link>
           </Button>
           <Button onClick={handleAddProduct}>
+            <AddIcon />
             <Link to="/adminpage/addproducts">Add Products</Link>
+          </Button>
+        </div>
+        <div id="left-bottomb">
+          <hr></hr>
+          <Button onClick={handleGetUsers}>
+            <AttachMoneyIcon />
+            <Link to="/adminpage/users">Manage Sales</Link>
+          </Button>
+          <Button onClick={handleAddUser}>
+            <ShowChartIcon />
+            <Link to="/adminpage/addusers">Manage Inventories</Link>
           </Button>
         </div>
       </div>
@@ -126,7 +145,7 @@ export default function AdminDashBoardPage(props) {
             >
               <ListItem button onClick={handleClickAdmin}>
                 <ListItemIcon>
-                  <InboxIcon />
+                  <SupervisorAccountIcon />
                 </ListItemIcon>
                 <ListItemText primary="Admin Management" />
                 {openAdmin ? <ExpandLess /> : <ExpandMore />}
@@ -159,7 +178,7 @@ export default function AdminDashBoardPage(props) {
               </Collapse>
               <ListItem button onClick={handleClickUser}>
                 <ListItemIcon>
-                  <InboxIcon />
+                  <PersonIcon />
                 </ListItemIcon>
                 <ListItemText primary="User Management" />
                 {openUser ? <ExpandLess /> : <ExpandMore />}
