@@ -47,7 +47,7 @@ export const ShoppingCart = (props) => {
 
   const handleAddToCart = async (name, id, price, color, size, image, quantity) => {
 
-    dispatch(
+    await dispatch(
       addToCart({
         id,
         name,
@@ -62,24 +62,24 @@ export const ShoppingCart = (props) => {
     if (isLoggedIn) {
       await dispatch(deleteUserCart(1));
     await dispatch(
-      addUserCart({ id: 1, total: totalPrice, cartItems: cartItems })
+      addUserCart({ id: 1, total: totalPrice, cartItems: cartItems }) //id is userId
     );
     }
   };
 
   const handleRemoveFromCart = async (id, size, color) => {
-    dispatch(removeFromCart({ id, size, color }));
+    await dispatch(removeFromCart({ id, size, color }));
     if (isLoggedIn) {
       await dispatch(deleteUserCart(1));
     await dispatch(
-      addUserCart({ id: 1, total: totalPrice, cartItems: cartItems })
+      addUserCart({ id: 1, total: totalPrice, cartItems: cartItems }) //userId
     );
     }
   };
 
   //   useEffect(() => {
   async function getLogggedInUserCartItems() {
-    let { payload } = await dispatch(fetchLoggedInUserCart(1));
+    let { payload } = await dispatch(fetchLoggedInUserCart(1)); //userId
     console.log("existing ", payload);
 
     payload.forEach((item) => {
@@ -110,10 +110,10 @@ export const ShoppingCart = (props) => {
   }
 
   async function handleLoggedOutUser() {
-    // await dispatch(deleteUserCart(1));
-    // await dispatch(
-    //   addUserCart({ id: 1, total: totalPrice, cartItems: cartItems })
-    // );
+    await dispatch(deleteUserCart(1));
+    await dispatch(
+      addUserCart({ id: 1, total: totalPrice, cartItems: cartItems }) //userId
+    );
     setIsLoggedIn(false);
   }
 
@@ -129,32 +129,7 @@ export const ShoppingCart = (props) => {
 
   return (
     <div className="shopping-cart-container">
-      {/* <div className="dummy-products">
-        <h3>Welcome to the shopping cart </h3>
-        <div>
-        <h2>"Air Jordan"</h2>
-        <img
-          src="https://images.unsplash.com/photo-1525547719571-a2d4ac8945e2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8bGFwdG9wfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60"
-          width="100px"
-        />
-        <p>$ 25</p>
-        <button onClick={() => handleAddToCart("Air Jordan", 1, 25)}>
-          Add to cart
-        </button>
-        </div>
 
-        <div>
-        <h2>"Pegasus"</h2>
-        <img
-          src="https://images.unsplash.com/photo-1525547719571-a2d4ac8945e2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8bGFwdG9wfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60"
-          width="100px"
-        />
-        <p>$ 35</p>
-        <button onClick={() => handleAddToCart("Pegasus", 2, 35)}>
-          Add to cart
-        </button>
-        </div>
-      </div> */}
       <div className="cart-left-column">
         <h2>Shopping Cart {totalQuantity > 0 ? `(${totalQuantity})` : null}</h2>
         <div className="cart-items">

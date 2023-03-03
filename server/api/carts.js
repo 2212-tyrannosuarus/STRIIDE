@@ -21,7 +21,7 @@ router.get("/:userId", async (req, res, next) => {
     try {
       const cart = await Cart.findOne({
         where: {
-            id: req.params.userId,
+            userId: req.params.userId,
         },
         include: [Cart_Item]
       });
@@ -71,7 +71,11 @@ router.post("/:userId", async (req, res, next) => {
   // DELETE api/carts/:id
 router.delete("/:userId", async (req, res, next) => {
     try {
-      const cart = await Cart.findByPk(req.params.userId)
+      const cart = await Cart.findOne({
+        where: {
+          userId: req.params.userId
+        }
+      })
       await cart.destroy();
       const cartItems = await Cart_Item.findAll({
         where: {
@@ -87,7 +91,6 @@ router.delete("/:userId", async (req, res, next) => {
       next(err);
     }
   });
-
 
 
 

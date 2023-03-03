@@ -16,6 +16,8 @@ import "./Checkout.css";
 import ShippingType from "./ShippingType";
 import Payment from "./Payment";
 import ReviewOrder from "./ReviewOrder";
+import { addOrderSummary } from "../../reducers/checkoutSlice";
+import {Link} from 'react-router-dom';
 
 /**
  * COMPONENT
@@ -45,22 +47,6 @@ export const Checkout = (props) => {
   const dispatch = useDispatch();
   let subTotalPrice = 0;
 
-  const handleSubmit = async (evt) => {
-    evt.preventDefault();
-    // await dispatch(addCampusAsync({ name, description, address, imageUrl }));
-    setFirstName("");
-    setLastName("");
-    setAddress("");
-    setCity("");
-    setState("");
-    setPostalCode("");
-    setEmail("");
-    setPhoneNumber("");
-    setCardNumber("");
-    setExpDate("");
-    setSecurityCode("");
-  };
-
   cartItems.forEach((item) => {
     console.log("item inside cartItems.forEach ", item);
     subTotalPrice += item.totalPrice;
@@ -80,145 +66,165 @@ export const Checkout = (props) => {
     }
   };
 
+  const handleSubmit = async (evt) => {
+    evt.preventDefault();
+    alert("inside handle submit");
+    await dispatch(addOrderSummary({userId: 1, total: totalPrice, orderItems: cartItems}));
+    // setFirstName("");
+    // setLastName("");
+    // setAddress("");
+    // setCity("");
+    // setState("");
+    // setPostalCode("");
+    // setEmail("");
+    // setPhoneNumber("");
+    // setCardNumber("");
+    // setExpDate("");
+    // setSecurityCode("");
+  };
+
   return (
     <div className="checkout-form">
-      {reviewOrder ? (
-        <div className="order-review-with-place-order-container">
-          <ReviewOrder
-            firstName={firstName}
-            lastName={lastName}
-            address={address}
-            city={city}
-            state={state}
-            postalCode={postalCode}
-            phoneNumber={phoneNumber}
-            email={email}
-          />
-          <div className="checkout-submit-button-container">
-            <button type="submit" className="submit-order-btn">
-              Place Order
-            </button>
-          </div>
-        </div>
-      ) : (
-        <div className="form-container">
-          <form
-            id="checkout-form"
-            onSubmit={(evt) => handleSubmit(evt)}
-            className="column"
-          >
-            <h2 className="form-title">Shipping Address</h2>
-            <div className="form-field">
-              <input
-                value={firstName}
-                onChange={(evt) => setFirstName(evt.target.value)}
-                placeholder="First Name *"
-                className="checkout-form-input"
-                required
+      <div className="form-container">
+        <form
+          id="checkout-form"
+          onSubmit={(evt) => handleSubmit(evt)}
+          className="column"
+        >
+          {reviewOrder ? (
+            <div className="order-review-with-place-order-container">
+              <ReviewOrder
+                firstName={firstName}
+                lastName={lastName}
+                address={address}
+                city={city}
+                state={state}
+                postalCode={postalCode}
+                phoneNumber={phoneNumber}
+                email={email}
               />
-
-              <input
-                value={lastName}
-                onChange={(evt) => setLastName(evt.target.value)}
-                placeholder="Last Name *"
-                className="checkout-form-input"
-                required
-              />
-            </div>
-
-            <div className="form-field">
-              <input
-                value={address}
-                onChange={(evt) => setAddress(evt.target.value)}
-                placeholder="Address *"
-                className="checkout-form-input"
-                required
-              />
-            </div>
-
-            <div className="form-field">
-              <input
-                value={city}
-                onChange={(evt) => setCity(evt.target.value)}
-                placeholder="City *"
-                className="checkout-form-input"
-                required
-              />
-              <input
-                value={state}
-                onChange={(evt) => setState(evt.target.value)}
-                placeholder="State *"
-                className="checkout-form-input"
-                required
-              />
-              <input
-                value={postalCode}
-                onChange={(evt) => setPostalCode(evt.target.value)}
-                placeholder="Postal Code *"
-                className="checkout-form-input"
-                required
-              />
-            </div>
-
-            <div className="form-field">
-              <input
-                type="email"
-                value={email}
-                onChange={(evt) => setEmail(evt.target.value)}
-                placeholder="Email *"
-                className="checkout-form-input"
-                required
-              />
-
-              <input
-                value={phoneNumber}
-                onChange={(evt) => setPhoneNumber(evt.target.value)}
-                placeholder="Phone Number *"
-                className="checkout-form-input"
-                required
-              />
-            </div>
-
-            <div className="checkout-submit-button-container">
-              <button
-                className="shipping-btn"
-                onClick={() => setShowShipping(true)}
-              >
-                Continue To Shipping
-              </button>
-
-              {/* SHIPPING */}
-            </div>
-            {showShipping ? (
-              <ShippingType
-                setShowPayment={setShowPayment}
-                handleShippingType={handleShippingType}
-              />
-            ) : (
-              <div className="shipping-header">
-                <h2>Shipping</h2>
+              <div className="checkout-submit-button-container">
+              <button type="submit" className="submit-order-btn" onClick={(e) => handleSubmit(e)}>
+              <Link to="/orderconfirmation">Place Order</Link>
+                </button>
+                
               </div>
-            )}
+            </div>
+          ) : (
+            <div className="shipping-address-container">
+              <h2 className="form-title">Shipping Address</h2>
+              <div className="form-field">
+                <input
+                  value={firstName}
+                  onChange={(evt) => setFirstName(evt.target.value)}
+                  placeholder="First Name *"
+                  className="checkout-form-input"
+                  required
+                />
 
-            {/* PAYMENT */}
-            {showPayment ? (
-              <Payment
-                setCardNumber={setCardNumber}
-                setExpDate={setExpDate}
-                setSecurityCode={setSecurityCode}
-                setReviewOrder={setReviewOrder}
-                cardNumber={cardNumber}
-                expDate={expDate}
-                securityCode={securityCode}
-              />
-            ) : (
-              <div className="payment-header">
-                <h2>Payment</h2>
+                <input
+                  value={lastName}
+                  onChange={(evt) => setLastName(evt.target.value)}
+                  placeholder="Last Name *"
+                  className="checkout-form-input"
+                  required
+                />
               </div>
-            )}
-          </form>
-        </div>
-      )}
+
+              <div className="form-field">
+                <input
+                  value={address}
+                  onChange={(evt) => setAddress(evt.target.value)}
+                  placeholder="Address *"
+                  className="checkout-form-input"
+                  required
+                />
+              </div>
+
+              <div className="form-field">
+                <input
+                  value={city}
+                  onChange={(evt) => setCity(evt.target.value)}
+                  placeholder="City *"
+                  className="checkout-form-input"
+                  required
+                />
+                <input
+                  value={state}
+                  onChange={(evt) => setState(evt.target.value)}
+                  placeholder="State *"
+                  className="checkout-form-input"
+                  required
+                />
+                <input
+                  value={postalCode}
+                  onChange={(evt) => setPostalCode(evt.target.value)}
+                  placeholder="Postal Code *"
+                  className="checkout-form-input"
+                  required
+                />
+              </div>
+
+              <div className="form-field">
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(evt) => setEmail(evt.target.value)}
+                  placeholder="Email *"
+                  className="checkout-form-input"
+                  required
+                />
+
+                <input
+                  value={phoneNumber}
+                  onChange={(evt) => setPhoneNumber(evt.target.value)}
+                  placeholder="Phone Number *"
+                  className="checkout-form-input"
+                  required
+                />
+              </div>
+
+              <div className="checkout-submit-button-container">
+                <button
+                  className="shipping-btn"
+                  onClick={() => setShowShipping(true)}
+                >
+                  Continue To Shipping
+                </button>
+
+                {/* SHIPPING */}
+              </div>
+              {showShipping ? (
+                <ShippingType
+                  setShowPayment={setShowPayment}
+                  handleShippingType={handleShippingType}
+                />
+              ) : (
+                <div className="shipping-header">
+                  <h2>Shipping</h2>
+                </div>
+              )}
+
+              {/* PAYMENT */}
+              {showPayment ? (
+                <Payment
+                  setCardNumber={setCardNumber}
+                  setExpDate={setExpDate}
+                  setSecurityCode={setSecurityCode}
+                  setReviewOrder={setReviewOrder}
+                  cardNumber={cardNumber}
+                  expDate={expDate}
+                  securityCode={securityCode}
+                />
+              ) : (
+                <div className="payment-header">
+                  <h2>Payment</h2>
+                </div>
+              )}
+            </div>
+          )}
+        </form>
+      </div>
 
       <div className="in-your-bag">
         <h2 className="form-title">In Your Bag</h2>
