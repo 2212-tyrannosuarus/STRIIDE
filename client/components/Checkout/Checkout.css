@@ -1,0 +1,131 @@
+.checkout-form {
+    display: flex;
+}
+
+.form-container {
+    /* background-color: #ffffff; */
+    margin-top: 0px;
+    /* border: 2px solid #ffffff; */
+    padding-bottom: 20px;
+    width: 65%;
+  }
+
+  .form-title {
+    font-size: large;
+  }
+
+  .form-field {
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+  }
+
+  .submit-order-btn, .shipping-btn, .payment-btn {
+    background-color: #e2e2e2;
+    font-size: large;
+    border: none;
+    border-radius: 25px;
+    color: #8d8d8d;
+    height: 3em;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 30%;
+  }
+
+  .submit-order-btn:hover, .shipping-btn:hover , .payment-btn:hover{
+    cursor: pointer;
+  }
+
+  .checkout-submit-button-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+  }
+
+  .checkout-form-input {
+    width: 100%;
+    padding: 5px;
+    height: 3em;
+    border: 2px solid #b4b4b4;
+    border-radius: 10px;
+    margin-right: 10px;
+  }
+
+  .in-your-bag {
+    display: flex;
+    flex-direction: column;
+    width: 35%;
+    margin-left: 20px;
+  }
+
+  .checkout-table {
+    width: 90%;
+}
+
+.checkout-td {    
+    padding-bottom: 10px;
+}
+
+.checkout-data-col-right {
+    text-align: right;
+    width: 20%;
+}
+
+.checkout-cart-item-img {
+  width: 75px;
+}
+
+.shipping-container {
+  padding-top: 5px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.shipping-header, .payment-header {
+  border-top: 2px solid #ececec;
+  padding-top: 5px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+
+}
+
+.shipping-option {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border: 2px solid #b4b4b4;
+  border-radius: 10px;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+}
+
+.selected-shipping-option {
+  border: 2px solid black;
+}
+
+.shipping-detail {
+  margin-top: 0px;
+  margin-bottom: 0px;
+  color: #8d8d8d;
+}
+
+
+.payment-container {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+}
+.payment-icon-container {
+  margin-bottom: 20px;
+  padding: 7px 0;
+  font-size: 24px;
+  gap: 5px;
+}
+
+.credit-card-details {
+  padding: 10px;
+  border: 2px solid #cccccc;
+  background-color: #f7f7f7;
+}

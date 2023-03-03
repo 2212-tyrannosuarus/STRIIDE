@@ -1,12 +1,37 @@
 import axios from "axios";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
+export const fetchLoggedInUserCart = createAsyncThunk(
+  "cartLoggedInUser/fetch",
+  async (id) => {
+    const { data } = await axios.get(`/api/carts/${id}`);
+    return data;
+  }
+);
+
+export const deleteUserCart = createAsyncThunk(
+  "cartLoggedInUser/delete",
+  async (id) => {
+    await axios.delete(`/api/carts/${id}`);
+  }
+);
+
+export const addUserCart = createAsyncThunk(
+  "cartLoggedInUser/post",
+  async ({id, total, cartItems}) => {
+    const { data } = await axios.post(`/api/carts/${id}`, {total, cartItems});
+    return data;
+  }
+);
+
+
 export const shoppingCartSlice = createSlice({
   name: "cart",
   initialState: {
     itemsList: JSON.parse(localStorage.getItem("cart")) || [],
     totalQuantity: 0,
     showCart: false,
+    loggedInUserCart: []
   },
   reducers: {
     setTotalQuantity (state, action) {
@@ -15,21 +40,23 @@ export const shoppingCartSlice = createSlice({
     addToCart(state, action) {
       const newItem = action.payload;
       const existingItem = state.itemsList.find(
-        (item) => item.id === newItem.id
+        (item) => item.id === newItem.id && item.size === newItem.size && item.color === newItem.color
       );
       if (existingItem) {
-        existingItem.quantity++;
+        console.log('inside if statement for existing item ');
+        existingItem.quantity+= newItem.quantity;
         existingItem.totalPrice += newItem.price;
       } else {
+        console.log('inside else statement for existing item ');
         state.itemsList.push({
           id: newItem.id,
           price: newItem.price,
-          quantity: 1,
+          quantity: newItem.quantity,
           totalPrice: newItem.price,
           name: newItem.name,
-          imageUrl:
-            "https://images.unsplash.com/photo-1525547719571-a2d4ac8945e2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8bGFwdG9wfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60",
-          color: "Blue",
+          imageUrl: newItem.image,
+          color: newItem.color,
+          size: newItem.size
         });
       }
       state.totalQuantity++;
@@ -38,8 +65,11 @@ export const shoppingCartSlice = createSlice({
       window.localStorage.setItem("cart", JSON.stringify(state.itemsList));
     },
     removeFromCart(state, action) {
-      const id = action.payload;
-      const existingItem = state.itemsList.find((item) => item.id === id);
+      console.log('action.payload inside remove from cart ', action.payload);
+      const id = action.payload.id;
+      const color = action.payload.color;
+      const size = action.payload.size;
+      const existingItem = state.itemsList.find((item) => item.id === id && item.size === size && item.color === color);
       if (existingItem.quantity === 1) {
         state.itemsList = state.itemsList.filter((item) => item.id !== id);
         state.totalQuantity--;
@@ -58,6 +88,12 @@ export const shoppingCartSlice = createSlice({
       state.showCart = true;
     },
   },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchLoggedInUserCart.fulfilled, (state, action) => {
+        state.loggedInUserCart = action.payload;
+      })
+    }
 });
 
 export const { addToCart, removeFromCart, setShowCart, setTotalQuantity } =
@@ -69,6 +105,10 @@ export const selectAllCartItems = (state) => {
 
 export const selectTotalQuantity = (state) => {
   return state.shoppingCart.totalQuantity;
+};
+
+export const selectLoggedInUserCart = (state) => {
+  return state.shoppingCart.loggedInUserCart;
 };
 
 export default shoppingCartSlice.reducer;
