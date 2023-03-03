@@ -47,7 +47,7 @@ Size.hasOne(Inventory);
 Inventory.belongsTo(Size);
 
 Colorway.hasOne(Inventory);
-Inventory.belongsTo(Size);
+Inventory.belongsTo(Colorway);
 
 // Product.belongsToMany(Size, {
 //   through: "product_size",

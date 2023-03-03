@@ -1,6 +1,7 @@
 "use strict";
 
 const { shoes } = require("./shoes");
+const { sizes } = require("./sizes");
 
 const {
   db,
@@ -41,11 +42,87 @@ async function seed() {
   // Creating Users
   const users = await User.bulkCreate(seededUsers);
   const products = await Product.bulkCreate(shoes);
-  console.log("product", products);
+  console.log("product ========================", products[0]);
+
+  const sizeDemo = await Size.bulkCreate(sizes);
+
+  const colorDemo = await Promise.all([
+    Colorway.create({ color: "Black" }),
+    Colorway.create({ color: "White" }),
+    Colorway.create({ color: "Blue" }),
+    Colorway.create({ color: "Green" }),
+    Colorway.create({ color: "Pink" }),
+    Colorway.create({ color: "Purple" }),
+  ]);
+
+  const seededInventory = products.forEach(async (shoe) => {
+    if (shoe.black_images.length > 0) {
+      for (let i = 0; i < sizes.length; i++) {
+        let item = await Inventory.create({
+          count: 20,
+          productId: shoe.id,
+          sizeId: i + 1,
+          colorwayId: 1,
+        });
+      }
+    }
+    if (shoe.white_images.length > 0) {
+      for (let i = 0; i < sizes.length; i++) {
+        let item = await Inventory.create({
+          count: 20,
+          productId: shoe.id,
+          sizeId: i + 1,
+          colorwayId: 2,
+        });
+      }
+    }
+    if (shoe.blue_images.length > 0) {
+      for (let i = 0; i < sizes.length; i++) {
+        let item = await Inventory.create({
+          count: 20,
+          productId: shoe.id,
+          sizeId: i + 1,
+          colorwayId: 3,
+        });
+      }
+    }
+    if (shoe.green_images.length > 0) {
+      for (let i = 0; i < sizes.length; i++) {
+        let item = await Inventory.create({
+          count: 20,
+          productId: shoe.id,
+          sizeId: i + 1,
+          colorwayId: 4,
+        });
+      }
+    }
+    if (shoe.pink_images.length > 0) {
+      for (let i = 0; i < sizes.length; i++) {
+        let item = await Inventory.create({
+          count: 20,
+          productId: shoe.id,
+          sizeId: i + 1,
+          colorwayId: 5,
+        });
+      }
+    }
+    if (shoe.purple_images.length > 0) {
+      for (let i = 0; i < sizes.length; i++) {
+        let item = await Inventory.create({
+          count: 20,
+          productId: shoe.id,
+          sizeId: i + 1,
+          colorwayId: 6,
+        });
+      }
+    }
+  });
+
+  // const inventory = await Inventory.bulkCreate(seededInventory);
 
   const realUsers = await Promise.all([
     User.create({
-      password: faker.internet.password(8),
+      password: "tasneemPass",
       firstname: "Tasneem",
       lastname: "Patrawala",
       username: "tasneem.patrawala",
@@ -53,7 +130,7 @@ async function seed() {
       phone_number: faker.phone.number(),
     }),
     User.create({
-      password: faker.internet.password(8),
+      password: "miroPass",
       firstname: "Miro",
       lastname: "Malebranche",
       username: "miro.malebranche",
@@ -66,6 +143,7 @@ async function seed() {
     Shipping_Info.create({
       address1: "Avenue of Americas",
       city: "Manhattan",
+      state: "New York",
       zipcode: "11373",
       country: "USA",
       userId: 1,
@@ -110,40 +188,11 @@ async function seed() {
     Order_Detail.create({
       historic_price: 150.0,
       count: 2,
+      color: "blue",
+      size: "M 6 / W 7.5",
       ordersummaryId: 1,
       productId: 1,
     }),
-  ]);
-
-  const sizeDemo = await Promise.all([
-    Size.create({ size: "M 6 / W 7.5" }),
-    Size.create({ size: "M 6.5 / W 8" }),
-    Size.create({ size: "M 7 / W 8.5" }),
-    Size.create({ size: "M 7.5 / W 9" }),
-    Size.create({ size: "M 8 / W 9.5" }),
-    Size.create({ size: "M 8.5 / W 10" }),
-    Size.create({ size: "M 9 / W 10.5" }),
-    Size.create({ size: "M 9.5 / W 11" }),
-    Size.create({ size: "M 10 / W 11.5" }),
-    Size.create({ size: "M 10.5 / W 12" }),
-    Size.create({ size: "M 11 / W 12.5" }),
-    Size.create({ size: "M 11.5 / W 13" }),
-    Size.create({ size: "M 12 / W 13.5" }),
-    Size.create({ size: "M 12.5 / W 14" }),
-    Size.create({ size: "M 13 / W 14.5" }),
-    Size.create({ size: "M 14 / W 15.5" }),
-    Size.create({ size: "M 15 / W 16.5" }),
-    Size.create({ size: "M 16 / W 17.5" }),
-    Size.create({ size: "M 17 / W 18.5" }),
-    Size.create({ size: "M 18 / W 19.5" }),
-  ]);
-
-  const colorDemo = await Promise.all([
-    Colorway.create({ color: "Black" }),
-    Colorway.create({ color: "Blue" }),
-    Colorway.create({ color: "White" }),
-    Colorway.create({ color: "Red" }),
-    Colorway.create({ color: "Grey" }),
   ]);
 
   // const sampleInventory = await Promise.all([ ])
