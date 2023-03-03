@@ -56,6 +56,17 @@ class Routes extends Component {
             path="/adminpage/products"
             component={AdminDashBoardPage}
           />
+          <Route exact path="/adminpage/sales" component={AdminDashBoardPage} />
+          <Route
+            exact
+            path="/adminpage/inventory"
+            component={AdminDashBoardPage}
+          />
+          <Route
+            exact
+            path="/adminpage/inventory/editinv/:id"
+            component={AdminDashBoardPage}
+          />
           <Route
             path="/adminpage/manage_products/:id"
             component={AdminDashBoardPage}

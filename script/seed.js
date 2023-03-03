@@ -179,10 +179,11 @@ async function seed() {
       cartId: 1,
     }),
   ]);
-
-  const orderSummaryDemo = await Promise.all([
-    Order_Summary.create({ userId: 1 }),
-  ]);
+  let orderSummaryArr = [];
+  for (let i = 1; i < 10; i++) {
+    orderSummaryArr.push(Order_Summary.create({ userId: i }));
+  }
+  const orderSummaryDemo = await Promise.all(orderSummaryArr);
 
   const orderDetailsDemo = await Promise.all([
     Order_Detail.create({
