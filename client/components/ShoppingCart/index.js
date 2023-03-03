@@ -13,6 +13,7 @@ import {
   addUserCart,
 } from "../../reducers/shoppingCartSlice";
 import "./ShoppingCart.css";
+import {Link} from 'react-router-dom'
 
 /**
  * COMPONENT
@@ -246,7 +247,9 @@ export const ShoppingCart = (props) => {
             </tr>
           </tbody>
         </table>
+        <Link to="/checkout">
         <button className="checkout-btn">Checkout</button>
+        </Link>
       </div>
     </div>
   );
