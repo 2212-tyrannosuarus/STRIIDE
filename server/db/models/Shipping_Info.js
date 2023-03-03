@@ -13,6 +13,10 @@ const Shipping_Info = db.define("shippinginfo", {
     type: Sequelize.STRING,
     allowNull: false,
   },
+  state: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
   zipcode: {
     type: Sequelize.STRING,
     allowNull: false,

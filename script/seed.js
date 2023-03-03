@@ -45,7 +45,7 @@ async function seed() {
 
   const realUsers = await Promise.all([
     User.create({
-      password: faker.internet.password(8),
+      password: "tasneemPass",
       firstname: "Tasneem",
       lastname: "Patrawala",
       username: "tasneem.patrawala",
@@ -53,7 +53,7 @@ async function seed() {
       phone_number: faker.phone.number(),
     }),
     User.create({
-      password: faker.internet.password(8),
+      password: "miroPass",
       firstname: "Miro",
       lastname: "Malebranche",
       username: "miro.malebranche",
@@ -66,6 +66,7 @@ async function seed() {
     Shipping_Info.create({
       address1: "Avenue of Americas",
       city: "Manhattan",
+      state: "New York",
       zipcode: "11373",
       country: "USA",
       userId: 1,
@@ -110,6 +111,8 @@ async function seed() {
     Order_Detail.create({
       historic_price: 150.0,
       count: 2,
+      color: "blue",
+      size: "M 6 / W 7.5",
       ordersummaryId: 1,
       productId: 1,
     }),

@@ -1,7 +1,8 @@
 const arrayOfShoes = [
   {
     name: "Nike Dunk Low SE",
-    desciption: "",
+    description:
+      "You're not just in the game, you're leading it. Celebrating women b-ball players with that off-court lifestyle embedded into everyday life, the AF1 returns with nothin'-but-net style. Textured leather breaks in beautifully and adds a premium touch. And let's not forget the removable medallion. It can be tucked into the pocket on the Swoosh, worn as a pendant or added to a keychain—the options are endless.",
     image:
       "https://static.nike.com/a/images/t_PDP_1728_v1/b83485d6-ef36-46b2-9c2b-326a68abfec8/dunk-low-se-womens-shoes-CKQg1s.png",
     black_images: [],
@@ -18,11 +19,12 @@ const arrayOfShoes = [
     price: 120,
     product_category: "Lifestyle",
     color_category: "",
-    Gender: "Women",
+    gender: "Women",
   },
   {
     name: "Nike Air Force 1 ‘07 SE",
-    desciption: "",
+    description:
+      "You're not just in the game, you're leading it. Celebrating women b-ball players with that off-court lifestyle embedded into everyday life, the AF1 returns with nothin'-but-net style. Textured leather breaks in beautifully and adds a premium touch. And let's not forget the removable medallion. It can be tucked into the pocket on the Swoosh, worn as a pendant or added to a keychain—the options are endless.",
     image:
       "https://static.nike.com/a/images/t_PDP_1728_v1/e6ca0888-bbbd-4d1e-8818-9dfc72ffa462/air-force-1-07-se-womens-shoes-cjvcc9.png",
     black_images: [],
@@ -39,11 +41,11 @@ const arrayOfShoes = [
     price: 120,
     product_category: "Lifestyle",
     color_category: "",
-    Gender: "Women",
+    gender: "Women",
   },
   {
     name: "Nike Air Max 90 Futura",
-    desciption:
+    description:
       "We've reimagined an icon of Air with bursts of high-energy colors and layered leather overlays to bring you skillfully crafted luxury. Plus, plush ankle padding mixes with tried-and-true Air cushioning for comfort you have to feel to believe. With a design that's playful, sporty and oh-so comfortable, the Nike Air Max 90 Futura is all about stepping into the future. Are you ready?",
     image:
       "https://static.nike.com/a/images/t_PDP_1728_v1/07ec21db-1f37-4506-8f63-533395617f10/air-max-90-futura-womens-shoes-kvRZ4h.png",
@@ -66,11 +68,11 @@ const arrayOfShoes = [
     price: 160,
     product_category: "Lifestyle",
     color_category: "",
-    Gender: "Women",
+    gender: "Women",
   },
   {
     name: "Nike Air Max 270",
-    desciption:
+    description:
       "Legendary Air gets lifted. Our 1st lifestyle Air Max brings you comfort, bold style and 270 degrees of Air to showcase one of our greatest innovations yet. Add a lightweight, airy upper and a low-cut collar and you've got the perfect got-to kicks for everyday fun.",
     image:
       "https://static.nike.com/a/images/t_PDP_1728_v1/pyyixbczj6u5kiwhpjik/air-max-270-womens-shoes-Pgb94t.png",
@@ -98,11 +100,11 @@ const arrayOfShoes = [
     price: 160,
     product_category: "Lifestyle",
     color_category: "",
-    Gender: "Women",
+    gender: "Women",
   },
   {
     name: "Nike Air Force 1 ‘07",
-    desciption:
+    description:
       "The radiance lives on in the Nike Air Force 1 ’07, the b-ball icon that puts a fresh spin on what you know best: crisp leather, bold colors and the perfect amount of flash to make you shine.",
     image:
       "https://static.nike.com/a/images/t_PDP_1728_v1/02f8959e-927a-40c0-8ed6-366574f302d0/air-force-1-07-womens-shoes-b19lqD.png",
@@ -125,11 +127,11 @@ const arrayOfShoes = [
     price: 110,
     product_category: "Lifestyle",
     color_category: "",
-    Gender: "Women",
+    gender: "Women",
   },
   {
     name: "Nike Invincible 3",
-    desciption:
+    description:
       "With maximum cushioning to support every mile, the Invincible 3 gives you our highest level of comfort underfoot to help you stay on your feet today, tomorrow and beyond. Designed to help keep you on the run, it’s super supportive and bouncy, so that you can propel down your preferred path and come back for your next run feeling ready and reinvigorated.",
     image:
       "https://static.nike.com/a/images/t_PDP_1728_v1/ab1389b7-5e3a-46b2-866d-94a5532671b1/invincible-3-womens-road-running-shoes-kC40R9.png",
@@ -157,11 +159,11 @@ const arrayOfShoes = [
     price: 180,
     product_category: "Running",
     color_category: "",
-    Gender: "Women",
+    gender: "Women",
   },
   {
     name: "Nike Pegasus 39",
-    desciption:
+    description:
       "Celebrate every mile with these festive road runners. Whether you prefer an extended route at sunrise or a quick jog at sunset, running is your daily ritual, and you need shoes just as dedicated. A comfortable, intuitive design provides a supportive sensation to help your foot feel contained while responsive Zoom Air cushioning adds a spring to your stride. Plus, colorful confetti-inspired graphic accents add fresh energy to your run. Your trusted workhorse with wings is back. Time to fly.",
     image:
       "https://static.nike.com/a/images/t_PDP_1728_v1/f89a59ee-b368-4978-94e0-70eda3ea0b3b/pegasus-39-womens-road-running-shoes-qdDh0D.png",
@@ -189,11 +191,11 @@ const arrayOfShoes = [
     price: 130,
     product_category: "Running",
     color_category: "",
-    Gender: "Women",
+    gender: "Women",
   },
   {
     name: "Nike React Infinity 3",
-    desciption:
+    description:
       "Stay on your feet with soft and supportive cushioning, built to help keep you on the run. A wider forefoot and higher foam stacks help shield you from recurring attrition, giving you the peace of mind to pound the pavement every day. The springy responsiveness will surprise you too, adding an element of pure speed to 1 of our most tested shoes to help you go longer, faster and farther than ever.",
     image:
       "https://static.nike.com/a/images/t_PDP_1728_v1/69be627a-5072-4ed0-9588-e979e7e985f2/react-infinity-3-womens-road-running-shoes-XpNmlR.png",
@@ -221,11 +223,11 @@ const arrayOfShoes = [
     price: 160,
     product_category: "Running",
     color_category: "",
-    Gender: "Women",
+    gender: "Women",
   },
   {
     name: "Nike Pegasus Trail 4",
-    desciption:
+    description:
       "It's time to get outside. Running is your daily ritual, taking you from road to trail as you seek out new routes and goals. With a supportive, springy feel, these trail runners can take you there and back again. Underfoot traction helps keep you going over rocky terrain while still providing a smooth ride for the road. Your trusted workhorse with wings is back and ready for an off-road adventure.",
     image:
       "https://static.nike.com/a/images/t_PDP_1728_v1/c3e29afa-8c9e-45ae-9e27-fd1571cd97c6/pegasus-trail-4-womens-trail-running-shoes-CQT261.png",
@@ -248,11 +250,11 @@ const arrayOfShoes = [
     price: 145,
     product_category: "Running",
     color_category: "",
-    Gender: "Women",
+    gender: "Women",
   },
   {
     name: "Nike Winflo 9",
-    desciption:
+    description:
       "The Winflo 9 gives you the support you need to match your speed. It has a secure fit that helps keep your foot in place as the miles go by. We added plenty of foam through the midsole, giving you extra pep to every step. Lace up, lock in, win your goals.",
     image:
       "https://static.nike.com/a/images/t_PDP_1728_v1/e6ca0888-bbbd-4d1e-8818-9dfc72ffa462/air-force-1-07-se-womens-shoes-cjvcc9.png",
@@ -280,11 +282,11 @@ const arrayOfShoes = [
     price: 100,
     product_category: "Running",
     color_category: "",
-    Gender: "Women",
+    gender: "Women",
   },
   {
     name: "Nike Free Metcon 4",
-    desciption:
+    description:
       "The Nike Free Metcon 4 Premium combines flexibility with stability to help you get the most out of your training program. Updated chain-link mesh cools and flexes as you speed through agility drills, while support at the midfoot and heel braces you for your heaviest sets in the weight room.",
     image:
       "https://static.nike.com/a/images/t_PDP_1728_v1/5b020291-96ae-4c26-a219-104ce0851a9e/free-metcon-4-premium-womens-training-shoes-pxHVt9.png",
@@ -312,11 +314,11 @@ const arrayOfShoes = [
     price: 120,
     product_category: "Training",
     color_category: "",
-    Gender: "Women",
+    gender: "Women",
   },
   {
     name: "Nike Metcon 8 AMP",
-    desciption:
+    description:
       "Turn your workout into a party in this special Nike Metcon 8 AMP. Pulsating purples and vibrating neon yellows are fit for pumping your fist to the beat between sets or using that electric pairing as inspiration to find 1 more rep. The upper is lighter and more breathable than our previous edition to complement our standards of durability and comfort, so that you can float through your cardio and power through your lifts.",
     image:
       "https://static.nike.com/a/images/t_PDP_1728_v1/65d50c58-490a-4f5f-adfb-1e8abdd1955e/metcon-8-womens-training-shoes-Hzmjkl.png",
@@ -344,11 +346,11 @@ const arrayOfShoes = [
     price: 130,
     product_category: "Training",
     color_category: "",
-    Gender: "Women",
+    gender: "Women",
   },
   {
     name: "Nike Zoom SuperRep 4 Next Nature",
-    desciption:
+    description:
       "The quad-burning box jumps that bring your “why” into focus. The sweat-soaked super-sets that leave you grabbing your tights. This is what you live for: the struggle, the moment of truth, the breakthrough, the transformation. Designed for quick bursts of force, heart-thumping tempo changes and fast-paced workouts, this trainer helps push you to fresh HIIT heights.",
     image:
       "https://static.nike.com/a/images/t_PDP_1728_v1/42b42624-96b9-452e-9b03-ed135949b390/zoom-superrep-4-next-nature-womens-hiit-class-shoes-Q9thvJ.png",
@@ -376,11 +378,11 @@ const arrayOfShoes = [
     price: 130,
     product_category: "Training",
     color_category: "",
-    Gender: "Women",
+    gender: "Women",
   },
   // {
   //   name: "",
-  //   desciption: "",
+  //   description: "",
   //   image: "",
   //   black_images: ["https://static.nike.com/a/images/t_PDP_1728_v1/e6ca0888-bbbd-4d1e-8818-9dfc72ffa462/air-force-1-07-se-womens-shoes-cjvcc9.png",	"https://static.nike.com/a/images/t_PDP_1728_v1/45b59210-8c17-40ed-8f1f-c8325693b2b3/air-force-1-07-se-womens-shoes-cjvcc9.png",	"https://static.nike.com/a/images/t_PDP_1728_v1/e483ce68-ee35-469e-b420-148c2b3a9c9a/air-force-1-07-se-womens-shoes-cjvcc9.png", "https://static.nike.com/a/images/t_PDP_1728_v1/bf794c91-fd43-4391-bf06-b3ede8aabe9c/air-force-1-07-se-womens-shoes-cjvcc9.png"],
   //   white_images: ["https://static.nike.com/a/images/t_PDP_1728_v1/e6ca0888-bbbd-4d1e-8818-9dfc72ffa462/air-force-1-07-se-womens-shoes-cjvcc9.png",	"https://static.nike.com/a/images/t_PDP_1728_v1/45b59210-8c17-40ed-8f1f-c8325693b2b3/air-force-1-07-se-womens-shoes-cjvcc9.png",	"https://static.nike.com/a/images/t_PDP_1728_v1/e483ce68-ee35-469e-b420-148c2b3a9c9a/air-force-1-07-se-womens-shoes-cjvcc9.png", "https://static.nike.com/a/images/t_PDP_1728_v1/bf794c91-fd43-4391-bf06-b3ede8aabe9c/air-force-1-07-se-womens-shoes-cjvcc9.png"],
@@ -391,11 +393,11 @@ const arrayOfShoes = [
   //   price: ,
   //   product_category: "Training",
   //   color_category: "",
-  //   Gender: "Women",
+  //   gender: "Women",
   // },
   // {
   //   name: "",
-  //   desciption: "",
+  //   description: "",
   //   image: "",
   //   black_images: ["https://static.nike.com/a/images/t_PDP_1728_v1/e6ca0888-bbbd-4d1e-8818-9dfc72ffa462/air-force-1-07-se-womens-shoes-cjvcc9.png",	"https://static.nike.com/a/images/t_PDP_1728_v1/45b59210-8c17-40ed-8f1f-c8325693b2b3/air-force-1-07-se-womens-shoes-cjvcc9.png",	"https://static.nike.com/a/images/t_PDP_1728_v1/e483ce68-ee35-469e-b420-148c2b3a9c9a/air-force-1-07-se-womens-shoes-cjvcc9.png", "https://static.nike.com/a/images/t_PDP_1728_v1/bf794c91-fd43-4391-bf06-b3ede8aabe9c/air-force-1-07-se-womens-shoes-cjvcc9.png"],
   //   white_images: ["https://static.nike.com/a/images/t_PDP_1728_v1/e6ca0888-bbbd-4d1e-8818-9dfc72ffa462/air-force-1-07-se-womens-shoes-cjvcc9.png",	"https://static.nike.com/a/images/t_PDP_1728_v1/45b59210-8c17-40ed-8f1f-c8325693b2b3/air-force-1-07-se-womens-shoes-cjvcc9.png",	"https://static.nike.com/a/images/t_PDP_1728_v1/e483ce68-ee35-469e-b420-148c2b3a9c9a/air-force-1-07-se-womens-shoes-cjvcc9.png", "https://static.nike.com/a/images/t_PDP_1728_v1/bf794c91-fd43-4391-bf06-b3ede8aabe9c/air-force-1-07-se-womens-shoes-cjvcc9.png"],
@@ -406,11 +408,11 @@ const arrayOfShoes = [
   //   price: ,
   //   product_category: "Training",
   //   color_category: "",
-  //   Gender: "Women",
+  //   gender: "Women",
   // },
   {
     name: "Nike Air Force 1 '07",
-    desciption:
+    description:
       "The radiance lives on in the Nike Air Force 1 ’07, the b-ball OG that puts a fresh spin on what you know best: durably stitched overlays, clean finishes and the perfect amount of flash to make you shine.",
     image:
       "https://static.nike.com/a/images/t_PDP_1728_v1/b7d9211c-26e7-431a-ac24-b0540fb3c00f/air-force-1-07-mens-shoes-5QFp5Z.png",
@@ -433,13 +435,14 @@ const arrayOfShoes = [
     price: 110,
     product_category: "Lifestyle",
     color_category: "",
-    Gender: "Men",
+    gender: "Men",
   },
   {
     name: "Nike Blazer Mid '77 Vintage",
-    desciption:
+    description:
       "In the ‘70s, Nike was the new shoe on the block. So new in fact, we were still breaking into the basketball scene and testing prototypes on the feet of our local team. Of course, the design improved over the years, but the name stuck. The Nike Blazer Mid ’77 Vintage—classic since the beginning.",
-    image: "",
+    image:
+      "https://static.nike.com/a/images/t_PDP_1728_v1/5ae3d658-7948-4212-8a97-b4ac30005e90/blazer-mid-77-vintage-mens-shoes-nw30B2.png",
     black_images: [
       "https://static.nike.com/a/images/t_PDP_1728_v1/5ae3d658-7948-4212-8a97-b4ac30005e90/blazer-mid-77-vintage-mens-shoes-nw30B2.png",
       "https://static.nike.com/a/images/t_PDP_1728_v1/764a4ac5-54c1-44b8-8f34-bd4718508269/blazer-mid-77-vintage-mens-shoes-nw30B2.png",
@@ -464,11 +467,11 @@ const arrayOfShoes = [
     price: 105,
     product_category: "Lifestyle",
     color_category: "",
-    Gender: "Men",
+    gender: "Men",
   },
   // {
   //   name: "",
-  //   desciption: "",
+  //   description: "",
   //   image: "",
   //   black_images: ["https://static.nike.com/a/images/t_PDP_1728_v1/e6ca0888-bbbd-4d1e-8818-9dfc72ffa462/air-force-1-07-se-womens-shoes-cjvcc9.png",	"https://static.nike.com/a/images/t_PDP_1728_v1/45b59210-8c17-40ed-8f1f-c8325693b2b3/air-force-1-07-se-womens-shoes-cjvcc9.png",	"https://static.nike.com/a/images/t_PDP_1728_v1/e483ce68-ee35-469e-b420-148c2b3a9c9a/air-force-1-07-se-womens-shoes-cjvcc9.png", "https://static.nike.com/a/images/t_PDP_1728_v1/bf794c91-fd43-4391-bf06-b3ede8aabe9c/air-force-1-07-se-womens-shoes-cjvcc9.png"],
   //   white_images: ["https://static.nike.com/a/images/t_PDP_1728_v1/e6ca0888-bbbd-4d1e-8818-9dfc72ffa462/air-force-1-07-se-womens-shoes-cjvcc9.png",	"https://static.nike.com/a/images/t_PDP_1728_v1/45b59210-8c17-40ed-8f1f-c8325693b2b3/air-force-1-07-se-womens-shoes-cjvcc9.png",	"https://static.nike.com/a/images/t_PDP_1728_v1/e483ce68-ee35-469e-b420-148c2b3a9c9a/air-force-1-07-se-womens-shoes-cjvcc9.png", "https://static.nike.com/a/images/t_PDP_1728_v1/bf794c91-fd43-4391-bf06-b3ede8aabe9c/air-force-1-07-se-womens-shoes-cjvcc9.png"],
@@ -479,11 +482,11 @@ const arrayOfShoes = [
   //   price: ,
   //   product_category: "Lifestyle",
   //   color_category: "",
-  //   Gender: "Men",
+  //   gender: "Men",
   // },
   // {
   //   name: "",
-  //   desciption: "",
+  //   description: "",
   //   image: "",
   //   black_images: ["https://static.nike.com/a/images/t_PDP_1728_v1/e6ca0888-bbbd-4d1e-8818-9dfc72ffa462/air-force-1-07-se-womens-shoes-cjvcc9.png",	"https://static.nike.com/a/images/t_PDP_1728_v1/45b59210-8c17-40ed-8f1f-c8325693b2b3/air-force-1-07-se-womens-shoes-cjvcc9.png",	"https://static.nike.com/a/images/t_PDP_1728_v1/e483ce68-ee35-469e-b420-148c2b3a9c9a/air-force-1-07-se-womens-shoes-cjvcc9.png", "https://static.nike.com/a/images/t_PDP_1728_v1/bf794c91-fd43-4391-bf06-b3ede8aabe9c/air-force-1-07-se-womens-shoes-cjvcc9.png"],
   //   white_images: ["https://static.nike.com/a/images/t_PDP_1728_v1/e6ca0888-bbbd-4d1e-8818-9dfc72ffa462/air-force-1-07-se-womens-shoes-cjvcc9.png",	"https://static.nike.com/a/images/t_PDP_1728_v1/45b59210-8c17-40ed-8f1f-c8325693b2b3/air-force-1-07-se-womens-shoes-cjvcc9.png",	"https://static.nike.com/a/images/t_PDP_1728_v1/e483ce68-ee35-469e-b420-148c2b3a9c9a/air-force-1-07-se-womens-shoes-cjvcc9.png", "https://static.nike.com/a/images/t_PDP_1728_v1/bf794c91-fd43-4391-bf06-b3ede8aabe9c/air-force-1-07-se-womens-shoes-cjvcc9.png"],
@@ -494,11 +497,11 @@ const arrayOfShoes = [
   //   price: ,
   //   product_category: "Lifestyle",
   //   color_category: "",
-  //   Gender: "Men",
+  //   gender: "Men",
   // },
   {
     name: "Nike Incincible 3",
-    desciption:
+    description:
       "With maximum cushioning to support every mile, the Invincible 3 gives you our highest level of comfort underfoot to help you stay on your feet today, tomorrow and beyond. Designed to help keep you on the run, it’s super supportive and bouncy, so that you can propel down your preferred path and come back for your next run feeling ready and reinvigorated.",
     image:
       "https://static.nike.com/a/images/t_PDP_1728_v1/1bb4cfb7-baec-4d3f-b998-23430fdd71a6/invincible-3-mens-road-running-shoes-CLdFjq.png",
@@ -521,11 +524,11 @@ const arrayOfShoes = [
     price: 180,
     product_category: "Running",
     color_category: "",
-    Gender: "Men",
+    gender: "Men",
   },
   {
     name: "Nike React Infinity 3",
-    desciption:
+    description:
       "Stay on your feet with soft and supportive cushioning, built to help keep you on the run. A wider forefoot and higher foam stacks provide cushioning to help keep you fresh, giving you the peace of mind to pound the pavement every day. The springy responsiveness will surprise you too, adding an element of pure speed to 1 of our most tested shoes to help you go longer, faster and farther than ever. For this version, we updated the design of our iconic logo and added fresh colors.",
     image:
       "https://static.nike.com/a/images/t_PDP_1728_v1/56722f56-743d-4991-9120-fc9274890cca/react-infinity-3-premium-mens-road-running-shoes-1bRq75.png",
@@ -553,11 +556,11 @@ const arrayOfShoes = [
     price: 160,
     product_category: "Running",
     color_category: "",
-    Gender: "Men",
+    gender: "Men",
   },
   // {
   //   name: "",
-  //   desciption: "",
+  //   description: "",
   //   image: "",
   //   black_images: ["https://static.nike.com/a/images/t_PDP_1728_v1/e6ca0888-bbbd-4d1e-8818-9dfc72ffa462/air-force-1-07-se-womens-shoes-cjvcc9.png",	"https://static.nike.com/a/images/t_PDP_1728_v1/45b59210-8c17-40ed-8f1f-c8325693b2b3/air-force-1-07-se-womens-shoes-cjvcc9.png",	"https://static.nike.com/a/images/t_PDP_1728_v1/e483ce68-ee35-469e-b420-148c2b3a9c9a/air-force-1-07-se-womens-shoes-cjvcc9.png", "https://static.nike.com/a/images/t_PDP_1728_v1/bf794c91-fd43-4391-bf06-b3ede8aabe9c/air-force-1-07-se-womens-shoes-cjvcc9.png"],
   //   white_images: ["https://static.nike.com/a/images/t_PDP_1728_v1/e6ca0888-bbbd-4d1e-8818-9dfc72ffa462/air-force-1-07-se-womens-shoes-cjvcc9.png",	"https://static.nike.com/a/images/t_PDP_1728_v1/45b59210-8c17-40ed-8f1f-c8325693b2b3/air-force-1-07-se-womens-shoes-cjvcc9.png",	"https://static.nike.com/a/images/t_PDP_1728_v1/e483ce68-ee35-469e-b420-148c2b3a9c9a/air-force-1-07-se-womens-shoes-cjvcc9.png", "https://static.nike.com/a/images/t_PDP_1728_v1/bf794c91-fd43-4391-bf06-b3ede8aabe9c/air-force-1-07-se-womens-shoes-cjvcc9.png"],
@@ -568,11 +571,11 @@ const arrayOfShoes = [
   //   price: ,
   //   product_category: "Running",
   //   color_category: "",
-  //   Gender: "Men",
+  //   gender: "Men",
   // },
   // {
   //   name: "",
-  //   desciption: "",
+  //   description: "",
   //   image: "",
   //   black_images: ["https://static.nike.com/a/images/t_PDP_1728_v1/e6ca0888-bbbd-4d1e-8818-9dfc72ffa462/air-force-1-07-se-womens-shoes-cjvcc9.png",	"https://static.nike.com/a/images/t_PDP_1728_v1/45b59210-8c17-40ed-8f1f-c8325693b2b3/air-force-1-07-se-womens-shoes-cjvcc9.png",	"https://static.nike.com/a/images/t_PDP_1728_v1/e483ce68-ee35-469e-b420-148c2b3a9c9a/air-force-1-07-se-womens-shoes-cjvcc9.png", "https://static.nike.com/a/images/t_PDP_1728_v1/bf794c91-fd43-4391-bf06-b3ede8aabe9c/air-force-1-07-se-womens-shoes-cjvcc9.png"],
   //   white_images: ["https://static.nike.com/a/images/t_PDP_1728_v1/e6ca0888-bbbd-4d1e-8818-9dfc72ffa462/air-force-1-07-se-womens-shoes-cjvcc9.png",	"https://static.nike.com/a/images/t_PDP_1728_v1/45b59210-8c17-40ed-8f1f-c8325693b2b3/air-force-1-07-se-womens-shoes-cjvcc9.png",	"https://static.nike.com/a/images/t_PDP_1728_v1/e483ce68-ee35-469e-b420-148c2b3a9c9a/air-force-1-07-se-womens-shoes-cjvcc9.png", "https://static.nike.com/a/images/t_PDP_1728_v1/bf794c91-fd43-4391-bf06-b3ede8aabe9c/air-force-1-07-se-womens-shoes-cjvcc9.png"],
@@ -583,11 +586,11 @@ const arrayOfShoes = [
   //   price: ,
   //   product_category: "Running",
   //   color_category: "",
-  //   Gender: "Men",
+  //   gender: "Men",
   // },
   // {
   //   name: "",
-  //   desciption: "",
+  //   description: "",
   //   image: "",
   //   black_images: ["https://static.nike.com/a/images/t_PDP_1728_v1/e6ca0888-bbbd-4d1e-8818-9dfc72ffa462/air-force-1-07-se-womens-shoes-cjvcc9.png",	"https://static.nike.com/a/images/t_PDP_1728_v1/45b59210-8c17-40ed-8f1f-c8325693b2b3/air-force-1-07-se-womens-shoes-cjvcc9.png",	"https://static.nike.com/a/images/t_PDP_1728_v1/e483ce68-ee35-469e-b420-148c2b3a9c9a/air-force-1-07-se-womens-shoes-cjvcc9.png", "https://static.nike.com/a/images/t_PDP_1728_v1/bf794c91-fd43-4391-bf06-b3ede8aabe9c/air-force-1-07-se-womens-shoes-cjvcc9.png"],
   //   white_images: ["https://static.nike.com/a/images/t_PDP_1728_v1/e6ca0888-bbbd-4d1e-8818-9dfc72ffa462/air-force-1-07-se-womens-shoes-cjvcc9.png",	"https://static.nike.com/a/images/t_PDP_1728_v1/45b59210-8c17-40ed-8f1f-c8325693b2b3/air-force-1-07-se-womens-shoes-cjvcc9.png",	"https://static.nike.com/a/images/t_PDP_1728_v1/e483ce68-ee35-469e-b420-148c2b3a9c9a/air-force-1-07-se-womens-shoes-cjvcc9.png", "https://static.nike.com/a/images/t_PDP_1728_v1/bf794c91-fd43-4391-bf06-b3ede8aabe9c/air-force-1-07-se-womens-shoes-cjvcc9.png"],
@@ -598,11 +601,11 @@ const arrayOfShoes = [
   //   price: ,
   //   product_category: "Running",
   //   color_category: "",
-  //   Gender: "Men",
+  //   gender: "Men",
   // },
   {
     name: "Nike Air Max Alpha Trainer 5",
-    desciption:
+    description:
       "Finish your last rep with power and rack it with a roar that stuns the gym floor in the Nike Air Max Alpha Trainer 5. Max Air cushioning offers comfortable stability for lifting whether it’s a light or heavy day. A wide, flat base gives you enhanced stability and grip for all kinds of tough workouts without sacrificing style, as you roam from station to station and set to set.",
     image:
       "You chase the clock, challenging and encouraging each other all in the name of achieving goals and making gains. Our go-to model for training relies on a lighter, more breathable upper than our previous edition, so that you can float through your cardio, power through your lifts and dominate your workouts.",
@@ -630,13 +633,14 @@ const arrayOfShoes = [
     price: 90,
     product_category: "Training",
     color_category: "",
-    Gender: "Men",
+    gender: "Men",
   },
   {
     name: "Nike Savaleos",
-    desciption:
+    description:
       "You chase the clock, challenging and encouraging each other all in the name of achieving goals and making gains. Our go-to model for training relies on a lighter, more breathable upper than our previous edition, so that you can float through your cardio, power through your lifts and dominate your workouts.",
-    image: "",
+    image:
+      "https://static.nike.com/a/images/t_PDP_1728_v1/07f8765a-60ed-459a-a0a4-b0770769dfe7/savaleos-weightlifting-shoes-zvPDl7.png",
     black_images: [],
     white_images: [
       "https://static.nike.com/a/images/t_PDP_1728_v1/07f8765a-60ed-459a-a0a4-b0770769dfe7/savaleos-weightlifting-shoes-zvPDl7.png",
@@ -656,11 +660,11 @@ const arrayOfShoes = [
     price: 140,
     product_category: "Training",
     color_category: "",
-    Gender: "Men",
+    gender: "Men",
   },
   // {
   //   name: "",
-  //   desciption: "",
+  //   description: "",
   //   image: "",
   //   black_images: ["https://static.nike.com/a/images/t_PDP_1728_v1/e6ca0888-bbbd-4d1e-8818-9dfc72ffa462/air-force-1-07-se-womens-shoes-cjvcc9.png",	"https://static.nike.com/a/images/t_PDP_1728_v1/45b59210-8c17-40ed-8f1f-c8325693b2b3/air-force-1-07-se-womens-shoes-cjvcc9.png",	"https://static.nike.com/a/images/t_PDP_1728_v1/e483ce68-ee35-469e-b420-148c2b3a9c9a/air-force-1-07-se-womens-shoes-cjvcc9.png", "https://static.nike.com/a/images/t_PDP_1728_v1/bf794c91-fd43-4391-bf06-b3ede8aabe9c/air-force-1-07-se-womens-shoes-cjvcc9.png"],
   //   white_images: ["https://static.nike.com/a/images/t_PDP_1728_v1/e6ca0888-bbbd-4d1e-8818-9dfc72ffa462/air-force-1-07-se-womens-shoes-cjvcc9.png",	"https://static.nike.com/a/images/t_PDP_1728_v1/45b59210-8c17-40ed-8f1f-c8325693b2b3/air-force-1-07-se-womens-shoes-cjvcc9.png",	"https://static.nike.com/a/images/t_PDP_1728_v1/e483ce68-ee35-469e-b420-148c2b3a9c9a/air-force-1-07-se-womens-shoes-cjvcc9.png", "https://static.nike.com/a/images/t_PDP_1728_v1/bf794c91-fd43-4391-bf06-b3ede8aabe9c/air-force-1-07-se-womens-shoes-cjvcc9.png"],
@@ -671,11 +675,11 @@ const arrayOfShoes = [
   //   price: ,
   //   product_category: "Training",
   //   color_category: "",
-  //   Gender: "Men",
+  //   gender: "Men",
   // },
   // {
   //   name: "",
-  //   desciption: "",
+  //   description: "",
   //   image: "",
   //   black_images: ["https://static.nike.com/a/images/t_PDP_1728_v1/e6ca0888-bbbd-4d1e-8818-9dfc72ffa462/air-force-1-07-se-womens-shoes-cjvcc9.png",	"https://static.nike.com/a/images/t_PDP_1728_v1/45b59210-8c17-40ed-8f1f-c8325693b2b3/air-force-1-07-se-womens-shoes-cjvcc9.png",	"https://static.nike.com/a/images/t_PDP_1728_v1/e483ce68-ee35-469e-b420-148c2b3a9c9a/air-force-1-07-se-womens-shoes-cjvcc9.png", "https://static.nike.com/a/images/t_PDP_1728_v1/bf794c91-fd43-4391-bf06-b3ede8aabe9c/air-force-1-07-se-womens-shoes-cjvcc9.png"],
   //   white_images: ["https://static.nike.com/a/images/t_PDP_1728_v1/e6ca0888-bbbd-4d1e-8818-9dfc72ffa462/air-force-1-07-se-womens-shoes-cjvcc9.png",	"https://static.nike.com/a/images/t_PDP_1728_v1/45b59210-8c17-40ed-8f1f-c8325693b2b3/air-force-1-07-se-womens-shoes-cjvcc9.png",	"https://static.nike.com/a/images/t_PDP_1728_v1/e483ce68-ee35-469e-b420-148c2b3a9c9a/air-force-1-07-se-womens-shoes-cjvcc9.png", "https://static.nike.com/a/images/t_PDP_1728_v1/bf794c91-fd43-4391-bf06-b3ede8aabe9c/air-force-1-07-se-womens-shoes-cjvcc9.png"],
@@ -686,11 +690,11 @@ const arrayOfShoes = [
   //   price: ,
   //   product_category: "Training",
   //   color_category: "",
-  //   Gender: "Men",
+  //   gender: "Men",
   // },
   // {
   //   name: "",
-  //   desciption: "",
+  //   description: "",
   //   image: "",
   //   black_images: ["https://static.nike.com/a/images/t_PDP_1728_v1/e6ca0888-bbbd-4d1e-8818-9dfc72ffa462/air-force-1-07-se-womens-shoes-cjvcc9.png",	"https://static.nike.com/a/images/t_PDP_1728_v1/45b59210-8c17-40ed-8f1f-c8325693b2b3/air-force-1-07-se-womens-shoes-cjvcc9.png",	"https://static.nike.com/a/images/t_PDP_1728_v1/e483ce68-ee35-469e-b420-148c2b3a9c9a/air-force-1-07-se-womens-shoes-cjvcc9.png", "https://static.nike.com/a/images/t_PDP_1728_v1/bf794c91-fd43-4391-bf06-b3ede8aabe9c/air-force-1-07-se-womens-shoes-cjvcc9.png"],
   //   white_images: ["https://static.nike.com/a/images/t_PDP_1728_v1/e6ca0888-bbbd-4d1e-8818-9dfc72ffa462/air-force-1-07-se-womens-shoes-cjvcc9.png",	"https://static.nike.com/a/images/t_PDP_1728_v1/45b59210-8c17-40ed-8f1f-c8325693b2b3/air-force-1-07-se-womens-shoes-cjvcc9.png",	"https://static.nike.com/a/images/t_PDP_1728_v1/e483ce68-ee35-469e-b420-148c2b3a9c9a/air-force-1-07-se-womens-shoes-cjvcc9.png", "https://static.nike.com/a/images/t_PDP_1728_v1/bf794c91-fd43-4391-bf06-b3ede8aabe9c/air-force-1-07-se-womens-shoes-cjvcc9.png"],
@@ -701,7 +705,7 @@ const arrayOfShoes = [
   //   price: ,
   //   product_category: "Training",
   //   color_category: "",
-  //   Gender: "Men",
+  //   gender: "Men",
   // },
 ];
 module.exports = {
