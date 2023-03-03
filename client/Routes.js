@@ -11,6 +11,8 @@ import ShoppingCart from "./components/ShoppingCart";
 import AdminDashBoardPage from "./components/AdminDashboard";
 import Checkout from "./components/Checkout";
 import { me } from "./store";
+import OrderConfirmation from "./components/Checkout/OrderConfirmation";
+import OrderHistory from "./components/OrderHistory";
 
 /**
  * COMPONENT
@@ -35,6 +37,8 @@ class Routes extends Component {
           <Route path="/checkout" component={Checkout} />
           <Route path="/singleproduct/:id" component={singleProductPage} />
           <Route path="/shoppingcart" component={ShoppingCart} />
+          <Route path="/orderconfirmation" component={OrderConfirmation} />
+          <Route path="/orderhistory" component={OrderHistory} />
           <Route exact path="/adminpage" component={AdminDashBoardPage} />
           <Route exact path="/adminpage/users" component={AdminDashBoardPage} />
           <Route

@@ -608,7 +608,7 @@ const arrayOfShoes = [
     description:
       "Finish your last rep with power and rack it with a roar that stuns the gym floor in the Nike Air Max Alpha Trainer 5. Max Air cushioning offers comfortable stability for lifting whether it’s a light or heavy day. A wide, flat base gives you enhanced stability and grip for all kinds of tough workouts without sacrificing style, as you roam from station to station and set to set.",
     image:
-      "You chase the clock, challenging and encouraging each other all in the name of achieving goals and making gains. Our go-to model for training relies on a lighter, more breathable upper than our previous edition, so that you can float through your cardio, power through your lifts and dominate your workouts.",
+      "https://static.nike.com/a/images/t_PDP_1728_v1/05ecb631-d5d9-4de7-9bac-80a460617586/air-max-alpha-trainer-5-mens-training-shoes-7LjRM6.png",
     black_images: [
       "https://static.nike.com/a/images/t_PDP_1728_v1/23397169-d23a-4823-a29c-1375bcf66899/air-max-alpha-trainer-5-mens-training-shoes-7LjRM6.png",
       "https://static.nike.com/a/images/t_PDP_1728_v1/fed43df2-634b-4804-a580-0490560e6a5e/air-max-alpha-trainer-5-mens-training-shoes-7LjRM6.png",
