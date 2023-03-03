@@ -12,11 +12,13 @@ import {
 } from "../../reducers/adminPageSlice";
 import { Link, useParams } from "react-router-dom";
 import UserIcon from "./UserIcon";
-import AddProduct from "./AddProduct";
 import AddUser from "./AddUser";
 import ProductIcon from "./ProductIcon";
 import ManageProduct from "./ManageProduct";
 import ManageUser from "./ManageUser";
+import { makeStyles } from "@material-ui/core/styles";
+import Button from "@material-ui/core/Button";
+import AddProduct from "./AddProduct";
 
 export default function AdminDashBoardPage(props) {
   const dispatch = useDispatch();
@@ -47,24 +49,22 @@ export default function AdminDashBoardPage(props) {
     <div className="adminpage-container">
       <div className="adminpage-left">
         <div id="left-top">
-          User
           <hr></hr>
-          <button onClick={handleGetUsers}>
+          <Button onClick={handleGetUsers}>
             <Link to="/adminpage/users">Manage Users</Link>
-          </button>
-          <button onClick={handleAddUser}>
+          </Button>
+          <Button onClick={handleAddUser}>
             <Link to="/adminpage/addusers">Add Users</Link>
-          </button>
+          </Button>
         </div>
         <div id="left-bottom">
-          Product Management
           <hr></hr>
-          <button onClick={handleGetProducts}>
+          <Button onClick={handleGetProducts}>
             <Link to="/adminpage/products">Manage Products</Link>
-          </button>
-          <button onClick={handleAddProduct}>
-            <Link to="/adminpage/addproducts">Add Users</Link>
-          </button>
+          </Button>
+          <Button onClick={handleAddProduct}>
+            <Link to="/adminpage/addproducts">Add Products</Link>
+          </Button>
         </div>
       </div>
       <div className="adminpage-right">

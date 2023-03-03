@@ -1,0 +1,63 @@
+.test-form-container {
+  display: flex;
+}
+.test-form {
+  background: rgba(255, 255, 255, 0.3);
+  margin: 30px;
+  padding: 3em;
+  border-radius: 20px;
+  border-left: 1px solid rgba(255, 255, 255, 0.3);
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px);
+  box-shadow: 20px 20px 40px -6px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  position: relative;
+  transition: all 0.2s ease-in-out;
+}
+
+.test-form > p {
+  font-weight: 500;
+  color: #b8b6b6;
+  opacity: 0.7;
+  font-size: 1.4rem;
+  margin-top: 0;
+  margin-bottom: 60px;
+  font-family: Montserrat, sans-serif;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.test-form > input {
+  background: transparent;
+  width: 200px;
+  padding: 1em;
+  margin-bottom: 2em;
+  border: none;
+  border-left: 1px solid rgba(255, 255, 255, 0.3);
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 5000px;
+  backdrop-filter: blur(5px);
+  box-shadow: 4px 4px 60px rgba(0, 0, 0, 0.2);
+  color: #b8b6b6;
+  font-family: Montserrat, sans-serif;
+  font-weight: 500;
+  transition: all 0.2s ease-in-out;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.test-form > select {
+  background: transparent;
+  width: 200px;
+  padding: 1em;
+  margin-bottom: 2em;
+  border: none;
+  border-left: 1px solid rgba(255, 255, 255, 0.3);
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 5000px;
+  backdrop-filter: blur(5px);
+  box-shadow: 4px 4px 60px rgba(0, 0, 0, 0.2);
+  color: #b8b6b6;
+  font-family: Montserrat, sans-serif;
+  font-weight: 500;
+  transition: all 0.2s ease-in-out;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
