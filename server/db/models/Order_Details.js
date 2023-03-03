@@ -2,10 +2,16 @@ const Sequelize = require("sequelize");
 const db = require("../db");
 
 const Order_Detail = db.define("orderdetail", {
-  count: {
+  quantity: {
     type: Sequelize.INTEGER,
     defaultValue: 0,
     allowNull: false,
+  },
+  color: {
+    type: Sequelize.STRING,
+  },
+  size: {
+    type: Sequelize.STRING,
   },
   //how do we implement historical price?
   historic_price: {
