@@ -2,10 +2,8 @@ import { assert } from "chai";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { createProduct } from "../../reducers/adminPageSlice";
-import "./Test.css";
-import Button from "@material-ui/core/Button";
 
-export default function Test() {
+export default function AddProduct() {
   const dispatch = useDispatch();
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -33,37 +31,34 @@ export default function Test() {
   };
 
   return (
-    <div className="test-form-container">
-      <form className="test-form" onSubmit={handleSubmit}>
+    <nav className="applicationnavBar">
+      <h1>Add Product</h1>
+      <form onSubmit={handleSubmit}>
+        <label htmlFor="name">Product Name: </label>
         <input
-          placeholder="Name"
           name="name"
           value={name}
           onChange={(e) => setName(e.target.value)}
         />
-        <br />
+        <label htmlFor="description">Description: </label>
         <input
-          placeholder="Description"
           name="description"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
         />
-        <br />
+        <label htmlFor="image">Image: </label>
         <input
-          placeholder="Image URL"
           name="image"
           value={image}
           onChange={(e) => setImage(e.target.value)}
         />
-        <br />
+        <label htmlFor="price">Price: </label>
         <input
-          placeholder="Price"
           name="price"
           value={price}
           onChange={(e) => setPrice(e.target.value)}
         />
-        <br />
-
+        <label htmlFor="product_category">Category: </label>
         <select
           id="product_category"
           name="product_category"
@@ -73,8 +68,7 @@ export default function Test() {
           <option value="Outdoors">Outdoors</option>
           <option value="Electronics">Electronics</option>
         </select>
-        <br />
-
+        <label htmlFor="color_category">Color: </label>
         <select
           id="color_category"
           name="color_category"
@@ -84,7 +78,7 @@ export default function Test() {
           <option value="White">White</option>
           <option value="Blue">Blue</option>
         </select>
-        <br />
+        <label htmlFor="gender">Gender: </label>
         <select
           id="gender"
           name="gender"
@@ -93,18 +87,9 @@ export default function Test() {
           <option value="Women">Female</option>
           <option value="Men">Male</option>
         </select>
-        <br />
-        <Button type="submit">Submit</Button>
-        <br />
+        <button type="submit">Submit</button>
+        {/* <p>{error}</p> */}
       </form>
-
-      <div className="drops">
-        <div className="drop drop-1"></div>
-        <div className="drop drop-2"></div>
-        <div className="drop drop-3"></div>
-        <div className="drop drop-4"></div>
-        <div className="drop drop-5"></div>
-      </div>
-    </div>
+    </nav>
   );
 }

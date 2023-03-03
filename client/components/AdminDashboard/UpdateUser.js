@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { updateUser } from "../../reducers/adminPageSlice";
 import { selectOneAdminUser } from "../../reducers/adminPageSlice";
+import "./Test.css";
+import { Button } from "@material-ui/core";
 
 export default function UpdateUser() {
   const dispatch = useDispatch();
@@ -46,46 +48,50 @@ export default function UpdateUser() {
   };
 
   return (
-    <nav className="applicationnavBar">
-      <h1>Update User #{user.id} </h1>
-      <form onSubmit={handleUpdate}>
-        <label htmlFor="username">Username: </label>
+    <div className="test-form-container">
+      <form className="test-form" onSubmit={handleUpdate}>
         <input
+          placeholder="Username"
           name="username"
           value={username}
           onChange={(e) => setUserName(e.target.value)}
         />
-        <label htmlFor="password">Password: </label>
+        <br />
         <input
+          placeholder="Password"
           name="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <label htmlFor="firstname">First Name: </label>
+        <br />
         <input
+          placeholder="First Name"
           name="firstname"
           value={firstname}
           onChange={(e) => setFirstName(e.target.value)}
         />
-        <label htmlFor="lastname">Last Name: </label>
+        <br />
         <input
+          placeholder="Last Name"
           name="lastname"
           value={lastname}
           onChange={(e) => setLastName(e.target.value)}
         />
-        <label htmlFor="email">Email: </label>
+        <br />
         <input
+          placeholder="Email"
           name="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
-        <label htmlFor="phone_number">Phone #: </label>
+        <br />
         <input
+          placeholder="Phone Number"
           name="phone_number"
           value={phone_number}
           onChange={(e) => setPhone_number(e.target.value)}
         />
-        <label htmlFor="status">Admin Status: </label>
+        <br />
         <select
           id="status"
           name="status"
@@ -94,9 +100,10 @@ export default function UpdateUser() {
           <option value="guess">Guess</option>
           <option value="admin">Admin</option>
         </select>
-        <button type="submit">Update</button>
-        {/* <p>{error}</p> */}
+        <br />
+        <Button type="submit">Submit</Button>
+        <br />
       </form>
-    </nav>
+    </div>
   );
 }
