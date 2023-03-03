@@ -35,6 +35,7 @@ import PersonAddIcon from "@material-ui/icons/PersonAdd";
 import AddIcon from "@material-ui/icons/Add";
 import AttachMoneyIcon from "@material-ui/icons/AttachMoney";
 import ShowChartIcon from "@material-ui/icons/ShowChart";
+import InventoryTable from "./InventoryTable";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -82,6 +83,9 @@ export default function AdminDashBoardPage(props) {
     dispatch(adminReduce.clearState());
     setDisplay("adduser");
   };
+  const handleInventory = async (event) => {
+    setDisplay("inventory");
+  };
 
   return (
     <div className="adminpage-container">
@@ -114,7 +118,7 @@ export default function AdminDashBoardPage(props) {
             <AttachMoneyIcon />
             <Link to="/adminpage/users">Manage Sales</Link>
           </Button>
-          <Button onClick={handleAddUser}>
+          <Button onClick={handleInventory}>
             <ShowChartIcon />
             <Link to="/adminpage/addusers">Manage Inventories</Link>
           </Button>
@@ -216,6 +220,8 @@ export default function AdminDashBoardPage(props) {
             <ManageProduct />
           ) : display === "manageuser" ? (
             <ManageUser />
+          ) : display === "inventory" ? (
+            <InventoryTable />
           ) : (
             <AddProduct />
           )

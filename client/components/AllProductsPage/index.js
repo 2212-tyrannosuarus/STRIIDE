@@ -141,9 +141,9 @@ export const allProducts = (props) => {
         <div className="allproducts-right-lower">
           {numProducts > 9
             ? paginationArr.map((page) => (
-                <button key={page}>
+                <Button key={page}>
                   <Link to={path + page}>{page}</Link>
-                </button>
+                </Button>
               ))
             : null}
         </div>
