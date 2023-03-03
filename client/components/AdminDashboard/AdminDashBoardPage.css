@@ -31,10 +31,13 @@
 }
 
 .admin-product-icon {
+  width: 30%;
+  word-wrap: break-word;
   margin: 5px;
   padding: 5px;
-  border: 5px;
-  box-shadow: 8px 8px 12px #bbb9b9;
+  border-radius: 5px;
+  background: rgba(196, 196, 196, 0.2);
+  box-shadow: 8px 8px 12px #bbbbbb;
 }
 
 .admin-product-icon:hover {
@@ -50,16 +53,18 @@
   margin: 20px;
   padding: 20px;
   border-radius: 25px;
-  background: rgba(188, 184, 184, 0.2);
-  box-shadow: 8px 8px 12px #030303;
+  background: rgba(255, 255, 255, 0.3);
+  box-shadow: 8px 8px 12px rgba(123, 118, 118, 0.3);
   word-wrap: break-word;
   width: 30%;
+  font-family: Montserrat, sans-serif;
 }
+
 .admin-management-page-right {
-  margin: 20px;
+  /* margin: 20px;
   padding: 20px;
   border-radius: 25px;
   background: rgba(188, 184, 184, 0.2);
   box-shadow: 8px 8px 12px #030303;
-  width: 25%;
+  width: 25%; */
 }
