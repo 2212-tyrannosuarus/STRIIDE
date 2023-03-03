@@ -64,6 +64,14 @@ export const allProductsPageSlice = createSlice({
       state.totalProducts = state.displayProductsArr.length;
       state.paginatedDisplay = state.displayProductsArr.slice(0, 9);
     },
+    sortNewest(state) {
+      state.displayProductsArr = state.displayProductsArr.sort(
+        (a, b) => b.id - a.id
+      );
+      console.log("sortedTime");
+      state.totalProducts = state.displayProductsArr.length;
+      state.paginatedDisplay = state.displayProductsArr.slice(0, 9);
+    },
     changePage(state, action) {
       state.pageNumber = action.payload;
       let startIdx = state.pageNumber * 9 - 9;
