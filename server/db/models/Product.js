@@ -11,9 +11,26 @@ const Product = db.define("product", {
   },
   image: {
     type: Sequelize.TEXT,
-    defaultValue:
-      "http://wandw.wdfiles.com/local--files/location:hogwarts-castle/Campus.jpg",
   },
+  black_images: {
+    type: Sequelize.ARRAY(Sequelize.STRING),
+  },
+  white_images: {
+    type: Sequelize.ARRAY(Sequelize.STRING),
+  },
+  blue_images: {
+    type: Sequelize.ARRAY(Sequelize.STRING),
+  },
+  green_images: {
+    type: Sequelize.ARRAY(Sequelize.STRING),
+  },
+  pink_images: {
+    type: Sequelize.ARRAY(Sequelize.STRING),
+  },
+  purple_images: {
+    type: Sequelize.ARRAY(Sequelize.STRING),
+  },
+
   price: {
     type: Sequelize.FLOAT,
     allowNull: false,

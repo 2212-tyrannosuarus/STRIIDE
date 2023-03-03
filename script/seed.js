@@ -1,5 +1,7 @@
 "use strict";
 
+const { shoes } = require("./shoes");
+
 const {
   db,
   models: {
@@ -33,35 +35,14 @@ async function seed() {
     phone_number: faker.phone.number(),
   }));
 
-  const seededProductsWomen = [...Array(50)].map((product) => ({
-    name: faker.commerce.product(8),
-    description: faker.commerce.productDescription(),
-    image: faker.image.abstract(),
-    price: faker.commerce.price(),
-    product_category: faker.commerce.department(),
-    color_category: faker.color.human(),
-    gender: "Women",
-  }));
-  const seededProductsMen = [...Array(50)].map((product) => ({
-    name: faker.commerce.product(8),
-    description: faker.commerce.productDescription(),
-    image: faker.image.abstract(),
-    price: faker.commerce.price(),
-    product_category: faker.commerce.department(),
-    color_category: faker.color.human(),
-    gender: "Men",
-  }));
-
-  const allSeededProducts = [];
-  allSeededProducts.push(...seededProductsMen);
-  allSeededProducts.push(...seededProductsWomen);
-
   await db.sync({ force: true }); // clears db and matches models to tables
   console.log("db synced!");
   //*******START OF DEMO DATA */
   // Creating Users
   const users = await User.bulkCreate(seededUsers);
-  const products = await Product.bulkCreate(allSeededProducts);
+  const products = await Product.bulkCreate(shoes);
+  console.log("product", products);
+
   const realUsers = await Promise.all([
     User.create({
       password: faker.internet.password(8),
