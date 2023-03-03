@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const {
-  models: { Product, Cart_Item, Cart },
+  models: { Product, Cart_Item, Cart, User },
 } = require("../db");
 module.exports = router;
 
@@ -41,6 +41,48 @@ router.get("/:userId", async (req, res, next) => {
       }
       
       res.json(cartItems);
+    } catch (err) {
+      next(err);
+    }
+  });
+
+    // POST api/carts/:id
+router.post("/:userId", async (req, res, next) => {
+    try {
+        const {total, cartItems} = req.body;
+      const newCart = await Cart.create({total: total});
+    //   console.log('newCartItems ',cartItems);
+      const user = await User.findByPk(req.params.userId);
+      newCart.setUser(user);
+
+      for (let item in cartItems) {
+        console.log('item ', item)
+        let newItem = await Cart_Item.create({quantity: cartItems[item].quantity, size: cartItems[item].size, color: cartItems[item].color});
+        let product = await Product.findByPk(cartItems[item].id);
+        newItem.setCart(newCart);
+        newItem.setProduct(product)
+      }
+      res.status(201).json(newCart);
+    } catch (err) {
+      next(err);
+    }
+  });
+
+  // DELETE api/carts/:id
+router.delete("/:userId", async (req, res, next) => {
+    try {
+      const cart = await Cart.findByPk(req.params.userId)
+      await cart.destroy();
+      const cartItems = await Cart_Item.findAll({
+        where: {
+            cartId: null
+        }
+      })
+
+      for (let item of cartItems) {
+        await item.destroy();
+      }
+      res.json(cart);
     } catch (err) {
       next(err);
     }

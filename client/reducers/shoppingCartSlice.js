@@ -9,6 +9,21 @@ export const fetchLoggedInUserCart = createAsyncThunk(
   }
 );
 
+export const deleteUserCart = createAsyncThunk(
+  "cartLoggedInUser/delete",
+  async (id) => {
+    await axios.delete(`/api/carts/${id}`);
+  }
+);
+
+export const addUserCart = createAsyncThunk(
+  "cartLoggedInUser/post",
+  async ({id, total, cartItems}) => {
+    const { data } = await axios.post(`/api/carts/${id}`, {total, cartItems});
+    return data;
+  }
+);
+
 
 export const shoppingCartSlice = createSlice({
   name: "cart",
@@ -16,6 +31,7 @@ export const shoppingCartSlice = createSlice({
     itemsList: JSON.parse(localStorage.getItem("cart")) || [],
     totalQuantity: 0,
     showCart: false,
+    loggedInUserCart: []
   },
   reducers: {
     setTotalQuantity (state, action) {
@@ -27,9 +43,11 @@ export const shoppingCartSlice = createSlice({
         (item) => item.id === newItem.id && item.size === newItem.size && item.color === newItem.color
       );
       if (existingItem) {
+        console.log('inside if statement for existing item ');
         existingItem.quantity+= newItem.quantity;
         existingItem.totalPrice += newItem.price;
       } else {
+        console.log('inside else statement for existing item ');
         state.itemsList.push({
           id: newItem.id,
           price: newItem.price,
@@ -73,7 +91,7 @@ export const shoppingCartSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchLoggedInUserCart.fulfilled, (state, action) => {
-        state.itemsList = action.payload;
+        state.loggedInUserCart = action.payload;
       })
     }
 });
@@ -87,6 +105,10 @@ export const selectAllCartItems = (state) => {
 
 export const selectTotalQuantity = (state) => {
   return state.shoppingCart.totalQuantity;
+};
+
+export const selectLoggedInUserCart = (state) => {
+  return state.shoppingCart.loggedInUserCart;
 };
 
 export default shoppingCartSlice.reducer;

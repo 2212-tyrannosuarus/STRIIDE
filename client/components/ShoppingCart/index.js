@@ -9,6 +9,8 @@ import {
   selectTotalQuantity,
   setTotalQuantity,
   fetchLoggedInUserCart,
+  deleteUserCart,
+  addUserCart,
 } from "../../reducers/shoppingCartSlice";
 import "./ShoppingCart.css";
 
@@ -22,7 +24,7 @@ export const ShoppingCart = (props) => {
   console.log("cart items", cartItems);
   const dispatch = useDispatch();
   let subTotalPrice = 0;
-  const [isToken, setIsToken] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   if (window.localStorage.getItem("cart")) {
     totalQuantity = 0;
@@ -32,15 +34,15 @@ export const ShoppingCart = (props) => {
     dispatch(setTotalQuantity(totalQuantity));
   }
 
-//   const setToken = () => {
-//     window.localStorage.setItem("token", "logged in");
-//     setIsToken(true);
-//   };
+  //   const setToken = () => {
+  //     window.localStorage.setItem("token", "logged in");
+  //     setIsToken(true);
+  //   };
 
-//   const unsetToken = () => {
-//     window.localStorage.removeItem("token");
-//     setIsToken(false);
-//   };
+  //   const unsetToken = () => {
+  //     window.localStorage.removeItem("token");
+  //     setIsToken(false);
+  //   };
 
   const handleAddToCart = (name, id, price, color, size, image, quantity) => {
     dispatch(
@@ -70,38 +72,48 @@ export const ShoppingCart = (props) => {
     dispatch(removeFromCart({ id, size, color }));
   };
 
-//   useEffect(() => {
-    async function getLogggedInUserCartItems() {
-      let { payload } = await dispatch(fetchLoggedInUserCart(1));
-      console.log("existing ", payload);
+  //   useEffect(() => {
+  async function getLogggedInUserCartItems() {
+    let { payload } = await dispatch(fetchLoggedInUserCart(1));
+    console.log("existing ", payload);
 
-      payload.forEach((item) => {
-        console.log(typeof(item.price), ' ', typeof(item.quantity));
-        let loggedInCartItemTotalPrice = item.price * item.quantity;
-        handleAddToCart(
-          item.name,
-          item.id,
-          loggedInCartItemTotalPrice,
-          item.color,
-          item.size,
-          item.image,
-          item.quantity
-        );
-      });
-    }
+    payload.forEach((item) => {
+      console.log(typeof item.price, " ", typeof item.quantity);
+      let loggedInCartItemTotalPrice = item.price * item.quantity;
+      handleAddToCart(
+        item.name,
+        item.id,
+        loggedInCartItemTotalPrice,
+        item.color,
+        item.size,
+        item.image,
+        item.quantity
+      );
+    });
+  }
 
-    // if (window.localStorage.getItem("token")) {
-    //   setIsToken(true);
-    //   getLogggedInUserCartItems(1);
-    // }
-//   }, [setIsToken]);
+  // if (window.localStorage.getItem("token")) {
+  //   setIsToken(true);
+  //   getLogggedInUserCartItems(1);
+  // }
+  //   }, [setIsToken]);
 
-async function handleLoggedInUser() {
+  async function handleLoggedInUser() {
+    setIsLoggedIn(true);
+    console.log("inseide handleLoggedInUser");
     await getLogggedInUserCartItems();
-}
+  }
+
+  async function handleLoggedOutUser() {
+    await dispatch(deleteUserCart(1));
+    await dispatch(
+      addUserCart({ id: 1, total: totalPrice, cartItems: cartItems })
+    );
+    setIsLoggedIn(false);
+  }
 
   cartItems.forEach((item) => {
-    console.log('item inside cartItems.forEach ', item)
+    console.log("item inside cartItems.forEach ", item);
     subTotalPrice += item.totalPrice;
     console.log("subtotal price ", subTotalPrice);
   });
@@ -208,29 +220,31 @@ async function handleLoggedInUser() {
 
       <div className="cart-summary">
         <button onClick={() => handleLoggedInUser()}>Log In</button>
-        <button onClick={() => unsetToken()}>Log Out</button>
+        <button onClick={() => handleLoggedOutUser()}>Log Out</button>
         <h2>Summary</h2>
         <table>
-          <tr>
-            <td className="data-col-left">Subtotal</td>
-            <td className="data-col-right">${subTotalPrice.toFixed(2)}</td>
-          </tr>
-          <tr>
-            <td className="data-col-left">Estimated Shipping and Handling</td>
-            <td className="data-col-right">
-              ${shippingAndHandling.toFixed(2)}
-            </td>
-          </tr>
-          <tr>
-            <td className="data-col-left">Estimated Tax</td>
-            <td className="data-col-right">${estimatedTax.toFixed(2)}</td>
-          </tr>
-          <tr className="">
-            <td className="data-col-left total-row">Total</td>
-            <td className="data-col-right total-row">
-              ${totalPrice.toFixed(2)}
-            </td>
-          </tr>
+          <tbody>
+            <tr>
+              <td className="data-col-left">Subtotal</td>
+              <td className="data-col-right">${subTotalPrice.toFixed(2)}</td>
+            </tr>
+            <tr>
+              <td className="data-col-left">Estimated Shipping and Handling</td>
+              <td className="data-col-right">
+                ${shippingAndHandling.toFixed(2)}
+              </td>
+            </tr>
+            <tr>
+              <td className="data-col-left">Estimated Tax</td>
+              <td className="data-col-right">${estimatedTax.toFixed(2)}</td>
+            </tr>
+            <tr className="">
+              <td className="data-col-left total-row">Total</td>
+              <td className="data-col-right total-row">
+                ${totalPrice.toFixed(2)}
+              </td>
+            </tr>
+          </tbody>
         </table>
         <button className="checkout-btn">Checkout</button>
       </div>
