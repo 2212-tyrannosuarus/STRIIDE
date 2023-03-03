@@ -19,6 +19,7 @@ export const deleteUserCart = createAsyncThunk(
 export const addUserCart = createAsyncThunk(
   "cartLoggedInUser/post",
   async ({id, total, cartItems}) => {
+    console.log('inside thunk for adding user cart - cartItems ', cartItems);
     const { data } = await axios.post(`/api/carts/${id}`, {total, cartItems});
     return data;
   }
