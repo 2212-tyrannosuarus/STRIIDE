@@ -1,27 +1,56 @@
 import React, { useEffect, useState } from "react";
 import { connect, useDispatch, useSelector } from "react-redux";
 import "./OrderHistory.css";
-import { selectAllOrderSummary } from "../../reducers/checkoutSlice";
+import { getAllOrderSummary, getProduct, selectAllOrderSummary, selectProduct } from "../../reducers/checkoutSlice";
 
 export const OrderHistory = (props) => {
   const orders = useSelector(selectAllOrderSummary);
+  let product = useSelector(selectProduct);
+  console.log('orders ', orders);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    console.log('inside useEffect')
+    dispatch(getAllOrderSummary({userId: 1}))
+
+    // async function getProduct() {
+    //   for (let i = 0; i < orders.length; i++) {
+    //     for (let j = 0; j < orders[i].orderdetails.length; j++) {
+    //               let productid = orders[i].orderdetails[j].productId;
+    //               product = await dispatch(getProduct(productid));
+    //               console.log('product ', product);
+    //               orders[i].orderdetails[j].imageUrl = product.image;
+    //               orders[i].orderdetails[j].name = product.name;
+    //               console.log('orders[i].orderdetails[j] ', orders[i].orderdetails[j]);
+    //           }
+    //         }
+    // }
+    // getProduct();
+    
+  },[dispatch])
 
   return (
     <div className="order-history-container">
       <h3>Your recent orders</h3>
       {orders && orders.length
         ? orders.map((order) => {
-            return <div className="order-summary">
-                {order && order.length ? (
-                    order.map((orderDetail) => {
+            return (<div className="order-summary" key={orders.id}>
+              <p>{order.total_price}</p>
+                {order["orderdetails"] && order["orderdetails"].length ? (
+                    order["orderdetails"].map((orderDetail) => {
                         return (
-                            <div className="order-detail">
-
+                            <div className="order-detail" key={ order["orderdetails"].id}>
+                              <p>{orderDetail.quantity}</p>
+                              <p>{orderDetail.color}</p>
+                              <p>{orderDetail.size}</p>
+                              <p>{orderDetail.historic_price}</p>
+                              <p>{orderDetail.imageUrl}</p>
+                              <p>{orderDetail.name}</p>
                             </div>
                         )
                     })
                 ): null}
-            </div>;
+            </div>);
           })
         : "No recent orders"}
     </div>

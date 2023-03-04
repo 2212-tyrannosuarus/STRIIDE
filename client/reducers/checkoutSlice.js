@@ -14,8 +14,15 @@ export const addOrderSummary = createAsyncThunk(
 export const getAllOrderSummary = createAsyncThunk(
   "orderSummary/get",
   async ({userId}) => {
-    console.log('inside thunk for getting order summary - orderItems ', orderItems);
-    const { data } = await axios.post(`/api/orders/${userId}`, {total, orderItems});
+    const { data } = await axios.get(`/api/orders/${userId}`);
+    return data;
+  }
+);
+
+export const getProduct = createAsyncThunk(
+  "orderitem/getProduct",
+  async ({productId}) => {
+    const { data } = await axios.get(`/api/products/${productId}`);
     return data;
   }
 );
@@ -24,7 +31,8 @@ export const checkoutSlice = createSlice({
     name: "order",
     initialState: {
       orderItems:[],
-      orders: []
+      orders: [],
+      product: {}
     },
     reducers: {},
     extraReducers: (builder) => {
@@ -34,12 +42,19 @@ export const checkoutSlice = createSlice({
         })
         .addCase(getAllOrderSummary.fulfilled, (state, action) => {
           state.orders = action.payload;
+        })
+        .addCase(getProduct.fulfilled, (state, action) => {
+          state.product = action.payload;
         });
       }
   });
 
   export const selectAllOrderSummary = (state) => {
     return state.checkout.orders;
+  };
+
+  export const selectProduct = (state) => {
+    return state.checkout.product;
   };
 
 

@@ -12,23 +12,23 @@ router.get("/:userId", async (req, res, next) => {
     const orders = await Order_Summary.findAll({
       include: [Order_Detail],
     });
+    // console.log('orders.length', orders.length)
+    // orders[0]["orderdetails"]["productId"]
+    // for (let i = 0; i < orders.length; i++) {
+    //     // console.log('orders[i].orderdetails',orders[i].orderdetails)
+    //     for (let j = 0; j < orders[i].orderdetails.length; j++) {
+    //         let productid = orders[i].orderdetails[j].productId;
+    //         let product = await Product.findByPk(productid);
+    //         console.log('product ', product.image);
+    //         Object.defineProperty(orders[i].orderdetails[j], 'imageUrl', {
+    //             value: product.image
+    //         });
+    //         // orders[i].orderdetails[j].imageUrl = product.image;
+    //         console.log('orders[i].orderdetails[j] ', orders[i].orderdetails[j]);
+    //     }
+    // }
    
-        // for (let order of orders) {
-        //     console.log('orders',orders, ' ', order)
-        //     for (let item of orders[order]["orderdetails"]) {
-        //         let product = await Product.findOne({
-        //             where: {
-        //                 id: orders[order][item].productId
-        //             }
-        //         })
-    
-        //         orders[order][item].imageUrl = product.image;
-    
-        //     }
-        // }
    
-
-    
     res.json(orders);
   } catch (err) {
     next(err);
