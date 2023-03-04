@@ -47,18 +47,49 @@ export const allProducts = (props) => {
   const [shoeButtonColor13, setShoeButtonColor13] = useState("");
   const [shoeButtonColor135, setShoeButtonColor135] = useState("");
   const [shoeButtonColor14, setShoeButtonColor14] = useState("");
+  const sizeArr = [];
 
   useEffect(() => {
     let string = "";
     if (window.location.pathname === "/women") {
       setSex("Women's");
       setPath("/women/page/");
+      dispatch(filters.sizeEmpty());
       dispatch(fetchAllWomenProductsPage());
+      setShoeButtonColor7("");
+      setShoeButtonColor8("");
+      setShoeButtonColor85("");
+      setShoeButtonColor9("");
+      setShoeButtonColor95("");
+      setShoeButtonColor10("");
+      setShoeButtonColor105("");
+      setShoeButtonColor11("");
+      setShoeButtonColor115("");
+      setShoeButtonColor12("");
+      setShoeButtonColor125("");
+      setShoeButtonColor13("");
+      setShoeButtonColor135("");
+      setShoeButtonColor14("");
     }
     if (window.location.pathname === "/men") {
-      setPath("/women/page/");
+      setPath("/men/page/");
       setSex("Men's");
+      dispatch(filters.sizeEmpty());
       dispatch(fetchAllMenProductsPage());
+      setShoeButtonColor7("");
+      setShoeButtonColor8("");
+      setShoeButtonColor85("");
+      setShoeButtonColor9("");
+      setShoeButtonColor95("");
+      setShoeButtonColor10("");
+      setShoeButtonColor105("");
+      setShoeButtonColor11("");
+      setShoeButtonColor115("");
+      setShoeButtonColor12("");
+      setShoeButtonColor125("");
+      setShoeButtonColor13("");
+      setShoeButtonColor135("");
+      setShoeButtonColor14("");
     }
   }, [dispatch, window.location.pathname]);
 
@@ -77,6 +108,10 @@ export const allProducts = (props) => {
     const action = filters.categoryFilter(filter);
     dispatch(action);
   };
+  const handleColorFilter = (color) => {
+    const action = filters.colorFilter(color);
+    dispatch(action);
+  };
 
   const handleSortLH = () => {
     const action = filters.sortPriceLH();
@@ -90,103 +125,340 @@ export const allProducts = (props) => {
     const action = filters.sortNewest();
     dispatch(action);
   };
+  const handleSizePush = (size) => {
+    const action = filters.sizePush(size);
+    dispatch(action);
+  };
+  const handleSizeRm = (size) => {
+    const action = filters.sizeRemove(size);
+    dispatch(action);
+  };
+  const handleSizeFilter = (size) => {
+    const action = filters.sizeFilter(size);
+    dispatch(action);
+  };
 
   const clickShoeSize7 = () => {
     if (shoeButtonColor7 === "") {
       setShoeButtonColor7("shoesize");
+      if (sex === "Men's") {
+        handleSizePush("M 7 / W 8.5");
+        handleSizeFilter();
+      }
+      if (sex === "Women's") {
+        handleSizePush("M 6 / W 7.5");
+        handleSizeFilter();
+      }
     } else {
       setShoeButtonColor7("");
+      if (sex === "Men's") {
+        handleSizeRm("M 7 / W 8.5");
+        handleSizeFilter();
+      }
+      if (sex === "Women's") {
+        handleSizeRm("M 6 / W 7.5");
+        handleSizeFilter();
+      }
     }
   };
   const clickShoeSize8 = () => {
     if (shoeButtonColor8 === "") {
       setShoeButtonColor8("shoesize");
+      if (sex === "Men's") {
+        handleSizePush("M 8 / W 9.5");
+        handleSizeFilter();
+      }
+      if (sex === "Women's") {
+        handleSizePush("M 6.5 / W 8");
+        handleSizeFilter();
+      }
     } else {
       setShoeButtonColor8("");
+      if (sex === "Men's") {
+        handleSizeRm("M 8 / W 9.5");
+        handleSizeFilter();
+      }
+      if (sex === "Women's") {
+        handleSizeRm("M 6.5 / W 8");
+        handleSizeFilter();
+      }
     }
   };
   const clickShoeSize85 = () => {
     if (shoeButtonColor85 === "") {
       setShoeButtonColor85("shoesize");
+      if (sex === "Men's") {
+        handleSizePush("M 8.5 / W 10");
+        handleSizeFilter();
+      }
+      if (sex === "Women's") {
+        handleSizePush("M 7 / W 8.5");
+        handleSizeFilter();
+      }
     } else {
       setShoeButtonColor85("");
+      if (sex === "Men's") {
+        handleSizeRm("M 8.5 / W 10");
+        handleSizeFilter();
+      }
+      if (sex === "Women's") {
+        handleSizeRm("M 7 / W 8.5");
+        handleSizeFilter();
+      }
     }
   };
   const clickShoeSize9 = () => {
     if (shoeButtonColor9 === "") {
       setShoeButtonColor9("shoesize");
+      if (sex === "Men's") {
+        handleSizePush("M 9 / W 10.5");
+        handleSizeFilter();
+      }
+      if (sex === "Women's") {
+        handleSizePush("M 7.5 / W 9");
+        handleSizeFilter();
+      }
     } else {
       setShoeButtonColor9("");
+      if (sex === "Men's") {
+        handleSizeRm("M 9 / W 10.5");
+        handleSizeFilter();
+      }
+      if (sex === "Women's") {
+        handleSizeRm("M 7.5 / W 9");
+        handleSizeFilter();
+      }
     }
   };
   const clickShoeSize95 = () => {
     if (shoeButtonColor95 === "") {
       setShoeButtonColor95("shoesize");
+      if (sex === "Men's") {
+        handleSizePush("M 9.5 / W 11");
+        handleSizeFilter();
+      }
+      if (sex === "Women's") {
+        handleSizePush("M 8 / W 9.5");
+        handleSizeFilter();
+      }
     } else {
       setShoeButtonColor95("");
+      if (sex === "Men's") {
+        handleSizeRm("M 9.5 / W 11");
+        handleSizeFilter();
+      }
+      if (sex === "Women's") {
+        handleSizeRm("M 8 / W 9.5");
+        handleSizeFilter();
+      }
     }
   };
   const clickShoeSize10 = () => {
     if (shoeButtonColor10 === "") {
       setShoeButtonColor10("shoesize");
+      if (sex === "Men's") {
+        handleSizePush("M 10 / W 11.5");
+        handleSizeFilter();
+      }
+      if (sex === "Women's") {
+        handleSizePush("M 8.5 / W 10");
+        handleSizeFilter();
+      }
     } else {
       setShoeButtonColor10("");
+      if (sex === "Men's") {
+        handleSizeRm("M 10 / W 11.5");
+        handleSizeFilter();
+      }
+      if (sex === "Women's") {
+        handleSizeRm("M 8.5 / W 10");
+        handleSizeFilter();
+      }
     }
   };
   const clickShoeSize105 = () => {
     if (shoeButtonColor105 === "") {
       setShoeButtonColor105("shoesize");
+      setShoeButtonColor10("shoesize");
+      if (sex === "Men's") {
+        handleSizePush("M 10.5 / W 12");
+        handleSizeFilter();
+      }
+      if (sex === "Women's") {
+        handleSizePush("M 9 / W 10.5");
+        handleSizeFilter();
+      }
     } else {
       setShoeButtonColor105("");
+      if (sex === "Men's") {
+        handleSizeRm("M 10.5 / W 12");
+        handleSizeFilter();
+      }
+      if (sex === "Women's") {
+        handleSizeRm("M 9 / W 10.5");
+        handleSizeFilter();
+      }
     }
   };
   const clickShoeSize11 = () => {
     if (shoeButtonColor11 === "") {
       setShoeButtonColor11("shoesize");
+      if (sex === "Men's") {
+        handleSizePush("M 11 / W 12.5");
+        handleSizeFilter();
+      }
+      if (sex === "Women's") {
+        handleSizePush("M 9.5 / W 11");
+        handleSizeFilter();
+      }
     } else {
       setShoeButtonColor11("");
+      if (sex === "Men's") {
+        handleSizeRm("M 11 / W 12.5");
+        handleSizeFilter();
+      }
+      if (sex === "Women's") {
+        handleSizeRm("M 9.5 / W 11");
+        handleSizeFilter();
+      }
     }
   };
   const clickShoeSize115 = () => {
     if (shoeButtonColor115 === "") {
       setShoeButtonColor115("shoesize");
+      if (sex === "Men's") {
+        handleSizePush("M 11.5 / W 13");
+        handleSizeFilter();
+      }
+      if (sex === "Women's") {
+        handleSizePush("M 10 / W 11.5");
+        handleSizeFilter();
+      }
     } else {
       setShoeButtonColor115("");
+      if (sex === "Men's") {
+        handleSizeRm("M 11.5 / W 13");
+        handleSizeFilter();
+      }
+      if (sex === "Women's") {
+        handleSizeRm("M 10 / W 11.5");
+        handleSizeFilter();
+      }
     }
   };
   const clickShoeSize12 = () => {
     if (shoeButtonColor12 === "") {
       setShoeButtonColor12("shoesize");
+      if (sex === "Men's") {
+        handleSizePush("M 12 / W 13.5");
+        handleSizeFilter();
+      }
+      if (sex === "Women's") {
+        handleSizePush("M 10.5 / W 12");
+        handleSizeFilter();
+      }
     } else {
       setShoeButtonColor12("");
+      if (sex === "Men's") {
+        handleSizeRm("M 12 / W 13.5");
+        handleSizeFilter();
+      }
+      if (sex === "Women's") {
+        handleSizeRm("M 10.5 / W 12");
+        handleSizeFilter();
+      }
     }
   };
   const clickShoeSize125 = () => {
     if (shoeButtonColor125 === "") {
       setShoeButtonColor125("shoesize");
+      if (sex === "Men's") {
+        handleSizePush("M 12.5 / W 14");
+        handleSizeFilter();
+      }
+      if (sex === "Women's") {
+        handleSizePush("M 11 / W 12.5");
+        handleSizeFilter();
+      }
     } else {
       setShoeButtonColor125("");
+      if (sex === "Men's") {
+        handleSizeRm("M 12.5 / W 14");
+        handleSizeFilter();
+      }
+      if (sex === "Women's") {
+        handleSizeRm("M 11 / W 12.5");
+        handleSizeFilter();
+      }
     }
   };
   const clickShoeSize13 = () => {
     if (shoeButtonColor13 === "") {
       setShoeButtonColor13("shoesize");
+      if (sex === "Men's") {
+        handleSizePush("M 13 / W 14.5");
+        handleSizeFilter();
+      }
+      if (sex === "Women's") {
+        handleSizePush("M 11.5 / W 13");
+        handleSizeFilter();
+      }
     } else {
       setShoeButtonColor13("");
+      if (sex === "Men's") {
+        handleSizeRm("M 13 / W 14.5");
+        handleSizeFilter();
+      }
+      if (sex === "Women's") {
+        handleSizeRm("M 11.5 / W 13");
+        handleSizeFilter();
+      }
     }
   };
   const clickShoeSize135 = () => {
     if (shoeButtonColor135 === "") {
       setShoeButtonColor135("shoesize");
+      if (sex === "Men's") {
+        handleSizePush("M 14 / W 15.5");
+        handleSizeFilter();
+      }
+      if (sex === "Women's") {
+        handleSizePush("M 12 / W 13.5");
+        handleSizeFilter();
+      }
     } else {
       setShoeButtonColor135("");
+      if (sex === "Men's") {
+        handleSizeRm("M 14 / W 15.5");
+        handleSizeFilter();
+      }
+      if (sex === "Women's") {
+        handleSizeRm("M 12 / W 13.5");
+        handleSizeFilter();
+      }
     }
   };
   const clickShoeSize14 = () => {
     if (shoeButtonColor14 === "") {
       setShoeButtonColor14("shoesize");
+      if (sex === "Men's") {
+        handleSizePush("M 15 / W 16.5");
+        handleSizeFilter();
+      }
+      if (sex === "Women's") {
+        handleSizePush("M 14 / W 15.5");
+        handleSizeFilter();
+      }
     } else {
       setShoeButtonColor14("");
+      if (sex === "Men's") {
+        handleSizeRm("M 15 / W 16.5");
+        handleSizeFilter();
+      }
+      if (sex === "Women's") {
+        handleSizeRm("M 14 / W 15.5");
+        handleSizeFilter();
+      }
     }
   };
 
@@ -251,12 +523,21 @@ export const allProducts = (props) => {
           </div>
           <h3>Color</h3>
           <div className="color-filter">
-            <Button>⬛️</Button>
-            <Button>⬜️</Button>
-            <Button>🟦</Button>
-            <Button>🟥</Button>
-            <Button>🟩</Button>
-            <Button>🩱</Button>
+            <Button onClick={() => handleColorFilter("black_images")}>
+              ⬛️
+            </Button>
+            <Button onClick={() => handleColorFilter("white_images")}>
+              ⬜️
+            </Button>
+            <Button onClick={() => handleColorFilter("blue_images")}>🟦</Button>
+            <Button onClick={() => handleColorFilter("green_images")}>
+              🟩
+            </Button>
+            <Button onClick={() => handleColorFilter("pink_images")}>🟥</Button>
+
+            <Button onClick={() => handleColorFilter("purple_images")}>
+              🟪
+            </Button>
             <hr></hr>
           </div>
           <div className="sort-filter">

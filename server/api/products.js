@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const {
-  models: { Product, Cart_Item, Inventory },
+  models: { Product, Cart_Item, Inventory, Size },
 } = require("../db");
 module.exports = router;
 
@@ -8,7 +8,7 @@ module.exports = router;
 router.get("/", async (req, res, next) => {
   try {
     const products = await Product.findAll({
-      include: [Cart_Item, Inventory],
+      include: [Cart_Item, { model: Inventory, include: Size }],
     });
     res.json(products);
   } catch (err) {
@@ -19,7 +19,7 @@ router.get("/", async (req, res, next) => {
 router.get("/men", async (req, res, next) => {
   try {
     const products = await Product.findAll({
-      include: [Cart_Item, Inventory],
+      include: [Cart_Item, { model: Inventory, include: Size }],
       where: { gender: "Men" },
     });
     res.json(products);
@@ -31,7 +31,7 @@ router.get("/men", async (req, res, next) => {
 router.get("/women", async (req, res, next) => {
   try {
     const products = await Product.findAll({
-      include: [Cart_Item, Inventory],
+      include: [Cart_Item, { model: Inventory, include: Size }],
       where: { gender: "Women" },
     });
     res.json(products);
@@ -52,7 +52,7 @@ router.post("/", async (req, res, next) => {
 router.get("/:id", async (req, res, next) => {
   try {
     const product = await Product.findByPk(req.params.id, {
-      include: [Cart_Item, Inventory],
+      include: [Cart_Item, { model: Inventory, include: Size }],
     });
     res.json(product);
   } catch (err) {

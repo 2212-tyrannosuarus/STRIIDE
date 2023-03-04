@@ -33,6 +33,7 @@ export const allProductsPageSlice = createSlice({
     errorMsg: "",
     totalProducts: 0,
     pageNumber: 1,
+    sizeArr: [],
   },
   reducers: {
     categoryFilter(state, action) {
@@ -41,8 +42,55 @@ export const allProductsPageSlice = createSlice({
         (product) => product.product_category === filter
       );
       state.totalProducts = state.displayProductsArr.length;
-      console.log("going");
       state.paginatedDisplay = state.displayProductsArr.slice(0, 9);
+    },
+    colorFilter(state, action) {
+      let filter = action.payload;
+      state.displayProductsArr = state.allProducts.filter(
+        (product) => product[filter].length !== 0
+      );
+      state.totalProducts = state.displayProductsArr.length;
+      state.paginatedDisplay = state.displayProductsArr.slice(0, 9);
+    },
+    sizePush(state, action) {
+      let size = action.payload;
+      state.sizeArr.push(size);
+    },
+    sizeRemove(state, action) {
+      let size = action.payload;
+      state.sizeArr = state.sizeArr.filter((item) => item !== size);
+    },
+    sizeEmpty(state) {
+      state.sizeArr = [];
+    },
+    sizeFilter(state) {
+      if (state.sizeArr.length === 0) {
+        state.displayProductsArr = state.allProducts;
+        state.totalProducts = state.displayProductsArr.length;
+        state.paginatedDisplay = state.displayProductsArr.slice(0, 9);
+      } else {
+        let tempArr = [];
+        for (let i = 0; i < state.sizeArr.length; i++) {
+          let newArr = state.allProducts.filter((product) => {
+            let truth = false;
+            product.inventories.forEach((inv) => {
+              if (inv.size.size === state.sizeArr[i] && inv.count !== 0) {
+                return (truth = true);
+              }
+            });
+            return truth;
+          });
+          newArr.forEach((item) => {
+            if (!tempArr.includes(item)) {
+              tempArr.push(item);
+            }
+          });
+          console.log(tempArr);
+        }
+        state.displayProductsArr = tempArr;
+        state.totalProducts = state.displayProductsArr.length;
+        state.paginatedDisplay = state.displayProductsArr.slice(0, 9);
+      }
     },
     resetState(state) {
       state.allProducts = [];
