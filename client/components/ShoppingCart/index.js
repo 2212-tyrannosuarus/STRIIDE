@@ -15,6 +15,9 @@ import {
   getLoggedInUserId,
   selectgotLoggedInUserCart,
   getInventoryQuantity,
+  deleteCart,
+  getIsLoggedIn,
+  setIsLoggedIn
 } from "../../reducers/shoppingCartSlice";
 import "./ShoppingCart.css";
 import { Link } from "react-router-dom";
@@ -44,7 +47,8 @@ export const ShoppingCart = (props) => {
   console.log("cart items", cartItems);
   const dispatch = useDispatch();
   let subTotalPrice = 0;
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const isLoggedIn = useSelector(getIsLoggedIn)
   let notification = useSelector((state) => state.notification.notification);
   let gotLoggedInUserCart = useSelector(selectgotLoggedInUserCart);
 
@@ -141,6 +145,7 @@ export const ShoppingCart = (props) => {
   const handleDeleteFromCart = async (id, quantity, color, size) => {
     alert("inside delete");
     await dispatch(deleteFromCart({ id, quantity, color, size }));
+    console.log('cart after clicking delete from cart ', cartItems);
     if (window.localStorage.getItem("token")) {
       const userId = await dispatch(getLoggedInUserId());
       await dispatch(deleteUserCart(userId.payload));
@@ -182,7 +187,25 @@ export const ShoppingCart = (props) => {
 
     if (window.localStorage.getItem("token")) {
       if (!gotLoggedInUserCart) {
+        dispatch(setIsLoggedIn(true));
         getLogggedInUserCartItems();
+
+      }
+    }
+
+    if (!window.localStorage.getItem("token")) {
+      console.log('inside !window.localStorage');
+      if (isLoggedIn) {
+        console.log('inside is LoggedIn');
+        window.localStorage.removeItem("cart");
+        dispatch(setIsLoggedIn(false));
+        dispatch(setTotalQuantity(0))
+        dispatch(deleteCart())
+        dispatch(
+          showNotification({
+            open: false
+          })
+        );
       }
     }
 
@@ -316,8 +339,6 @@ export const ShoppingCart = (props) => {
       </div>
 
       <div className="cart-summary">
-        {/* <button onClick={() => handleLoggedInUser()}>Log In</button>
-        <button onClick={() => handleLoggedOutUser()}>Log Out</button> */}
         <h2>Summary</h2>
         <table>
           <tbody>
