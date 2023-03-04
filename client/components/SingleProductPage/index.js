@@ -1,8 +1,10 @@
 import "./SingleProductPage.css";
-import { Typography } from "@material-ui/core";
+import { Button, ButtonGroup, Typography } from "@material-ui/core";
 import { showNotification } from "../../reducers/notificationSlice";
 import { Notification } from "../Notification";
 import { makeStyles } from "@material-ui/core/styles";
+import { Badge, IconButton, InputBase } from "@material-ui/core";
+import { Search, ShoppingCart } from "@material-ui/icons";
 const { sizes } = require("../../../script/sizes");
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,16 +19,25 @@ import {
 import { Link, useParams } from "react-router-dom";
 
 export const singleProductPage = (props) => {
+  const dispatch = useDispatch();
   let notification = useSelector((state) => state.notification.notification);
   const { id } = useParams();
+  useEffect(() => {
+    dispatch(fetchSingleProduct(id));
+  }, [dispatch]);
   const singleProduct = useSelector(selectSingleProduct);
-  const dispatch = useDispatch();
   const cartItemsQuantity = useSelector(selectTotalQuantity);
   const [size, setSize] = useState("");
   const [sizeClass, setSizeClass] = useState("");
   const [colorClass, setColorClass] = useState("");
-  let colorSelectClass = "";
-  let sizeSelectClass = "";
+
+  const useStyles = makeStyles({
+    button: {
+      backgroundColor: "black",
+      color: "white",
+    },
+  });
+  const classes = useStyles();
 
   useEffect(() => {
     setSizeClass("");
@@ -56,18 +67,12 @@ export const singleProductPage = (props) => {
   useEffect(() => {
     setColor(availableColors[0]);
   }, []);
-  // if (availableColors.length > 0) {
-  //   const initialColor = availableColors[0];
-  //   setColor("black_");
-  // }
 
-  //{id} = props
-  useEffect(() => {
-    dispatch(fetchSingleProduct(id));
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(fetchSingleProduct(id));
+  // }, [dispatch]);
 
   const handleImageClick = (event) => {
-    //change color state which will change the displayed images and eventually be sent to the cart
     setColor(event.target.value);
   };
 
@@ -114,85 +119,175 @@ export const singleProductPage = (props) => {
       })
     );
   };
-
-  if (singleProduct && color && availableColors && singleProduct.id) {
-    return (
-      <>
-        {notification && (
-          <Notification
-            type={notification.type}
-            message={notification.message}
-          />
-        )}
-        {
-          <div className="product-container">
-            <div className="images">
-              <div className="product-image-container">
-                <img
-                  className="product-image"
-                  src={singleProduct[color][0]}
-                  alt={singleProduct.name}
-                />
-                <img
-                  className="product-image"
-                  src={singleProduct[color][1]}
-                  alt={singleProduct.name}
-                />
+  //singleProduct && color && availableColors && singleProduct.id
+  return (
+    <>
+      {singleProduct && availableColors && singleProduct.id ? (
+        <div>
+          {notification && (
+            <Notification
+              type={notification.type}
+              message={notification.message}
+            />
+          )}
+          {
+            <div className="product-container">
+              <div className="images">
+                <div className="product-image-container">
+                  {singleProduct[color]
+                    ? singleProduct[color].map((colorImage) => {
+                        return (
+                          <img
+                            className="product-image"
+                            src={colorImage}
+                            alt={singleProduct.name}
+                          />
+                        );
+                      })
+                    : null}
+                </div>
               </div>
-              <div className="product-image-container">
-                <img
-                  className="product-image"
-                  src={singleProduct[color][2]}
-                  alt={singleProduct.name}
-                />
-                <img
-                  className="product-image"
-                  src={singleProduct[color][3]}
-                  alt={singleProduct.name}
-                />
-              </div>
-            </div>
-            <div className="details">
-              <Typography className="product-name">
-                {singleProduct.name}
-              </Typography>
-              <p className="product-description">{singleProduct.description}</p>
-              <div className="product-price">${singleProduct.price}</div>
-              <div className="color-category">
-                {singleProduct.color_category}
-              </div>
-              <div className={colorClass} id="color-filter">
-                <h4>Available Colors</h4>
-                {availableColors.map((shoeColor) => {
-                  return (
-                    <input
-                      type={"image"}
-                      value={shoeColor}
-                      key={`${singleProduct.id}${shoeColor}`}
-                      onClick={handleImageClick}
-                      className="single-product-color-picker"
-                      src={singleProduct[shoeColor][0]}
-                    />
-                  );
-                })}
-              </div>
-              <div className={sizeClass} id="size-filter">
-                <h4>Available Sizes</h4>
-                {sizes.map((sizeObj) => {
-                  let sizeBySex = "";
-                  if (singleProduct.gender === "Men") {
-                    sizeBySex = sizeObj.size.split("/")[0];
-                  } else {
-                    sizeBySex = sizeObj.size.split("/")[1];
-                  }
-                  return (
-                    <button onClick={() => setSize(sizeObj.size)}>
-                      {sizeBySex}
-                    </button>
-                  );
-                })}
-
-                {/* <button onClick={() => setSize("M 6 / W 7.5")}>
+              <div className="details">
+                <Typography className="product-name">
+                  {singleProduct.name}
+                </Typography>
+                <p className="product-description">
+                  {singleProduct.description}
+                </p>
+                <div className="product-price">${singleProduct.price}</div>
+                <div className="color-category">
+                  {singleProduct.color_category}
+                </div>
+                <div className={colorClass} id="color-filter">
+                  <h4>Available Colors</h4>
+                  {availableColors.length > 0
+                    ? availableColors.map((shoeColor) => {
+                        return (
+                          <input
+                            type={"image"}
+                            value={shoeColor}
+                            key={`${singleProduct.id}${shoeColor}`}
+                            onClick={handleImageClick}
+                            className="single-product-color-picker"
+                            src={singleProduct[shoeColor][0]}
+                          />
+                        );
+                      })
+                    : null}
+                </div>
+                <div className={sizeClass} id="size-filter">
+                  <h4>Available Sizes</h4>
+                  <ButtonGroup
+                    size="small"
+                    fullWidth="true"
+                    variant="outlined"
+                    aria-label="outlined primary button group"
+                  >
+                    {sizes.map((sizeObj, idx) => {
+                      let sizeBySex = "";
+                      if (singleProduct.gender === "Men") {
+                        sizeBySex = sizeObj.size.split("/")[0].substring(1);
+                      } else {
+                        sizeBySex = sizeObj.size.split("/")[1].substring(2);
+                      }
+                      if (idx < 4) {
+                        return (
+                          <Button onClick={() => setSize(sizeObj.size)}>
+                            {sizeBySex}
+                          </Button>
+                        );
+                      }
+                    })}
+                  </ButtonGroup>
+                  <ButtonGroup
+                    size="small"
+                    fullWidth="true"
+                    variant="outlined"
+                    aria-label="outlined primary button group"
+                  >
+                    {sizes.map((sizeObj, idx) => {
+                      let sizeBySex = "";
+                      if (singleProduct.gender === "Men") {
+                        sizeBySex = sizeObj.size.split("/")[0].substring(1);
+                      } else {
+                        sizeBySex = sizeObj.size.split("/")[1].substring(2);
+                      }
+                      if (idx >= 4 && idx < 8) {
+                        return (
+                          <Button onClick={() => setSize(sizeObj.size)}>
+                            {sizeBySex}
+                          </Button>
+                        );
+                      }
+                    })}
+                  </ButtonGroup>
+                  <ButtonGroup
+                    size="small"
+                    fullWidth="true"
+                    variant="outlined"
+                    aria-label="outlined primary button group"
+                  >
+                    {sizes.map((sizeObj, idx) => {
+                      let sizeBySex = "";
+                      if (singleProduct.gender === "Men") {
+                        sizeBySex = sizeObj.size.split("/")[0].substring(1);
+                      } else {
+                        sizeBySex = sizeObj.size.split("/")[1].substring(2);
+                      }
+                      if (idx >= 8 && idx < 12) {
+                        return (
+                          <Button onClick={() => setSize(sizeObj.size)}>
+                            {sizeBySex}
+                          </Button>
+                        );
+                      }
+                    })}
+                  </ButtonGroup>
+                  <ButtonGroup
+                    size="small"
+                    fullWidth="false"
+                    variant="outlined"
+                    aria-label="outlined primary button group"
+                  >
+                    {sizes.map((sizeObj, idx) => {
+                      let sizeBySex = "";
+                      if (singleProduct.gender === "Men") {
+                        sizeBySex = sizeObj.size.split("/")[0].substring(1);
+                      } else {
+                        sizeBySex = sizeObj.size.split("/")[1].substring(2);
+                      }
+                      if (idx >= 12 && idx < 16) {
+                        return (
+                          <Button onClick={() => setSize(sizeObj.size)}>
+                            {sizeBySex}
+                          </Button>
+                        );
+                      }
+                    })}
+                  </ButtonGroup>
+                  <ButtonGroup
+                    size="small"
+                    fullWidth="false"
+                    variant="outlined"
+                    aria-label="outlined primary button group"
+                  >
+                    {sizes.map((sizeObj, idx) => {
+                      let sizeBySex = "";
+                      if (singleProduct.gender === "Men") {
+                        sizeBySex = sizeObj.size.split("/")[0].substring(1);
+                      } else {
+                        sizeBySex = sizeObj.size.split("/")[1].substring(2);
+                      }
+                      if (idx >= 16 && idx < 20) {
+                        return (
+                          <Button onClick={() => setSize(sizeObj.size)}>
+                            {sizeBySex}
+                          </Button>
+                        );
+                      }
+                    })}
+                  </ButtonGroup>
+                  {/* <button onClick={() => setSize("M 6 / W 7.5")}>
                   M 6 / W 7.5
                 </button>
                 <button onClick={() => setSize("M 7 / W 8.5")}>7</button>
@@ -201,36 +296,49 @@ export const singleProductPage = (props) => {
                 <button onClick={() => setSize("M 10 / W 11.5")}>10</button>
                 <button onClick={() => setSize("M 11 / W 12.5")}>11</button>
                 <button onClick={() => setSize("M 12 / W 13.5")}>12</button> */}
-              </div>
-              <div>
-                <button
-                  onClick={() =>
-                    handleAddToCart(
-                      singleProduct.name,
-                      singleProduct.id,
-                      singleProduct.price,
-                      color.split("_")[0],
-                      size,
-                      singleProduct.image,
-                      1
-                    )
-                  }
-                >
-                  Add to Cart
-                </button>
-              </div>
-              <div>Total Shopping cart quantity {cartItemsQuantity}</div>
-              <Link to="/shoppingcart">
+                </div>
+                <div>
+                  <Button
+                    variant="contained"
+                    className={classes.button}
+                    fullWidth="true"
+                    onClick={() =>
+                      handleAddToCart(
+                        singleProduct.name,
+                        singleProduct.id,
+                        singleProduct.price,
+                        color.split("_")[0],
+                        size,
+                        singleProduct.image,
+                        1
+                      )
+                    }
+                  >
+                    Add to Cart
+                  </Button>
+                </div>
+                {/* <div>Total Shopping cart quantity {cartItemsQuantity}</div> */}
+                <IconButton aria-label="cart">
+                  <Link to="/shoppingcart">
+                    <Badge
+                      overlap="circular"
+                      badgeContent={cartItemsQuantity}
+                      color="error"
+                    >
+                      <ShoppingCart style={{ color: "black" }} />
+                    </Badge>
+                  </Link>
+                </IconButton>
+                {/* <Link to="/shoppingcart">
                 <div>Shopping Cart</div>
-              </Link>
+              </Link> */}
+              </div>
             </div>
-          </div>
-        }
-      </>
-    );
-  } else {
-    return null;
-  }
+          }
+        </div>
+      ) : null}
+    </>
+  );
 };
 
 export default singleProductPage;
