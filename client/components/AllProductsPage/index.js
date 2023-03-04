@@ -34,6 +34,19 @@ export const allProducts = (props) => {
   const [sex, setSex] = useState("");
   const [path, setPath] = useState("");
   const [shoeButtonColor7, setShoeButtonColor7] = useState("");
+  const [shoeButtonColor8, setShoeButtonColor8] = useState("");
+  const [shoeButtonColor85, setShoeButtonColor85] = useState("");
+  const [shoeButtonColor9, setShoeButtonColor9] = useState("");
+  const [shoeButtonColor95, setShoeButtonColor95] = useState("");
+  const [shoeButtonColor10, setShoeButtonColor10] = useState("");
+  const [shoeButtonColor105, setShoeButtonColor105] = useState("");
+  const [shoeButtonColor11, setShoeButtonColor11] = useState("");
+  const [shoeButtonColor115, setShoeButtonColor115] = useState("");
+  const [shoeButtonColor12, setShoeButtonColor12] = useState("");
+  const [shoeButtonColor125, setShoeButtonColor125] = useState("");
+  const [shoeButtonColor13, setShoeButtonColor13] = useState("");
+  const [shoeButtonColor135, setShoeButtonColor135] = useState("");
+  const [shoeButtonColor14, setShoeButtonColor14] = useState("");
 
   useEffect(() => {
     let string = "";
@@ -85,6 +98,97 @@ export const allProducts = (props) => {
       setShoeButtonColor7("");
     }
   };
+  const clickShoeSize8 = () => {
+    if (shoeButtonColor8 === "") {
+      setShoeButtonColor8("shoesize");
+    } else {
+      setShoeButtonColor8("");
+    }
+  };
+  const clickShoeSize85 = () => {
+    if (shoeButtonColor85 === "") {
+      setShoeButtonColor85("shoesize");
+    } else {
+      setShoeButtonColor85("");
+    }
+  };
+  const clickShoeSize9 = () => {
+    if (shoeButtonColor9 === "") {
+      setShoeButtonColor9("shoesize");
+    } else {
+      setShoeButtonColor9("");
+    }
+  };
+  const clickShoeSize95 = () => {
+    if (shoeButtonColor95 === "") {
+      setShoeButtonColor95("shoesize");
+    } else {
+      setShoeButtonColor95("");
+    }
+  };
+  const clickShoeSize10 = () => {
+    if (shoeButtonColor10 === "") {
+      setShoeButtonColor10("shoesize");
+    } else {
+      setShoeButtonColor10("");
+    }
+  };
+  const clickShoeSize105 = () => {
+    if (shoeButtonColor105 === "") {
+      setShoeButtonColor105("shoesize");
+    } else {
+      setShoeButtonColor105("");
+    }
+  };
+  const clickShoeSize11 = () => {
+    if (shoeButtonColor11 === "") {
+      setShoeButtonColor11("shoesize");
+    } else {
+      setShoeButtonColor11("");
+    }
+  };
+  const clickShoeSize115 = () => {
+    if (shoeButtonColor115 === "") {
+      setShoeButtonColor115("shoesize");
+    } else {
+      setShoeButtonColor115("");
+    }
+  };
+  const clickShoeSize12 = () => {
+    if (shoeButtonColor12 === "") {
+      setShoeButtonColor12("shoesize");
+    } else {
+      setShoeButtonColor12("");
+    }
+  };
+  const clickShoeSize125 = () => {
+    if (shoeButtonColor125 === "") {
+      setShoeButtonColor125("shoesize");
+    } else {
+      setShoeButtonColor125("");
+    }
+  };
+  const clickShoeSize13 = () => {
+    if (shoeButtonColor13 === "") {
+      setShoeButtonColor13("shoesize");
+    } else {
+      setShoeButtonColor13("");
+    }
+  };
+  const clickShoeSize135 = () => {
+    if (shoeButtonColor135 === "") {
+      setShoeButtonColor135("shoesize");
+    } else {
+      setShoeButtonColor135("");
+    }
+  };
+  const clickShoeSize14 = () => {
+    if (shoeButtonColor14 === "") {
+      setShoeButtonColor14("shoesize");
+    } else {
+      setShoeButtonColor14("");
+    }
+  };
 
   return (
     <div className="allproducts-container">
@@ -104,19 +208,45 @@ export const allProducts = (props) => {
               <Button id={shoeButtonColor7} onClick={clickShoeSize7}>
                 7
               </Button>
-              <Button>8</Button>
-              <Button>8.5</Button>
-              <Button>9</Button>
-              <Button>9.5</Button>
-              <Button>10</Button>
-              <Button>10.5</Button>
-              <Button>11</Button>
-              <Button>11.5</Button>
-              <Button>12</Button>
-              <Button>12.5</Button>
-              <Button>13</Button>
-              <Button>13.5</Button>
-              <Button>14</Button>
+              <Button id={shoeButtonColor8} onClick={clickShoeSize8}>
+                8
+              </Button>
+              <Button id={shoeButtonColor85} onClick={clickShoeSize85}>
+                8.5
+              </Button>
+              <Button id={shoeButtonColor9} onClick={clickShoeSize9}>
+                9
+              </Button>
+              <Button id={shoeButtonColor95} onClick={clickShoeSize95}>
+                9.5
+              </Button>
+              <Button id={shoeButtonColor10} onClick={clickShoeSize10}>
+                10
+              </Button>
+              <Button id={shoeButtonColor105} onClick={clickShoeSize105}>
+                10.5
+              </Button>
+              <Button id={shoeButtonColor11} onClick={clickShoeSize11}>
+                11
+              </Button>
+              <Button id={shoeButtonColor115} onClick={clickShoeSize115}>
+                11.5
+              </Button>
+              <Button id={shoeButtonColor12} onClick={clickShoeSize12}>
+                12
+              </Button>
+              <Button id={shoeButtonColor125} onClick={clickShoeSize125}>
+                12.5
+              </Button>
+              <Button id={shoeButtonColor13} onClick={clickShoeSize13}>
+                13
+              </Button>
+              <Button id={shoeButtonColor135} onClick={clickShoeSize135}>
+                13.5
+              </Button>
+              <Button id={shoeButtonColor14} onClick={clickShoeSize14}>
+                14
+              </Button>
             </div>
           </div>
           <h3>Color</h3>
