@@ -56,7 +56,8 @@ export const shoppingCartSlice = createSlice({
     showCart: false,
     loggedInUserCart: [],
     userId: null,
-    gotLoggedInUserCart: false
+    gotLoggedInUserCart: false,
+    isLoggedIn: false
   },
   reducers: {
     setTotalQuantity (state, action) {
@@ -118,9 +119,11 @@ export const shoppingCartSlice = createSlice({
       const size = action.payload.size;
       const color = action.payload.color;
       const quantity = action.payload.quantity
-      // const existingItem = state.itemsList.find((item) => item.id === id && item.size === size && item.color === color);
+      const existingItem = state.itemsList.find((item) => item.id === id && item.size === size && item.color === color);
+      const index = state.itemsList.indexOf(existingItem);
+      state.itemsList.splice(index, 1);
     
-        state.itemsList = state.itemsList.filter((item) => item.id !== id && item.size === size && item.color === color);
+        // state.itemsList = state.itemsList.filter((item) => item.id !== id && item.size !== size && item.color !== color);
         state.totalQuantity-= quantity;
     
       window.localStorage.removeItem("cart");
@@ -129,6 +132,12 @@ export const shoppingCartSlice = createSlice({
         window.localStorage.setItem("cart", JSON.stringify(state.itemsList));
       }
     },
+    deleteCart (state) {
+      state.itemsList = [];
+    },
+    setIsLoggedIn (state, action) {
+      state.isLoggedIn = action.payload
+    }
     // setLoggedOutUser (state) {
     //   state.gotLoggedInUserCart = !state.gotLoggedInUserCart;
     //   state.itemsList = [];
@@ -148,7 +157,7 @@ export const shoppingCartSlice = createSlice({
     }
 });
 
-export const { addToCart, removeFromCart, setShowCart, setTotalQuantity, deleteFromCart } =
+export const { addToCart, removeFromCart, setShowCart, setTotalQuantity, deleteFromCart, deleteCart, setIsLoggedIn } =
   shoppingCartSlice.actions;
 
 export const selectAllCartItems = (state) => {
@@ -166,5 +175,9 @@ export const selectLoggedInUserCart = (state) => {
 export const selectgotLoggedInUserCart = (state) => {
   return state.shoppingCart.gotLoggedInUserCart;
 };
+
+export const getIsLoggedIn = (state) => {
+  return state.shoppingCart.isLoggedIn
+}
 
 export default shoppingCartSlice.reducer;

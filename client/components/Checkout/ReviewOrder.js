@@ -31,9 +31,6 @@ export const ReviewOrder = (props) => {
                   <p>{email}</p>
                 </div>
 
-                <div className="order-review-shipping">
-                  <p> </p>
-                </div>
               </div>
 
             </div>

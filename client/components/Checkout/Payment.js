@@ -26,9 +26,9 @@ export const Payment = (props) => {
 
               <label htmlFor="fname">Accepted Cards</label>
               <div className="payment-icon-container">
-                <i className="fa fa-cc-visa" style={{ color: "navy" }}></i>
-                <i className="fa fa-cc-amex" style={{ color: "blue" }}></i>
-                <i className="fa fa-cc-mastercard" style={{ color: "red" }}></i>
+                <i className="payment-icon fa fa-cc-visa" style={{ color: "navy" }}></i>
+                <i className="payment-icon fa fa-cc-amex" style={{ color: "blue" }}></i>
+                <i className="payment-icon fa fa-cc-mastercard" style={{ color: "red" }}></i>
                 <i
                   className="fa fa-cc-discover"
                   style={{ color: "orange" }}
@@ -37,6 +37,7 @@ export const Payment = (props) => {
 
               <div className="credit-card-details">
                 <div className="form-field">
+                  <div className="payment-form-field">
                   <label htmlFor="credit-card-number">Credit Card Number</label>
                   <input
                     name="credit-card-number"
@@ -46,17 +47,21 @@ export const Payment = (props) => {
                     className="checkout-form-input"
                     required
                   />
+                  </div>
 
+                  <div className="payment-form-field">
                   <label htmlFor="exp-date">Expiration Date</label>
                   <input
                     name="exp-date"
                     value={expDate}
                     onChange={(evt) => setExpDate(evt.target.value)}
-                    placeholder="Expiration Date"
+                    placeholder="MM/YY"
                     className="checkout-form-input"
                     required
                   />
+                  </div>
 
+                  <div className="payment-form-field">
                   <label htmlFor="security-code">Security Code</label>
                   <input
                     name="security-code"
@@ -66,6 +71,7 @@ export const Payment = (props) => {
                     className="checkout-form-input"
                     required
                   />
+                  </div>
                 </div>
               </div>
 
