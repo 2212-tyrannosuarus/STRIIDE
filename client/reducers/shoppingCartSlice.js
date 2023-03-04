@@ -25,7 +25,6 @@ export const addUserCart = createAsyncThunk(
   }
 );
 
-
 export const shoppingCartSlice = createSlice({
   name: "cart",
   initialState: {

@@ -180,19 +180,68 @@ async function seed() {
       cartId: 1,
     }),
   ]);
-
-  const orderSummaryDemo = await Promise.all([
-    Order_Summary.create({ userId: 1 }),
-  ]);
+  let orderSummaryArr = [];
+  for (let i = 1; i < 10; i++) {
+    orderSummaryArr.push(Order_Summary.create({ userId: i }));
+  }
+  const orderSummaryDemo = await Promise.all(orderSummaryArr);
 
   const orderDetailsDemo = await Promise.all([
     Order_Detail.create({
       historic_price: 150.0,
       count: 2,
-      color: "blue",
+      color: "white",
       size: "M 6 / W 7.5",
       ordersummaryId: 1,
       productId: 1,
+    }),
+    Order_Detail.create({
+      historic_price: 150.0,
+      count: 2,
+      color: "black",
+      size: "M 7 / W 8.5",
+      ordersummaryId: 2,
+      productId: 2,
+    }),
+    Order_Detail.create({
+      historic_price: 150.0,
+      count: 2,
+      color: "purple",
+      size: "M 7 / W 8.5",
+      ordersummaryId: 3,
+      productId: 3,
+    }),
+    Order_Detail.create({
+      historic_price: 150.0,
+      count: 2,
+      color: "white",
+      size: "M 8 / W 9.5",
+      ordersummaryId: 4,
+      productId: 4,
+    }),
+    Order_Detail.create({
+      historic_price: 150.0,
+      count: 2,
+      color: "black",
+      size: "M 10 / W 11.5",
+      ordersummaryId: 5,
+      productId: 5,
+    }),
+    Order_Detail.create({
+      historic_price: 150.0,
+      count: 2,
+      color: "blue",
+      size: "M 12 / W 13.5",
+      ordersummaryId: 6,
+      productId: 6,
+    }),
+    Order_Detail.create({
+      historic_price: 150.0,
+      count: 2,
+      color: "green",
+      size: "M 15 / W 16.5",
+      ordersummaryId: 7,
+      productId: 7,
     }),
   ]);
 

@@ -40,7 +40,7 @@ Cart_Item.belongsTo(Product);
 Product.hasMany(Order_Detail);
 Order_Detail.belongsTo(Product);
 
-Product.hasOne(Inventory);
+Product.hasMany(Inventory);
 Inventory.belongsTo(Product);
 
 Size.hasOne(Inventory);

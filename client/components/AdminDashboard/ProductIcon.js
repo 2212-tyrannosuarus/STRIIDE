@@ -11,7 +11,7 @@ export default function ProductIcon(props) {
           onClick={() => setDisplay("manageproduct")}
         >
           {" "}
-          <img src={product.image} width="200" height="200"></img>
+          <img src={product.image} width="100%" height="same-as-width"></img>
         </Link>
       </div>
       <div className="bottom">
