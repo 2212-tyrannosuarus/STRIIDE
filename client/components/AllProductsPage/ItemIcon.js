@@ -36,7 +36,7 @@ export default function ItemIcon(props) {
         </Link>
       </div>
       <div className="bottom">
-        <h2>{product.name}</h2>
+        <h3>{product.name}</h3>
         <p>
           {sex} {product.product_category} Shoe
         </p>

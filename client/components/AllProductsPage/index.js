@@ -12,6 +12,7 @@ import {
 import ItemIcon from "./ItemIcon";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
+import Divider from "@material-ui/core/Divider";
 
 const useStyles = makeStyles((theme) => ({
   category: {
@@ -46,10 +47,8 @@ export const allProducts = (props) => {
   const [shoeButtonColor13, setShoeButtonColor13] = useState("");
   const [shoeButtonColor135, setShoeButtonColor135] = useState("");
   const [shoeButtonColor14, setShoeButtonColor14] = useState("");
-  const sizeArr = [];
 
   useEffect(() => {
-    let string = "";
     if (window.location.pathname === "/women") {
       setSex("Women's");
       setPath("/women/page/");
@@ -471,8 +470,20 @@ export const allProducts = (props) => {
             <Button onClick={() => handleFilter("Training")}>Training</Button>
           </div>
         </div>
-        <div id="left-bottom">
-          <h3>Sizes</h3>
+        <Divider />
+        <div className={classes.category}>
+          <div className="sort-filter">
+            <Button>Featured</Button>
+            <Button onClick={() => handleSortNew()}>Newest</Button>
+            <Button onClick={() => handleSortHL()}>High-Low</Button>
+            <Button onClick={() => handleSortLH()}>Low-High</Button>
+            <hr></hr>
+          </div>
+        </div>
+
+        <Divider />
+        <div className={classes.category}>
+          <Button id="sizeTag">Sizes</Button>
 
           <div className="size-filter">
             <div>
@@ -520,7 +531,9 @@ export const allProducts = (props) => {
               </Button>
             </div>
           </div>
-          <h3>Color</h3>
+
+          <Divider />
+          <Button id="sizeTag">Color</Button>
           <div className="color-filter">
             <Button onClick={() => handleColorFilter("black_images")}>
               ⬛️
@@ -537,14 +550,6 @@ export const allProducts = (props) => {
             <Button onClick={() => handleColorFilter("purple_images")}>
               🟪
             </Button>
-            <hr></hr>
-          </div>
-          <div className="sort-filter">
-            <h3>Sort</h3>
-            <Button>Featured</Button>
-            <Button onClick={() => handleSortNew()}>Newest</Button>
-            <Button onClick={() => handleSortHL()}>High-Low</Button>
-            <Button onClick={() => handleSortLH()}>Low-High</Button>
             <hr></hr>
           </div>
         </div>
