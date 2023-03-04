@@ -3,8 +3,12 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Search, ShoppingCart } from "@material-ui/icons";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { selectTotalQuantity } from "../../reducers/shoppingCartSlice";
+import { connect } from "react-redux";
+import { logout } from "../../store";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
 
 const useStyles = makeStyles((theme) => ({
   navbar: {
@@ -77,8 +81,59 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Navbar = () => {
+const UserMenu = (props) => {
+  const { user, handleLogout } = props;
+  const navigate = useHistory();
   const [searchInput, setSearchInput] = useState("");
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const handleClick = (event) => {
+    event.preventDefault();
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleAdminPanel = () => {
+    navigate.push("/adminpage");
+  };
+
+  const classes = useStyles();
+
+  return (
+    <div>
+      <span
+        className={classes.language}
+        aria-haspopup="true"
+        onClick={handleClick}
+      >
+        {`HI, ${user.firstname.toUpperCase()}`}
+      </span>
+
+      <Menu
+        style={{
+          top: "40px",
+        }}
+        id="simple-menu"
+        anchorEl={anchorEl}
+        keepMounted
+        open={Boolean(anchorEl)}
+        onClose={handleClose}
+      >
+        {user.status === "admin" ? (
+          <MenuItem onClick={handleAdminPanel}>Admin Panel</MenuItem>
+        ) : null}
+        <MenuItem onClick={handleLogout}>Logout</MenuItem>
+      </Menu>
+    </div>
+  );
+};
+
+const Navbar = (props) => {
+  const { user, isLoggedIn, logoutUser } = props;
+
   const handleChange = (e) => {
     e.preventDefault();
     setSearchInput(e.target.value);
@@ -113,9 +168,13 @@ const Navbar = () => {
               onChange={(e) => setSearchQuery(e.target.value)}
             />
           </div>
-          <Link to="/login">
-            <span className={classes.language}>SIGN IN</span>
-          </Link>
+          {isLoggedIn ? (
+            <UserMenu user={user} handleLogout={logoutUser} />
+          ) : (
+            <Link to="/login">
+              <span className={classes.language}>LOGIN</span>
+            </Link>
+          )}
           <IconButton aria-label="cart">
             <Link to="/shoppingcart">
               <Badge
@@ -133,4 +192,21 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+const mapState = (state) => {
+  return {
+    // Being 'logged in' for our purposes will be defined has having a state.auth that has a truthy id.
+    // Otherwise, state.auth will be an empty object, and state.auth.id will be falsey
+    user: state.auth,
+    isLoggedIn: !!state.auth.id,
+  };
+};
+
+const mapDispatch = (dispatch) => {
+  return {
+    logoutUser() {
+      dispatch(logout());
+    },
+  };
+};
+
+export default connect(mapState, mapDispatch)(Navbar);
