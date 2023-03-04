@@ -21,8 +21,7 @@ export default function AddProduct() {
         name,
         description,
         image,
-        price,
-        //drop downs
+        price: intPrice,
         product_category,
         color_category,
         gender,

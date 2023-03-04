@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { connect, useDispatch, useSelector } from "react-redux";
 import {
-  selectAllProductsDisplay,
   selectPaginatedDisplay,
   fetchAllMenProductsPage,
   fetchAllWomenProductsPage,
