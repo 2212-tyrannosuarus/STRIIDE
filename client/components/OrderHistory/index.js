@@ -1,27 +1,52 @@
 import React, { useEffect, useState } from "react";
 import { connect, useDispatch, useSelector } from "react-redux";
 import "./OrderHistory.css";
-import { selectAllOrderSummary } from "../../reducers/checkoutSlice";
+import { getAllOrderSummary, selectAllOrderSummary} from "../../reducers/checkoutSlice";
+import {getLoggedInUserId} from "../../reducers/shoppingCartSlice"
 
 export const OrderHistory = (props) => {
-  const orders = useSelector(selectAllOrderSummary);
+  let orders = useSelector(selectAllOrderSummary);
+  const dispatch = useDispatch();
+  console.log('orders ', orders);
+
+  useEffect(() => {
+    console.log('inside useEffect')
+
+     async function getOrderHistory () {
+      const userId = await dispatch(getLoggedInUserId());
+      console.log('userId ', userId);
+      orders = await dispatch(getAllOrderSummary(userId.payload));
+    }
+    if (window.localStorage.getItem("token")) {
+      getOrderHistory();
+    }
+    
+  },[dispatch])
+
+  
 
   return (
     <div className="order-history-container">
       <h3>Your recent orders</h3>
       {orders && orders.length
         ? orders.map((order) => {
-            return <div className="order-summary">
-                {order && order.length ? (
-                    order.map((orderDetail) => {
+            return (<div className="order-summary" key={orders.id}>
+              <p key={order.id}>{order.total_price}</p>
+                {order["orderdetails"] && order["orderdetails"].length ? (
+                    order["orderdetails"].map((orderDetail) => {
                         return (
-                            <div className="order-detail">
-
+                            <div className="order-detail" key={ order["orderdetails"].id}>
+                              <p>{orderDetail.quantity}</p>
+                              <p>{orderDetail.color}</p>
+                              <p>{orderDetail.size}</p>
+                              <p>{orderDetail.historic_price}</p>
+                              <img src={orderDetail.image} width="100px"/>
+                              <p>{orderDetail.name}</p>
                             </div>
                         )
                     })
                 ): null}
-            </div>;
+            </div>);
           })
         : "No recent orders"}
     </div>

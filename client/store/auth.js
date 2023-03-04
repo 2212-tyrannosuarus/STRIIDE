@@ -62,6 +62,7 @@ export const createUser =
 
 export const logout = () => {
   window.localStorage.removeItem(TOKEN);
+  window.localStorage.removeItem("cart");
   history.push("/home");
   return {
     type: SET_AUTH,

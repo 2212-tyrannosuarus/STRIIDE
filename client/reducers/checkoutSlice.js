@@ -13,9 +13,8 @@ export const addOrderSummary = createAsyncThunk(
 
 export const getAllOrderSummary = createAsyncThunk(
   "orderSummary/get",
-  async ({userId}) => {
-    console.log('inside thunk for getting order summary - orderItems ', orderItems);
-    const { data } = await axios.post(`/api/orders/${userId}`, {total, orderItems});
+  async (userId) => {
+    const { data } = await axios.get(`/api/orders/${userId}`);
     return data;
   }
 );
@@ -41,6 +40,7 @@ export const checkoutSlice = createSlice({
   export const selectAllOrderSummary = (state) => {
     return state.checkout.orders;
   };
+
 
 
 export default checkoutSlice.reducer

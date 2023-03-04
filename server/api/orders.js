@@ -10,32 +10,19 @@ module.exports = router;
 router.get("/:userId", async (req, res, next) => {
   try {
     const orders = await Order_Summary.findAll({
-      include: [Order_Detail],
+      where: {
+        userId: req.params.userId
+      },
+      include: [Order_Detail]
     });
-   
-        // for (let order of orders) {
-        //     console.log('orders',orders, ' ', order)
-        //     for (let item of orders[order]["orderdetails"]) {
-        //         let product = await Product.findOne({
-        //             where: {
-        //                 id: orders[order][item].productId
-        //             }
-        //         })
-    
-        //         orders[order][item].imageUrl = product.image;
-    
-        //     }
-        // }
-   
 
-    
     res.json(orders);
   } catch (err) {
     next(err);
   }
 });
 
-// POST api/carts/:id
+// POST api/orders/:id
 router.post("/:userId", async (req, res, next) => {
   try {
     const { total, orderItems } = req.body;
@@ -51,6 +38,8 @@ router.post("/:userId", async (req, res, next) => {
         quantity: orderItems[item].quantity,
         size: orderItems[item].size,
         color: orderItems[item].color,
+        image: orderItems[item].imageUrl,
+        name: orderItems[item].name
       });
       let product = await Product.findByPk(orderItems[item].id);
       newOrderItem.setOrdersummary(newOrder);
@@ -61,11 +50,3 @@ router.post("/:userId", async (req, res, next) => {
     next(err);
   }
 });
-
-// router.post("/", async (req, res, next) => {
-//   try {
-//     res.status(201).send(await Product.create(req.body));
-//   } catch (e) {
-//     next(e);
-//   }
-// });

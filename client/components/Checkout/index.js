@@ -57,13 +57,26 @@ export const Checkout = (props) => {
   let totalPrice = subTotalPrice + shippingAndHandling + estimatedTax;
 
   const handleShippingType = (e) => {
+    const selectedDiv = document.querySelector('.selected-shipping-option');
+    let clickedDiv = document.querySelector(`#${e.target.id}`);
+    if (clickedDiv.tagName !== 'DIV') {
+      clickedDiv = clickedDiv.parentElement;
+    }
     if (e.target.id.includes("8")) {
       setShippingAndHandling(8);
+      selectedDiv.classList.toggle('selected-shipping-option');
+      clickedDiv.classList.toggle('selected-shipping-option');
     } else if (e.target.id.includes("20")) {
       setShippingAndHandling(20);
+      selectedDiv.classList.toggle('selected-shipping-option');
+      clickedDiv.classList.toggle('selected-shipping-option');
     } else if (e.target.id.includes("30")) {
       setShippingAndHandling(30);
+      selectedDiv.classList.toggle('selected-shipping-option');
+      clickedDiv.classList.toggle('selected-shipping-option');
     }
+
+    
   };
 
   const handleSubmit = async (evt) => {
@@ -185,12 +198,14 @@ export const Checkout = (props) => {
               </div>
 
               <div className="checkout-submit-button-container">
+                <a href="#shipping-type-options" className="shipping-btn-container">
                 <button
                   className="shipping-btn"
                   onClick={() => setShowShipping(true)}
                 >
                   Continue To Shipping
                 </button>
+                </a>
 
                 {/* SHIPPING */}
               </div>
