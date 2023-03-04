@@ -40,14 +40,14 @@ Cart_Item.belongsTo(Product);
 Product.hasMany(Order_Detail);
 Order_Detail.belongsTo(Product);
 
-Product.hasOne(Inventory);
+Product.hasMany(Inventory);
 Inventory.belongsTo(Product);
 
 Size.hasOne(Inventory);
 Inventory.belongsTo(Size);
 
 Colorway.hasOne(Inventory);
-Inventory.belongsTo(Size);
+Inventory.belongsTo(Colorway);
 
 // Product.belongsToMany(Size, {
 //   through: "product_size",

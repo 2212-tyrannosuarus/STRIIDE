@@ -13,6 +13,9 @@ const Order_Detail = db.define("orderdetail", {
   size: {
     type: Sequelize.STRING,
   },
+  image: {
+    type: Sequelize.STRING,
+  },
   //how do we implement historical price?
   historic_price: {
     type: Sequelize.FLOAT,

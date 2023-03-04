@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { updateProduct } from "../../reducers/adminPageSlice";
 import { selectOneAdminProduct } from "../../reducers/adminPageSlice";
+import "./Test.css";
+import { Button } from "@material-ui/core";
 
 export default function UpdateProduct() {
   const dispatch = useDispatch();
@@ -48,34 +50,37 @@ export default function UpdateProduct() {
   };
 
   return (
-    <nav className="applicationnavBar">
-      <h1>Update Product #{product.id}</h1>
-      <form onSubmit={handleUpdate}>
-        <label htmlFor="name">Product Name: </label>
+    <div className="test-form-container">
+      <form className="test-form" onSubmit={handleUpdate}>
         <input
+          placeholder="Name"
           name="name"
           value={name}
           onChange={(e) => setName(e.target.value)}
         />
-        <label htmlFor="description">Description: </label>
+        <br />
         <input
+          placeholder="Description"
           name="description"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
         />
-        <label htmlFor="image">Image: </label>
+        <br />
         <input
+          placeholder="Image URL"
           name="image"
           value={image}
           onChange={(e) => setImage(e.target.value)}
         />
-        <label htmlFor="price">Price: </label>
+        <br />
         <input
+          placeholder="Price"
           name="price"
           value={price}
           onChange={(e) => setPrice(e.target.value)}
         />
-        <label htmlFor="product_category">Category: </label>
+        <br />
+
         <select
           id="product_category"
           name="product_category"
@@ -85,7 +90,8 @@ export default function UpdateProduct() {
           <option value="Outdoors">Outdoors</option>
           <option value="Electronics">Electronics</option>
         </select>
-        <label htmlFor="color_category">Color: </label>
+        <br />
+
         <select
           id="color_category"
           name="color_category"
@@ -95,7 +101,7 @@ export default function UpdateProduct() {
           <option value="White">White</option>
           <option value="Blue">Blue</option>
         </select>
-        <label htmlFor="gender">Gender: </label>
+        <br />
         <select
           id="gender"
           name="gender"
@@ -104,9 +110,18 @@ export default function UpdateProduct() {
           <option value="Women">Female</option>
           <option value="Men">Male</option>
         </select>
-        <button type="submit">Submit</button>
-        {/* <p>{error}</p> */}
+        <br />
+        <Button type="submit">Submit</Button>
+        <br />
       </form>
-    </nav>
+
+      <div className="drops">
+        <div className="drop drop-1"></div>
+        <div className="drop drop-2"></div>
+        <div className="drop drop-3"></div>
+        <div className="drop drop-4"></div>
+        <div className="drop drop-5"></div>
+      </div>
+    </div>
   );
 }

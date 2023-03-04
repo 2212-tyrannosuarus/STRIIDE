@@ -1,6 +1,7 @@
 "use strict";
 
 const { shoes } = require("./shoes");
+const { sizes } = require("./sizes");
 
 const {
   db,
@@ -41,7 +42,82 @@ async function seed() {
   // Creating Users
   const users = await User.bulkCreate(seededUsers);
   const products = await Product.bulkCreate(shoes);
-  console.log("product", products);
+
+  const sizeDemo = await Size.bulkCreate(sizes);
+
+  const colorDemo = await Promise.all([
+    Colorway.create({ color: "Black" }),
+    Colorway.create({ color: "White" }),
+    Colorway.create({ color: "Blue" }),
+    Colorway.create({ color: "Green" }),
+    Colorway.create({ color: "Pink" }),
+    Colorway.create({ color: "Purple" }),
+  ]);
+
+  const seededInventory = products.forEach(async (shoe) => {
+    if (shoe.black_images.length > 0) {
+      for (let i = 0; i < sizes.length; i++) {
+        let item = await Inventory.create({
+          count: 20,
+          productId: shoe.id,
+          sizeId: i + 1,
+          colorwayId: 1,
+        });
+      }
+    }
+    if (shoe.white_images.length > 0) {
+      for (let i = 0; i < sizes.length; i++) {
+        let item = await Inventory.create({
+          count: 20,
+          productId: shoe.id,
+          sizeId: i + 1,
+          colorwayId: 2,
+        });
+      }
+    }
+    if (shoe.blue_images.length > 0) {
+      for (let i = 0; i < sizes.length; i++) {
+        let item = await Inventory.create({
+          count: 20,
+          productId: shoe.id,
+          sizeId: i + 1,
+          colorwayId: 3,
+        });
+      }
+    }
+    if (shoe.green_images.length > 0) {
+      for (let i = 0; i < sizes.length; i++) {
+        let item = await Inventory.create({
+          count: 20,
+          productId: shoe.id,
+          sizeId: i + 1,
+          colorwayId: 4,
+        });
+      }
+    }
+    if (shoe.pink_images.length > 0) {
+      for (let i = 0; i < sizes.length; i++) {
+        let item = await Inventory.create({
+          count: 20,
+          productId: shoe.id,
+          sizeId: i + 1,
+          colorwayId: 5,
+        });
+      }
+    }
+    if (shoe.purple_images.length > 0) {
+      for (let i = 0; i < sizes.length; i++) {
+        let item = await Inventory.create({
+          count: 20,
+          productId: shoe.id,
+          sizeId: i + 1,
+          colorwayId: 6,
+        });
+      }
+    }
+  });
+
+  // const inventory = await Inventory.bulkCreate(seededInventory);
 
   const realUsers = await Promise.all([
     User.create({
@@ -50,6 +126,7 @@ async function seed() {
       lastname: "Patrawala",
       username: "tasneem.patrawala",
       email: "tasneemp_sa@yahoo.com",
+      status: "admin",
       phone_number: faker.phone.number(),
     }),
     User.create({
@@ -58,6 +135,7 @@ async function seed() {
       lastname: "Malebranche",
       username: "miro.malebranche",
       email: "miro.maleb@gmail.com",
+      status: "admin",
       phone_number: faker.phone.number(),
     }),
   ]);
@@ -102,59 +180,75 @@ async function seed() {
       cartId: 1,
     }),
   ]);
-
-  const orderSummaryDemo = await Promise.all([
-    Order_Summary.create({ userId: 1 }),
-  ]);
+  let orderSummaryArr = [];
+  for (let i = 1; i < 10; i++) {
+    orderSummaryArr.push(Order_Summary.create({ userId: i }));
+  }
+  const orderSummaryDemo = await Promise.all(orderSummaryArr);
 
   const orderDetailsDemo = await Promise.all([
     Order_Detail.create({
       historic_price: 150.0,
       count: 2,
-      color: "blue",
+      color: "white",
       size: "M 6 / W 7.5",
       ordersummaryId: 1,
       productId: 1,
     }),
-  ]);
-
-  const sizeDemo = await Promise.all([
-    Size.create({ size: "M 6 / W 7.5" }),
-    Size.create({ size: "M 6.5 / W 8" }),
-    Size.create({ size: "M 7 / W 8.5" }),
-    Size.create({ size: "M 7.5 / W 9" }),
-    Size.create({ size: "M 8 / W 9.5" }),
-    Size.create({ size: "M 8.5 / W 10" }),
-    Size.create({ size: "M 9 / W 10.5" }),
-    Size.create({ size: "M 9.5 / W 11" }),
-    Size.create({ size: "M 10 / W 11.5" }),
-    Size.create({ size: "M 10.5 / W 12" }),
-    Size.create({ size: "M 11 / W 12.5" }),
-    Size.create({ size: "M 11.5 / W 13" }),
-    Size.create({ size: "M 12 / W 13.5" }),
-    Size.create({ size: "M 12.5 / W 14" }),
-    Size.create({ size: "M 13 / W 14.5" }),
-    Size.create({ size: "M 14 / W 15.5" }),
-    Size.create({ size: "M 15 / W 16.5" }),
-    Size.create({ size: "M 16 / W 17.5" }),
-    Size.create({ size: "M 17 / W 18.5" }),
-    Size.create({ size: "M 18 / W 19.5" }),
-  ]);
-
-  const colorDemo = await Promise.all([
-    Colorway.create({ color: "Black" }),
-    Colorway.create({ color: "Blue" }),
-    Colorway.create({ color: "White" }),
-    Colorway.create({ color: "Red" }),
-    Colorway.create({ color: "Grey" }),
+    Order_Detail.create({
+      historic_price: 150.0,
+      count: 2,
+      color: "black",
+      size: "M 7 / W 8.5",
+      ordersummaryId: 2,
+      productId: 2,
+    }),
+    Order_Detail.create({
+      historic_price: 150.0,
+      count: 2,
+      color: "purple",
+      size: "M 7 / W 8.5",
+      ordersummaryId: 3,
+      productId: 3,
+    }),
+    Order_Detail.create({
+      historic_price: 150.0,
+      count: 2,
+      color: "white",
+      size: "M 8 / W 9.5",
+      ordersummaryId: 4,
+      productId: 4,
+    }),
+    Order_Detail.create({
+      historic_price: 150.0,
+      count: 2,
+      color: "black",
+      size: "M 10 / W 11.5",
+      ordersummaryId: 5,
+      productId: 5,
+    }),
+    Order_Detail.create({
+      historic_price: 150.0,
+      count: 2,
+      color: "blue",
+      size: "M 12 / W 13.5",
+      ordersummaryId: 6,
+      productId: 6,
+    }),
+    Order_Detail.create({
+      historic_price: 150.0,
+      count: 2,
+      color: "green",
+      size: "M 15 / W 16.5",
+      ordersummaryId: 7,
+      productId: 7,
+    }),
   ]);
 
   // const sampleInventory = await Promise.all([ ])
   //TRIPLE FOR LOOP -- ONCE WE HAVE COLORWAY & Size Data;
   // FOR(let product# = 0; product.legth > product#; product#){}
 
-  console.log(`seeded ${users.length} users`);
-  console.log(`seeded ${products.length} products`);
   console.log(`seeded successfully`);
   return;
 }

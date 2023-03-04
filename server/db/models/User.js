@@ -41,7 +41,8 @@ const User = db.define("user", {
   },
   status: {
     type: Sequelize.ENUM,
-    values: ["guess", "admin"],
+    values: ["guest", "admin"],
+    defaultValue: "guest",
   },
 });
 
