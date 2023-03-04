@@ -2,19 +2,10 @@ const router = require("express").Router();
 const {
   models: { Product, Cart_Item, Cart, User },
 } = require("../db");
+const Colorway = require("../db/models/Colorway");
+const Inventory = require("../db/models/Inventory");
+const Size = require("../db/models/Size");
 module.exports = router;
-
-// GET api/carts/
-// router.get("/", async (req, res, next) => {
-//   try {
-//     const products = await Product.findAll({
-//       include: [Cart_Item],
-//     });
-//     res.json(products);
-//   } catch (err) {
-//     next(err);
-//   }
-// });
 
 // GET api/carts/:id
 router.get("/:userId", async (req, res, next) => {
@@ -92,15 +83,42 @@ router.delete("/:userId", async (req, res, next) => {
     }
   });
 
+  router.get('/user/me', async (req, res, next) => {
+    try {
+      console.log('req.headers.authorization ',req.headers.authorization)
+      const user = await User.findByToken(req.headers.authorization)
+      res.json(user.id)
+    } catch (ex) {
+      next(ex)
+    }
+  })
 
+  router.get('/inventory/:id',  async (req, res, next) => {
+    try {
+      console.log('req.body ', req.body)
+      const size = await Size.findOne({
+        where: {
+          size: req.body.size
+        }
+      })
+      console.log('size ', size);
 
-
-// router.post("/", async (req, res, next) => {
-//   try {
-//     res.status(201).send(await Product.create(req.body));
-//   } catch (e) {
-//     next(e);
-//   }
-// });
+      const color = await Colorway.findOne({
+        where: {
+          color: req.body.color
+        }
+      })
+      const item = await Inventory.findOne({
+        where: {
+          productId: req.params.id,
+          colorwayId: color.id,
+          sizeId: size.id
+        }
+      })
+      res.json(item.count)
+    } catch (ex) {
+      next(ex)
+    }
+  })
 
 

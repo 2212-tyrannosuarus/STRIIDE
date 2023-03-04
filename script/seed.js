@@ -40,6 +40,28 @@ async function seed() {
   console.log("db synced!");
   //*******START OF DEMO DATA */
   // Creating Users
+
+  const realUsers = await Promise.all([
+    User.create({
+      password: "tasneemPass",
+      firstname: "Tasneem",
+      lastname: "Patrawala",
+      username: "tasneem.patrawala",
+      email: "tasneemp_sa@yahoo.com",
+      status: "admin",
+      phone_number: faker.phone.number(),
+    }),
+    User.create({
+      password: "miroPass",
+      firstname: "Miro",
+      lastname: "Malebranche",
+      username: "miro.malebranche",
+      email: "miro.maleb@gmail.com",
+      status: "admin",
+      phone_number: faker.phone.number(),
+    }),
+  ]);
+
   const users = await User.bulkCreate(seededUsers);
   const products = await Product.bulkCreate(shoes);
 
@@ -119,26 +141,7 @@ async function seed() {
 
   // const inventory = await Inventory.bulkCreate(seededInventory);
 
-  const realUsers = await Promise.all([
-    User.create({
-      password: "tasneemPass",
-      firstname: "Tasneem",
-      lastname: "Patrawala",
-      username: "tasneem.patrawala",
-      email: "tasneemp_sa@yahoo.com",
-      status: "admin",
-      phone_number: faker.phone.number(),
-    }),
-    User.create({
-      password: "miroPass",
-      firstname: "Miro",
-      lastname: "Malebranche",
-      username: "miro.malebranche",
-      email: "miro.maleb@gmail.com",
-      status: "admin",
-      phone_number: faker.phone.number(),
-    }),
-  ]);
+  
 
   const shippinginfos = await Promise.all([
     Shipping_Info.create({
@@ -166,18 +169,22 @@ async function seed() {
     }),
   ]);
 
-  const cartdemo = await Promise.all([Cart.create({ userId: 1 })]);
+  const cartdemo = await Promise.all([Cart.create({ userId: 2 })]);
 
   const cartitemdemo = await Promise.all([
     Cart_Item.create({
       quantity: 1,
       productId: 1,
       cartId: 1,
+      size: "M 6 / W 7.5",
+      color: "Black"
     }),
     Cart_Item.create({
       quantity: 2,
       productId: 1,
       cartId: 1,
+      size: "M 6.5 / W 8",
+      color: "Black"
     }),
   ]);
   let orderSummaryArr = [];
@@ -189,59 +196,75 @@ async function seed() {
   const orderDetailsDemo = await Promise.all([
     Order_Detail.create({
       historic_price: 150.0,
-      count: 2,
+      quantity: 2,
       color: "white",
       size: "M 6 / W 7.5",
       ordersummaryId: 1,
       productId: 1,
+      image: "https://static.nike.com/a/images/t_PDP_1728_v1/b83485d6-ef36-46b2-9c2b-326a68abfec8/dunk-low-se-womens-shoes-CKQg1s.png",
+      name: "Nike Dunk Low SE"
     }),
     Order_Detail.create({
       historic_price: 150.0,
-      count: 2,
+      quantity: 2,
       color: "black",
       size: "M 7 / W 8.5",
-      ordersummaryId: 2,
+      ordersummaryId: 1,
       productId: 2,
+      image: "https://static.nike.com/a/images/t_PDP_1728_v1/e6ca0888-bbbd-4d1e-8818-9dfc72ffa462/air-force-1-07-se-womens-shoes-cjvcc9.png",
+      name: "Nike Air Force 1 ‘07 SE"
+
     }),
     Order_Detail.create({
       historic_price: 150.0,
-      count: 2,
+      quantity: 2,
       color: "purple",
       size: "M 7 / W 8.5",
-      ordersummaryId: 3,
+      ordersummaryId: 2,
       productId: 3,
+      image: "https://static.nike.com/a/images/t_PDP_1728_v1/07ec21db-1f37-4506-8f63-533395617f10/air-max-90-futura-womens-shoes-kvRZ4h.png",
+      name: "Nike Air Max 90 Futura"
+
     }),
     Order_Detail.create({
       historic_price: 150.0,
-      count: 2,
+      quantity: 2,
       color: "white",
       size: "M 8 / W 9.5",
-      ordersummaryId: 4,
+      ordersummaryId: 2,
       productId: 4,
+      image: "https://static.nike.com/a/images/t_PDP_1728_v1/pyyixbczj6u5kiwhpjik/air-max-270-womens-shoes-Pgb94t.png",
+      name: "Nike Air Max 270"
     }),
     Order_Detail.create({
       historic_price: 150.0,
-      count: 2,
+      quantity: 2,
       color: "black",
       size: "M 10 / W 11.5",
       ordersummaryId: 5,
       productId: 5,
+      image: "https://static.nike.com/a/images/t_PDP_1728_v1/02f8959e-927a-40c0-8ed6-366574f302d0/air-force-1-07-womens-shoes-b19lqD.png",
+      name: "Nike Air Force 1 ‘07"
     }),
     Order_Detail.create({
       historic_price: 150.0,
-      count: 2,
+      quantity: 2,
       color: "blue",
       size: "M 12 / W 13.5",
-      ordersummaryId: 6,
+      ordersummaryId: 5,
       productId: 6,
+      image: "https://static.nike.com/a/images/t_PDP_1728_v1/ab1389b7-5e3a-46b2-866d-94a5532671b1/invincible-3-womens-road-running-shoes-kC40R9.png",
+      name: "Nike Invincible 3"
     }),
     Order_Detail.create({
       historic_price: 150.0,
-      count: 2,
+      quantity: 2,
       color: "green",
       size: "M 15 / W 16.5",
       ordersummaryId: 7,
       productId: 7,
+      image: "https://static.nike.com/a/images/t_PDP_1728_v1/f89a59ee-b368-4978-94e0-70eda3ea0b3b/pegasus-39-womens-road-running-shoes-qdDh0D.png",
+      name: "Nike Pegasus 39"
     }),
   ]);
 

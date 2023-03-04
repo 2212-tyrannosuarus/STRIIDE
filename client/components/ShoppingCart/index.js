@@ -11,7 +11,10 @@ import {
   fetchLoggedInUserCart,
   deleteUserCart,
   addUserCart,
-  deleteFromCart
+  deleteFromCart,
+  getLoggedInUserId,
+  selectgotLoggedInUserCart,
+  getInventoryQuantity,
 } from "../../reducers/shoppingCartSlice";
 import "./ShoppingCart.css";
 import { Link } from "react-router-dom";
@@ -43,12 +46,12 @@ export const ShoppingCart = (props) => {
   let subTotalPrice = 0;
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   let notification = useSelector((state) => state.notification.notification);
+  let gotLoggedInUserCart = useSelector(selectgotLoggedInUserCart);
 
   const date = new Date();
   date.setDate(date.getDate() + 7);
-  console.log('date ',date);
-  let dateStr = date.toString().split(' ');
-
+  console.log("date ", date);
+  let dateStr = date.toString().split(" ");
 
   if (window.localStorage.getItem("cart")) {
     totalQuantity = 0;
@@ -57,16 +60,6 @@ export const ShoppingCart = (props) => {
     });
     dispatch(setTotalQuantity(totalQuantity));
   }
-
-  //   const setToken = () => {
-  //     window.localStorage.setItem("token", "logged in");
-  //     setIsToken(true);
-  //   };
-
-  //   const unsetToken = () => {
-  //     window.localStorage.removeItem("token");
-  //     setIsToken(false);
-  //   };
 
   const handleAddToCart = async (
     name,
@@ -77,13 +70,20 @@ export const ShoppingCart = (props) => {
     image,
     quantity
   ) => {
-    dispatch(
-      showNotification({
-        open: true,
-        message: "Attempting to add item cart",
-        type: "warning",
-      })
-    );
+    
+    let inventoryQuantity = await dispatch(getInventoryQuantity({id: id, color: color, size: size}));
+
+    if (inventoryQuantity === 0) return;
+
+    if (inventoryQuantity < 5) {
+      dispatch(
+        showNotification({
+          open: true,
+          message: "Low inventory",
+          type: "warning",
+        })
+      );
+    }
 
     await dispatch(
       addToCart({
@@ -97,12 +97,12 @@ export const ShoppingCart = (props) => {
       })
     );
 
-    if (isLoggedIn) {
-      await dispatch(deleteUserCart(1));
-      await dispatch(
-        addUserCart({ id: 1, total: totalPrice, cartItems: cartItems }) //id is userId
-      );
-    }
+    // if (isLoggedIn) {
+    //   await dispatch(deleteUserCart(1));
+    //   await dispatch(
+    //     addUserCart({ id: 1, total: totalPrice, cartItems: cartItems }) //id is userId
+    //   );
+    // }
 
     dispatch(
       showNotification({
@@ -138,13 +138,14 @@ export const ShoppingCart = (props) => {
     );
   };
 
-  const handleDeleteFromCart = async(id, quantity) => {
-    alert('inside delete')
-    await dispatch(deleteFromCart({ id, quantity }));
-    if (isLoggedIn) {
-      await dispatch(deleteUserCart(1));
+  const handleDeleteFromCart = async (id, quantity, color, size) => {
+    alert("inside delete");
+    await dispatch(deleteFromCart({ id, quantity, color, size }));
+    if (window.localStorage.getItem("token")) {
+      const userId = await dispatch(getLoggedInUserId());
+      await dispatch(deleteUserCart(userId.payload));
       await dispatch(
-        addUserCart({ id: 1, total: totalPrice, cartItems: cartItems }) //userId
+        addUserCart({ id: userId, total: totalPrice, cartItems: cartItems }) //userId
       );
     }
 
@@ -155,47 +156,51 @@ export const ShoppingCart = (props) => {
         type: "success",
       })
     );
-  }
+  };
 
-  //   useEffect(() => {
-  async function getLogggedInUserCartItems() {
-    let { payload } = await dispatch(fetchLoggedInUserCart(1)); //userId
-    console.log("existing ", payload);
+  useEffect(() => {
+    async function getLogggedInUserCartItems() {
+      const userId = await dispatch(getLoggedInUserId());
+      console.log("userId ", userId.payload);
+      let { payload } = await dispatch(fetchLoggedInUserCart(userId.payload)); //userId
+      console.log("existing ", payload);
 
-    payload.forEach((item) => {
-      console.log(typeof item.price, " ", typeof item.quantity);
-      let loggedInCartItemTotalPrice = item.price * item.quantity;
-      handleAddToCart(
-        item.name,
-        item.id,
-        loggedInCartItemTotalPrice,
-        item.color,
-        item.size,
-        item.image,
-        item.quantity
-      );
-    });
-  }
+      payload.forEach((item) => {
+        console.log(typeof item.price, " ", typeof item.quantity);
+        let loggedInCartItemTotalPrice = item.price * item.quantity;
+        handleAddToCart(
+          item.name,
+          item.id,
+          loggedInCartItemTotalPrice,
+          item.color,
+          item.size,
+          item.image,
+          item.quantity
+        );
+      });
+    }
 
-  // if (window.localStorage.getItem("token")) {
-  //   setIsToken(true);
-  //   getLogggedInUserCartItems(1);
+    if (window.localStorage.getItem("token")) {
+      if (!gotLoggedInUserCart) {
+        getLogggedInUserCartItems();
+      }
+    }
+
+  }, [dispatch]);
+
+  // async function handleLoggedInUser() {
+  //   setIsLoggedIn(true);
+  //   console.log("inside handleLoggedInUser");
+  //   await getLogggedInUserCartItems();
   // }
-  //   }, [setIsToken]);
 
-  async function handleLoggedInUser() {
-    setIsLoggedIn(true);
-    console.log("inside handleLoggedInUser");
-    await getLogggedInUserCartItems();
-  }
-
-  async function handleLoggedOutUser() {
-    await dispatch(deleteUserCart(1));
-    await dispatch(
-      addUserCart({ id: 1, total: totalPrice, cartItems: cartItems }) //userId
-    );
-    setIsLoggedIn(false);
-  }
+  // async function handleLoggedOutUser() {
+  //   await dispatch(deleteUserCart(1));
+  //   await dispatch(
+  //     addUserCart({ id: 1, total: totalPrice, cartItems: cartItems }) //userId
+  //   );
+  //   setIsLoggedIn(false);
+  // }
 
   cartItems.forEach((item) => {
     console.log("item inside cartItems.forEach ", item);
@@ -236,7 +241,7 @@ export const ShoppingCart = (props) => {
                         <div>{product.size}</div>
                         <div className="btn-container">
                           <button
-                          className="add-delete-btn"
+                            className="add-delete-btn"
                             onClick={() =>
                               handleAddToCart(
                                 product.name,
@@ -254,7 +259,7 @@ export const ShoppingCart = (props) => {
                           <div>{product.quantity}</div>
 
                           <button
-                          className="add-delete-btn"
+                            className="add-delete-btn"
                             onClick={() =>
                               handleRemoveFromCart(
                                 product.id,
@@ -265,32 +270,39 @@ export const ShoppingCart = (props) => {
                           >
                             -
                           </button>
-                          <div className={classes.root}>
+                          <div className={classes.root} onClick={() =>
+                                handleDeleteFromCart(
+                                  product.id,
+                                  product.quantity,
+                                  product.color,
+                                  product.size,
+                                )
+                              }>
                             <IconButton
                               aria-label="delete"
                               disabled
                               color="primary"
                               className="add-delete-btn"
-                              onClick={() =>
-                                handleDeleteFromCart(
-                                  product.id,
-                                  product.quantity
-                                )
-                              }
+                              
                             >
                               <DeleteIcon />
                             </IconButton>
-                          </div>
 
+                      
+                          </div>
                         </div>
                       </div>
 
-                      <div className="item-details-price">${product.totalPrice.toFixed(2)}</div>
+                      <div className="item-details-price">
+                        ${product.totalPrice.toFixed(2)}
+                      </div>
                     </div>
                   </div>
                   <div className="shipping-info-cart">
-                    <div >Shipping</div>
-                    <div>Arrives by {dateStr[0]}, {dateStr[1]} {dateStr[2]}</div>
+                    <div>Shipping</div>
+                    <div>
+                      Arrives by {dateStr[0]}, {dateStr[1]} {dateStr[2]}
+                    </div>
                   </div>
                 </div>
               );
@@ -304,8 +316,8 @@ export const ShoppingCart = (props) => {
       </div>
 
       <div className="cart-summary">
-        <button onClick={() => handleLoggedInUser()}>Log In</button>
-        <button onClick={() => handleLoggedOutUser()}>Log Out</button>
+        {/* <button onClick={() => handleLoggedInUser()}>Log In</button>
+        <button onClick={() => handleLoggedOutUser()}>Log Out</button> */}
         <h2>Summary</h2>
         <table>
           <tbody>

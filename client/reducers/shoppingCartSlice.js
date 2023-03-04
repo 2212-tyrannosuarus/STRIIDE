@@ -25,13 +25,38 @@ export const addUserCart = createAsyncThunk(
   }
 );
 
+export const getLoggedInUserId = createAsyncThunk(
+  "userId/get",
+  async () =>{
+    const token = window.localStorage.getItem("token");
+  if (token) {
+    const {data} = await axios.get("/api/carts/user/me", {
+      headers: {
+        authorization: token,
+      },
+    });
+    return data;
+  }
+}
+);
+
+export const getInventoryQuantity = createAsyncThunk(
+  "inventoryQuantity/get",
+  async ({id, color, size}) => {
+    const { data } = await axios.get(`/api/carts/inventory/${id}`, {color: color, size: size});
+    return data;
+  }
+);
+
 export const shoppingCartSlice = createSlice({
   name: "cart",
   initialState: {
     itemsList: JSON.parse(localStorage.getItem("cart")) || [],
     totalQuantity: 0,
     showCart: false,
-    loggedInUserCart: []
+    loggedInUserCart: [],
+    userId: null,
+    gotLoggedInUserCart: false
   },
   reducers: {
     setTotalQuantity (state, action) {
@@ -90,10 +115,12 @@ export const shoppingCartSlice = createSlice({
     deleteFromCart(state, action) {
       console.log('action.payload inside delete from cart ', action.payload);
       const id = action.payload.id;
+      const size = action.payload.size;
+      const color = action.payload.color;
       const quantity = action.payload.quantity
       // const existingItem = state.itemsList.find((item) => item.id === id && item.size === size && item.color === color);
     
-        state.itemsList = state.itemsList.filter((item) => item.id !== id);
+        state.itemsList = state.itemsList.filter((item) => item.id !== id && item.size === size && item.color === color);
         state.totalQuantity-= quantity;
     
       window.localStorage.removeItem("cart");
@@ -101,13 +128,23 @@ export const shoppingCartSlice = createSlice({
         console.log('inside remove item state.itemsList ========', JSON.stringify(state.itemsList));
         window.localStorage.setItem("cart", JSON.stringify(state.itemsList));
       }
-    }
+    },
+    // setLoggedOutUser (state) {
+    //   state.gotLoggedInUserCart = !state.gotLoggedInUserCart;
+    //   state.itemsList = [];
+    //   state.totalQuantity = 0;
+    //   window.localStorage.removeItem("cart");
+    // }
   },
   extraReducers: (builder) => {
     builder
       .addCase(fetchLoggedInUserCart.fulfilled, (state, action) => {
         state.loggedInUserCart = action.payload;
+        state.gotLoggedInUserCart = true;
       })
+      .addCase(getLoggedInUserId.fulfilled, (state, action) => {
+        state.userId = action.payload;
+      });
     }
 });
 
@@ -124,6 +161,10 @@ export const selectTotalQuantity = (state) => {
 
 export const selectLoggedInUserCart = (state) => {
   return state.shoppingCart.loggedInUserCart;
+};
+
+export const selectgotLoggedInUserCart = (state) => {
+  return state.shoppingCart.gotLoggedInUserCart;
 };
 
 export default shoppingCartSlice.reducer;

@@ -13,7 +13,7 @@ export const addOrderSummary = createAsyncThunk(
 
 export const getAllOrderSummary = createAsyncThunk(
   "orderSummary/get",
-  async ({userId}) => {
+  async (userId) => {
     const { data } = await axios.get(`/api/orders/${userId}`);
     return data;
   }

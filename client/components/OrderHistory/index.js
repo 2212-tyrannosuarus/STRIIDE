@@ -2,31 +2,28 @@ import React, { useEffect, useState } from "react";
 import { connect, useDispatch, useSelector } from "react-redux";
 import "./OrderHistory.css";
 import { getAllOrderSummary, selectAllOrderSummary} from "../../reducers/checkoutSlice";
+import {getLoggedInUserId} from "../../reducers/shoppingCartSlice"
 
 export const OrderHistory = (props) => {
-  const orders = useSelector(selectAllOrderSummary);
+  let orders = useSelector(selectAllOrderSummary);
   const dispatch = useDispatch();
   console.log('orders ', orders);
 
   useEffect(() => {
     console.log('inside useEffect')
-    dispatch(getAllOrderSummary({userId: 1}))
 
-    // async function getProduct() {
-    //   for (let i = 0; i < orders.length; i++) {
-    //     for (let j = 0; j < orders[i].orderdetails.length; j++) {
-    //               let productid = orders[i].orderdetails[j].productId;
-    //               product = await dispatch(getProduct(productid));
-    //               console.log('product ', product);
-    //               orders[i].orderdetails[j].imageUrl = product.image;
-    //               orders[i].orderdetails[j].name = product.name;
-    //               console.log('orders[i].orderdetails[j] ', orders[i].orderdetails[j]);
-    //           }
-    //         }
-    // }
-    // getProduct();
+     async function getOrderHistory () {
+      const userId = await dispatch(getLoggedInUserId());
+      console.log('userId ', userId);
+      orders = await dispatch(getAllOrderSummary(userId.payload));
+    }
+    if (window.localStorage.getItem("token")) {
+      getOrderHistory();
+    }
     
   },[dispatch])
+
+  
 
   return (
     <div className="order-history-container">

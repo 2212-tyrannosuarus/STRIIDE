@@ -10,32 +10,19 @@ module.exports = router;
 router.get("/:userId", async (req, res, next) => {
   try {
     const orders = await Order_Summary.findAll({
+      where: {
+        userId: req.params.userId
+      },
       include: [Order_Detail]
     });
-    // console.log('orders.length', orders.length)
-    // orders[0]["orderdetails"]["productId"]
-    // for (let i = 0; i < orders.length; i++) {
-    //     // console.log('orders[i].orderdetails',orders[i].orderdetails)
-    //     for (let j = 0; j < orders[i].orderdetails.length; j++) {
-    //         let productid = orders[i].orderdetails[j].productId;
-    //         let product = await Product.findByPk(productid);
-    //         console.log('product ', product.image);
-    //         Object.defineProperty(orders[i].orderdetails[j], 'imageUrl', {
-    //             value: product.image
-    //         });
-    //         // orders[i].orderdetails[j].imageUrl = product.image;
-    //         console.log('orders[i].orderdetails[j] ', orders[i].orderdetails[j]);
-    //     }
-    // }
-   
-   
+
     res.json(orders);
   } catch (err) {
     next(err);
   }
 });
 
-// POST api/carts/:id
+// POST api/orders/:id
 router.post("/:userId", async (req, res, next) => {
   try {
     const { total, orderItems } = req.body;
@@ -51,7 +38,8 @@ router.post("/:userId", async (req, res, next) => {
         quantity: orderItems[item].quantity,
         size: orderItems[item].size,
         color: orderItems[item].color,
-        image: orderItems[item].imageUrl
+        image: orderItems[item].imageUrl,
+        name: orderItems[item].name
       });
       let product = await Product.findByPk(orderItems[item].id);
       newOrderItem.setOrdersummary(newOrder);
@@ -62,11 +50,3 @@ router.post("/:userId", async (req, res, next) => {
     next(err);
   }
 });
-
-// router.post("/", async (req, res, next) => {
-//   try {
-//     res.status(201).send(await Product.create(req.body));
-//   } catch (e) {
-//     next(e);
-//   }
-// });
