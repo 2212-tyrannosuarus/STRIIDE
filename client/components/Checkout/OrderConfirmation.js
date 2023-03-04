@@ -13,10 +13,11 @@ import {
   addUserCart,
 } from "../../reducers/shoppingCartSlice";
 import "./Checkout.css";
+import { useLocation } from "react-router-dom";
 
 export const OrderConfirmation = (props) => {
-
-    const {email} = props;
+const location = useLocation();
+    const {email} = location.state;
 
     return (
        <div className="confirmation-container">

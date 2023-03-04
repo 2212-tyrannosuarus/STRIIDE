@@ -11,6 +11,7 @@ import {
   fetchLoggedInUserCart,
   deleteUserCart,
   addUserCart,
+  getLoggedInUserId
 } from "../../reducers/shoppingCartSlice";
 import "./Checkout.css";
 import ShippingType from "./ShippingType";
@@ -18,6 +19,19 @@ import Payment from "./Payment";
 import ReviewOrder from "./ReviewOrder";
 import { addOrderSummary } from "../../reducers/checkoutSlice";
 import {Link} from 'react-router-dom';
+
+import { makeStyles } from '@material-ui/core/styles';
+
+
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    '& > *': {
+      margin: theme.spacing(1),
+      width: '25ch',
+    },
+  },
+}));
 
 /**
  * COMPONENT
@@ -41,6 +55,7 @@ export const Checkout = (props) => {
   const [securityCode, setSecurityCode] = useState("");
 
   let [shippingAndHandling, setShippingAndHandling] = useState(8);
+  const classes = useStyles();
 
   const cartItems = useSelector(selectAllCartItems);
   let totalQuantity = useSelector(selectTotalQuantity);
@@ -82,7 +97,15 @@ export const Checkout = (props) => {
   const handleSubmit = async (evt) => {
     evt.preventDefault();
     alert("inside handle submit");
-    await dispatch(addOrderSummary({userId: 1, total: totalPrice, orderItems: cartItems}));
+    if (window.localStorage.getItem("token")) {
+      const userId = await dispatch(getLoggedInUserId());
+      await dispatch(addOrderSummary({userId: userId.payload, total: totalPrice, orderItems: cartItems}));
+    }
+    else {
+      console.log('guest user order summary not saved ')
+      // await dispatch(addOrderSummary({userId: 1, total: totalPrice, orderItems: cartItems}));
+    }
+    
     // setFirstName("");
     // setLastName("");
     // setAddress("");
@@ -97,13 +120,15 @@ export const Checkout = (props) => {
   };
 
   return (
-    <div className="checkout-form">
-      <div className="form-container">
+    <div className="checkout-form" >
+      <div className="form-container" >
+      <div className="column">
         <form
           id="checkout-form"
           onSubmit={(evt) => handleSubmit(evt)}
           className="column"
         >
+          
           {reviewOrder ? (
             <div className="order-review-with-place-order-container">
               <ReviewOrder
@@ -117,8 +142,8 @@ export const Checkout = (props) => {
                 email={email}
               />
               <div className="checkout-submit-button-container">
-              <button type="submit" className="submit-order-btn" onClick={(e) => handleSubmit(e)}>
-              <Link to="/orderconfirmation">Place Order</Link>
+              <button type="submit" className="place-order-btn" onClick={(e) => handleSubmit(e)}>
+              <Link to={{pathname: "/orderconfirmation", state: {email: `${email}` }}} className="place-order-btn">Place Order</Link>
                 </button>
                 
               </div>
@@ -198,14 +223,14 @@ export const Checkout = (props) => {
               </div>
 
               <div className="checkout-submit-button-container">
-                <a href="#shipping-type-options" className="shipping-btn-container">
+            
                 <button
                   className="shipping-btn"
                   onClick={() => setShowShipping(true)}
                 >
                   Continue To Shipping
                 </button>
-                </a>
+         
 
                 {/* SHIPPING */}
               </div>
@@ -238,7 +263,9 @@ export const Checkout = (props) => {
               )}
             </div>
           )}
+         
         </form>
+        </div>
       </div>
 
       <div className="in-your-bag">
@@ -274,7 +301,7 @@ export const Checkout = (props) => {
 
         <div>
           <div>Shipping</div>
-          <div>Arrives by Thu, Mar 9</div>
+          <div>Arrives by </div>
         </div>
         <div className="cart-items">
           {cartItems && cartItems.length ? (
