@@ -33,6 +33,7 @@ export const allProducts = (props) => {
   const dispatch = useDispatch();
   const [sex, setSex] = useState("");
   const [path, setPath] = useState("");
+  const [shoeButtonColor7, setShoeButtonColor7] = useState("");
 
   useEffect(() => {
     let string = "";
@@ -77,6 +78,14 @@ export const allProducts = (props) => {
     dispatch(action);
   };
 
+  const clickShoeSize7 = () => {
+    if (shoeButtonColor7 === "") {
+      setShoeButtonColor7("shoesize");
+    } else {
+      setShoeButtonColor7("");
+    }
+  };
+
   return (
     <div className="allproducts-container">
       <div className="allproduct-left">
@@ -91,8 +100,10 @@ export const allProducts = (props) => {
           <h3>Sizes</h3>
 
           <div className="size-filter">
-            <div className={classes.size}>
-              <Button>7</Button>
+            <div>
+              <Button id={shoeButtonColor7} onClick={clickShoeSize7}>
+                7
+              </Button>
               <Button>8</Button>
               <Button>8.5</Button>
               <Button>9</Button>
