@@ -53,3 +53,10 @@
 .product-price {
   padding-bottom: 10px;
 }
+.single-product-color-picker {
+  width: 35px;
+  padding: 5px;
+}
+.red-box {
+  border: 3px solid red;
+}

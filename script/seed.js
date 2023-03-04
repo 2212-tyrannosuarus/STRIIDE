@@ -42,7 +42,6 @@ async function seed() {
   // Creating Users
   const users = await User.bulkCreate(seededUsers);
   const products = await Product.bulkCreate(shoes);
-  console.log("product ========================", products[0]);
 
   const sizeDemo = await Size.bulkCreate(sizes);
 
@@ -127,6 +126,7 @@ async function seed() {
       lastname: "Patrawala",
       username: "tasneem.patrawala",
       email: "tasneemp_sa@yahoo.com",
+      status: "admin",
       phone_number: faker.phone.number(),
     }),
     User.create({
@@ -135,6 +135,7 @@ async function seed() {
       lastname: "Malebranche",
       username: "miro.malebranche",
       email: "miro.maleb@gmail.com",
+      status: "admin",
       phone_number: faker.phone.number(),
     }),
   ]);
@@ -199,8 +200,6 @@ async function seed() {
   //TRIPLE FOR LOOP -- ONCE WE HAVE COLORWAY & Size Data;
   // FOR(let product# = 0; product.legth > product#; product#){}
 
-  console.log(`seeded ${users.length} users`);
-  console.log(`seeded ${products.length} products`);
   console.log(`seeded successfully`);
   return;
 }
