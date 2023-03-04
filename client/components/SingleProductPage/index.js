@@ -1,5 +1,8 @@
 import "./SingleProductPage.css";
-
+import { Typography } from "@material-ui/core";
+import { showNotification } from "../../reducers/notificationSlice";
+import { Notification } from "../Notification";
+import { makeStyles } from "@material-ui/core/styles";
 const { sizes } = require("../../../script/sizes");
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,6 +17,7 @@ import {
 import { Link, useParams } from "react-router-dom";
 
 export const singleProductPage = (props) => {
+  let notification = useSelector((state) => state.notification.notification);
   const { id } = useParams();
   const singleProduct = useSelector(selectSingleProduct);
   const dispatch = useDispatch();
@@ -26,6 +30,13 @@ export const singleProductPage = (props) => {
 
   useEffect(() => {
     setSizeClass("");
+    dispatch(
+      showNotification({
+        open: false,
+        message: "",
+        type: "",
+      })
+    );
   }, [size]);
 
   const getShoeColors = () => {
@@ -63,19 +74,26 @@ export const singleProductPage = (props) => {
   const handleAddToCart = (name, id, price, color, size, image, quantity) => {
     if (color === "" && size !== "") {
       setColorClass("red-box");
-      alert("Color is required");
+      dispatch(
+        showNotification({
+          open: true,
+          message: "Color is a required field",
+          type: "error",
+        })
+      );
       return;
     }
     if (color !== "" && size === "") {
       setSizeClass("red-box");
-      // alert("Size is required");
+      dispatch(
+        showNotification({
+          open: true,
+          message: "Size is a required field",
+          type: "error",
+        })
+      );
       return;
     }
-
-    // if (color === "" || size === "") {
-    // alert("Size and Color are required");
-    //   return;
-    // }
 
     dispatch(
       addToCart({
@@ -88,14 +106,24 @@ export const singleProductPage = (props) => {
         quantity,
       })
     );
+    dispatch(
+      showNotification({
+        open: true,
+        message: "Item successfully added to cart",
+        type: "success",
+      })
+    );
   };
 
-  const onSubmit = () => {
-    //somehow add stuff to cart
-  };
   if (singleProduct && color && availableColors && singleProduct.id) {
     return (
       <>
+        {notification && (
+          <Notification
+            type={notification.type}
+            message={notification.message}
+          />
+        )}
         {
           <div className="product-container">
             <div className="images">
@@ -125,7 +153,9 @@ export const singleProductPage = (props) => {
               </div>
             </div>
             <div className="details">
-              <h2 className="product-name">{singleProduct.name}</h2>
+              <Typography className="product-name">
+                {singleProduct.name}
+              </Typography>
               <p className="product-description">{singleProduct.description}</p>
               <div className="product-price">${singleProduct.price}</div>
               <div className="color-category">
