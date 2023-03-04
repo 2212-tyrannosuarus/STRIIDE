@@ -10,7 +10,7 @@ module.exports = router;
 router.get("/:userId", async (req, res, next) => {
   try {
     const orders = await Order_Summary.findAll({
-      include: [Order_Detail],
+      include: [Order_Detail]
     });
     // console.log('orders.length', orders.length)
     // orders[0]["orderdetails"]["productId"]
@@ -51,6 +51,7 @@ router.post("/:userId", async (req, res, next) => {
         quantity: orderItems[item].quantity,
         size: orderItems[item].size,
         color: orderItems[item].color,
+        image: orderItems[item].imageUrl
       });
       let product = await Product.findByPk(orderItems[item].id);
       newOrderItem.setOrdersummary(newOrder);

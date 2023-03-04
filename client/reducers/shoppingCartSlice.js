@@ -87,6 +87,21 @@ export const shoppingCartSlice = createSlice({
     setShowCart(state) {
       state.showCart = true;
     },
+    deleteFromCart(state, action) {
+      console.log('action.payload inside delete from cart ', action.payload);
+      const id = action.payload.id;
+      const quantity = action.payload.quantity
+      // const existingItem = state.itemsList.find((item) => item.id === id && item.size === size && item.color === color);
+    
+        state.itemsList = state.itemsList.filter((item) => item.id !== id);
+        state.totalQuantity-= quantity;
+    
+      window.localStorage.removeItem("cart");
+      if (state.itemsList.length > 0) {
+        console.log('inside remove item state.itemsList ========', JSON.stringify(state.itemsList));
+        window.localStorage.setItem("cart", JSON.stringify(state.itemsList));
+      }
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -96,7 +111,7 @@ export const shoppingCartSlice = createSlice({
     }
 });
 
-export const { addToCart, removeFromCart, setShowCart, setTotalQuantity } =
+export const { addToCart, removeFromCart, setShowCart, setTotalQuantity, deleteFromCart } =
   shoppingCartSlice.actions;
 
 export const selectAllCartItems = (state) => {

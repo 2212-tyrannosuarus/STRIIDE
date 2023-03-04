@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { connect, useDispatch, useSelector } from "react-redux";
 import "./OrderHistory.css";
-import { getAllOrderSummary, getProduct, selectAllOrderSummary, selectProduct } from "../../reducers/checkoutSlice";
+import { getAllOrderSummary, selectAllOrderSummary} from "../../reducers/checkoutSlice";
 
 export const OrderHistory = (props) => {
   const orders = useSelector(selectAllOrderSummary);
-  let product = useSelector(selectProduct);
-  console.log('orders ', orders);
   const dispatch = useDispatch();
+  console.log('orders ', orders);
 
   useEffect(() => {
     console.log('inside useEffect')
@@ -35,7 +34,7 @@ export const OrderHistory = (props) => {
       {orders && orders.length
         ? orders.map((order) => {
             return (<div className="order-summary" key={orders.id}>
-              <p>{order.total_price}</p>
+              <p key={order.id}>{order.total_price}</p>
                 {order["orderdetails"] && order["orderdetails"].length ? (
                     order["orderdetails"].map((orderDetail) => {
                         return (
@@ -44,7 +43,7 @@ export const OrderHistory = (props) => {
                               <p>{orderDetail.color}</p>
                               <p>{orderDetail.size}</p>
                               <p>{orderDetail.historic_price}</p>
-                              <p>{orderDetail.imageUrl}</p>
+                              <img src={orderDetail.image} width="100px"/>
                               <p>{orderDetail.name}</p>
                             </div>
                         )

@@ -1,17 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { connect, useDispatch, useSelector } from "react-redux";
-import {
-  selectAllCartItems,
-  fetchAllProducts,
-  addToCart,
-  setShowCart,
-  removeFromCart,
-  selectTotalQuantity,
-  setTotalQuantity,
-  fetchLoggedInUserCart,
-  deleteUserCart,
-  addUserCart,
-} from "../../reducers/shoppingCartSlice";
+import React from "react";
 import "./Checkout.css";
 
 export const ShippingType = (props) => {
@@ -21,7 +8,7 @@ export const ShippingType = (props) => {
     return (
         <div className="shipping-container">
               <div className="shipping-header">
-                <h2>Shipping</h2>
+                <h2 id="shipping-type-options">Shipping</h2>
               </div>
               <div className="shipping-option selected-shipping-option" id="div-8" onClick={(e) => handleShippingType(e)}>
                 <p className="shipping-detail" id="p1-8" onClick={(e) => handleShippingType(e)}>$8.00 Shipping</p>

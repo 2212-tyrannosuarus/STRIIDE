@@ -22,6 +22,7 @@ import singleProductPageSlice from "../reducers/singleProductPageSlice";
 import shoppingCartSlice from "../reducers/shoppingCartSlice";
 import checkoutSlice from "../reducers/checkoutSlice";
 import adminSlice from "../reducers/adminPageSlice";
+import notificationSlice from "../reducers/notificationSlice";
 
 export const store = configureStore({
   reducer: {
@@ -32,6 +33,7 @@ export const store = configureStore({
     checkout: checkoutSlice,
     auth: auth,
     admin: adminSlice,
+    notification: notificationSlice
   },
 });
 
