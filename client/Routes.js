@@ -1,7 +1,6 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter, Route, Switch, Redirect } from "react-router-dom";
-import { Login, Signup } from "./components/AuthForm";
 import HomePage from "./components/HomePage";
 import AllProductsPage from "./components/AllProductsPage";
 import SingleProductPage, {
@@ -13,6 +12,8 @@ import Checkout from "./components/Checkout";
 import { me } from "./store";
 import OrderConfirmation from "./components/Checkout/OrderConfirmation";
 import OrderHistory from "./components/OrderHistory";
+import LoginForm from "./components/LoginForm";
+import RegisterForm from "./components/RegisterForm";
 
 /**
  * COMPONENT
@@ -23,13 +24,32 @@ class Routes extends Component {
   }
 
   render() {
-    const { isLoggedIn } = this.props;
+    const { isLoggedIn, isAdmin } = this.props;
+
+    function PrivateRoute({ children, ...rest }) {
+      return (
+        <Route
+          {...rest}
+          render={({ location }) =>
+            isAdmin && isLoggedIn ? (
+              children
+            ) : (
+              <Redirect
+                to={{
+                  pathname: "/login",
+                  state: { from: location },
+                }}
+              />
+            )
+          }
+        />
+      );
+    }
 
     return (
       <div>
         <Switch>
           <Route path="/home" component={HomePage} />
-          {/* <Redirect to="/home" /> */}
           <Route path="/men" component={AllProductsPage} />
           <Route path="/men/page/:pagenumber" component={AllProductsPage} />
           <Route exact path="/women" component={AllProductsPage} />
@@ -39,7 +59,9 @@ class Routes extends Component {
           <Route path="/shoppingcart" component={ShoppingCart} />
           <Route path="/orderconfirmation" component={OrderConfirmation} />
           <Route path="/orderhistory" component={OrderHistory} />
-          <Route exact path="/adminpage" component={AdminDashBoardPage} />
+          <PrivateRoute exact path="/adminpage">
+            <AdminDashBoardPage />
+          </PrivateRoute>
           <Route exact path="/adminpage/users" component={AdminDashBoardPage} />
           <Route
             exact
@@ -77,19 +99,10 @@ class Routes extends Component {
           />
 
           {/* <Redirect to="/allproduct" /> */}
+
+          <Route path="/login" component={LoginForm} />
+          <Route path="/signup" component={RegisterForm} />
         </Switch>
-        {isLoggedIn ? (
-          <Switch>
-            <Route path="/home" component={HomePage} />
-            <Redirect to="/home" />
-          </Switch>
-        ) : (
-          <Switch>
-            <Route path="/" exact component={Login} />
-            <Route path="/login" component={Login} />
-            <Route path="/signup" component={Signup} />
-          </Switch>
-        )}
       </div>
     );
   }
@@ -103,6 +116,7 @@ const mapState = (state) => {
     // Being 'logged in' for our purposes will be defined has having a state.auth that has a truthy id.
     // Otherwise, state.auth will be an empty object, and state.auth.id will be falsey
     isLoggedIn: !!state.auth.id,
+    isAdmin: state.auth.status === "admin",
   };
 };
 
