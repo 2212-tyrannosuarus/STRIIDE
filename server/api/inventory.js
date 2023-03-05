@@ -10,7 +10,7 @@ module.exports = router;
 //GET /api/inventory/:id
 router.get('/:id',  async (req, res, next) => {
     try {
-    //   console.log('req.headers ', req.headers)
+    //   console.log('req.headers.size ', req.headers.size, typeof(req.headers.size))
       const size = await Size.findOne({
         where: {
           size: req.headers.size
@@ -34,6 +34,50 @@ router.get('/:id',  async (req, res, next) => {
         }
       })
       res.json(item.count)
+    } catch (ex) {
+      next(ex)
+    }
+  })
+
+// PUT /api/inventory/:id
+  router.put('/:id',  async (req, res, next) => {
+    try {
+    //   console.log('req.body ', req.body)
+      const size = await Size.findOne({
+        where: {
+          size: req.body.size
+        }
+      })
+    //   console.log('size ', size);
+
+      const color = await Colorway.findOne({
+        where: {
+          color: req.body.color
+        }
+      })
+
+    //   console.log('color ', color);
+
+      const item = await Inventory.findOne({
+        where: {
+          productId: req.params.id,
+          colorwayId: color.id,
+          sizeId: size.id
+        }
+      })
+
+      let updatedCount = item.count - req.body.count;
+
+      let updatedItem = await Inventory.update({count: updatedCount},{
+        where: {
+          productId: req.params.id,
+          colorwayId: color.id,
+          sizeId: size.id
+        }
+      })
+
+
+      res.json(updatedItem)
     } catch (ex) {
       next(ex)
     }

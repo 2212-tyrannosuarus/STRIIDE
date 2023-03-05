@@ -334,7 +334,7 @@
   width: 125px;
 }
 
-.cart-item-right-col, .item-details {
+.checkout-cart-item-right-col, .item-details {
   display: flex;
   width: 100%;
   flex-direction: column;

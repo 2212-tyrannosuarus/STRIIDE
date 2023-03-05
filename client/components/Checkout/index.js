@@ -12,6 +12,7 @@ import {
   deleteUserCart,
   addUserCart,
   getLoggedInUserId,
+  updateInventoryQuantity,
 } from "../../reducers/shoppingCartSlice";
 import "./Checkout.css";
 import ShippingType from "./ShippingType";
@@ -144,6 +145,9 @@ export const Checkout = (props) => {
       // await dispatch(addOrderSummary({userId: 1, total: totalPrice, orderItems: cartItems}));
     }
 
+    for (let i = 0; i < cartItems.length; i++) {
+      await dispatch(updateInventoryQuantity({id: cartItems[i].id, color: cartItems[i].color, size: cartItems[i].size, count: cartItems[i].quantity}));
+    }
     history.push({
       pathname: "/orderconfirmation",
       state: {
@@ -372,7 +376,7 @@ export const Checkout = (props) => {
                         className="checkout-cart-item-img"
                       />
                     </div>
-                    <div className="cart-item-right-col">
+                    <div className="checkout-cart-item-right-col">
                       <div className="item-details">
                         <h3>{product.name}</h3>
                         <div>{product.color}</div>

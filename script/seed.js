@@ -79,6 +79,13 @@ async function seed() {
     Colorway.create({ color: "Purple" }),
   ]);
 
+  await Inventory.create({
+    count: 4,
+    productId: 8,
+    sizeId: 1,
+    colorwayId: 2
+   })
+
   const seededInventory = products.forEach(async (shoe) => {
     if (shoe.black_images.length > 0) {
       for (let i = 0; i < sizes.length; i++) {
@@ -142,32 +149,7 @@ async function seed() {
     }
   });
 
-  // ==========================================================
 
-  // const inventoryItem = await Inventory.findOne({
-  //   where: {
-  //     productId: 4,
-  //     sizeId: 2,
-  //     colorwayId: 2,
-  //   },
-  // });
-
-  // console.log("inventoryItem ", inventoryItem);
-
-  // let lowInventoryItem = await Inventory.update(
-  //   { count: 6 },
-  //   {
-  //     where: {
-  //       productId: 4,
-  //       sizeId: 2,
-  //       colorwayId: 2,
-  //     },
-  //   }
-  // );
-
-  // console.log("low inventory item ", lowInventoryItem);
-
-  // ==========================================================
 
   // const inventory = await Inventory.bulkCreate(seededInventory);
 
@@ -209,9 +191,9 @@ async function seed() {
     }),
     Cart_Item.create({
       quantity: 2,
-      productId: 4,
+      productId: 8,
       cartId: 1,
-      size: "M 6.5 / W 8",
+      size: "M 6 / W 7.5",
       color: "White",
     }),
   ]);
@@ -220,6 +202,12 @@ async function seed() {
     orderSummaryArr.push(Order_Summary.create({ userId: i }));
   }
   const orderSummaryDemo = await Promise.all(orderSummaryArr);
+
+  await Order_Summary.update ({total_price: 300}, {
+    where: {
+      userId: 1
+    }
+  })
 
   const orderDetailsDemo = await Promise.all([
     Order_Detail.create({
