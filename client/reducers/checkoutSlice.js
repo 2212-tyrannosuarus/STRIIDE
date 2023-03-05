@@ -4,9 +4,9 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 export const addOrderSummary = createAsyncThunk(
   "orderSummary/post",
-  async ({userId, total, orderItems}) => {
+  async ({userId, total, orderItems, orderDate}) => {
     console.log('inside thunk for adding order summary - orderItems ', orderItems);
-    const { data } = await axios.post(`/api/orders/${userId}`, {total, orderItems});
+    const { data } = await axios.post(`/api/orders/${userId}`, {total, orderItems, orderDate});
     return data;
   }
 );

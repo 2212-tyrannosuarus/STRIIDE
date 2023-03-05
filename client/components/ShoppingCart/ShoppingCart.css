@@ -107,6 +107,18 @@ td {
     cursor: pointer;
 }
 
+.disabled-checkout-btn {
+    background-color: #e2e2e2;
+    font-size: large;
+    color: #8d8d8d;
+    border-radius: 25px;
+    height: 3em;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 100%;
+    border: none;
+}
+
 .btn-container {
     display: flex;
     flex-direction: row;

@@ -12,6 +12,7 @@ import {
   deleteUserCart,
   addUserCart,
   getLoggedInUserId,
+  updateInventoryQuantity,
 } from "../../reducers/shoppingCartSlice";
 import "./Checkout.css";
 import ShippingType from "./ShippingType";
@@ -132,11 +133,14 @@ export const Checkout = (props) => {
     alert("inside handle submit");
     if (window.localStorage.getItem("token")) {
       const userId = await dispatch(getLoggedInUserId());
+      let date = new Date();
+      let dateArr = date.toString().split(' ');
       await dispatch(
         addOrderSummary({
           userId: userId.payload,
           total: totalPrice,
           orderItems: cartItems,
+          orderDate: `${dateArr[0]}, ${dateArr[1]} ${dateArr[2]}`
         })
       );
     } else {
@@ -144,6 +148,11 @@ export const Checkout = (props) => {
       // await dispatch(addOrderSummary({userId: 1, total: totalPrice, orderItems: cartItems}));
     }
 
+    for (let i = 0; i < cartItems.length; i++) {
+      await dispatch(updateInventoryQuantity({id: cartItems[i].id, color: cartItems[i].color, size: cartItems[i].size, count: cartItems[i].quantity}));
+    }
+
+    window.localStorage.removeItem("cart");
     history.push({
       pathname: "/orderconfirmation",
       state: {
@@ -372,7 +381,7 @@ export const Checkout = (props) => {
                         className="checkout-cart-item-img"
                       />
                     </div>
-                    <div className="cart-item-right-col">
+                    <div className="checkout-cart-item-right-col">
                       <div className="item-details">
                         <h3>{product.name}</h3>
                         <div>{product.color}</div>
