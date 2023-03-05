@@ -17,7 +17,7 @@ export default function UpdateUser() {
   const [lastname, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [phone_number, setPhone_number] = useState("");
-  const [status, setStatus] = useState("guess");
+  const [status, setStatus] = useState("guest");
 
   useEffect(() => {
     setUserName(user.username || "");
@@ -26,7 +26,7 @@ export default function UpdateUser() {
     setLastName(user.lastname || "");
     setEmail(user.email || "");
     setPhone_number(user.phone_number || "");
-    setStatus(user.status || "guess");
+    setStatus(user.status || "guest");
   }, [user]);
 
   const handleUpdate = async (event) => {
@@ -97,7 +97,7 @@ export default function UpdateUser() {
           name="status"
           onChange={(e) => setStatus(e.target.value)}
         >
-          <option value="guess">Guess</option>
+          <option value="guest">Guest</option>
           <option value="admin">Admin</option>
         </select>
         <br />
