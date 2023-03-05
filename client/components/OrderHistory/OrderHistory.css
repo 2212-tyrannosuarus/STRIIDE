@@ -1,12 +1,40 @@
 .order-history-container {
     display: flex;
     flex-direction: column;
-    margin-left: 50px;
-    margin-right: 50px;
+    width: 100%;
 }
 
 .order-summary {
     display: flex;
     flex-direction: column;
     width: 100%;
+    margin-left: 30px;
+}
+
+.order-detail {
+    display: flex;  
+    width: 40%;
+    border-bottom: 2px solid #ececec;
+    padding-bottom: 30px;
+    padding-top: 30px;
+}
+
+.order-history-left-col {
+
+}
+
+.order-history-right-col {
+    width: 60%; 
+    display: flex;
+    flex-direction: column;
+    padding-left: 20px;
+}
+
+.order-history-right-col > h3 {
+    margin-top: 5px;
+}
+
+.order-history-right-col > p {
+    margin-top: 0px;
+    margin-bottom: 10px;
 }

@@ -17,7 +17,8 @@ import {
   getInventoryQuantity,
   deleteCart,
   getIsLoggedIn,
-  setIsLoggedIn
+  setIsLoggedIn,
+  setGotLoogedInUserCart
 } from "../../reducers/shoppingCartSlice";
 import "./ShoppingCart.css";
 import { Link } from "react-router-dom";
@@ -26,6 +27,7 @@ import { Notification } from "../Notification";
 import { makeStyles } from "@material-ui/core/styles";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
+import { TrafficRounded } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -74,6 +76,18 @@ export const ShoppingCart = (props) => {
     image,
     quantity
   ) => {
+
+    dispatch(
+      showNotification({
+        open: true,
+        message: "Attempting to add item to cart",
+        type: "warning",
+      })
+    );
+
+    console.log(name, ' ', id, ' ', price, ' ' ,color, ' ',size, ' ', image, ' ', quantity);
+    color = color[0].toUpperCase() + color.slice(1);
+    console.log('color ', color);
     
     let inventoryQuantity = await dispatch(getInventoryQuantity({id: id, color: color, size: size}));
 
@@ -170,7 +184,7 @@ export const ShoppingCart = (props) => {
       let { payload } = await dispatch(fetchLoggedInUserCart(userId.payload)); //userId
       console.log("existing ", payload);
 
-      payload.forEach((item) => {
+      payload.length && payload.forEach((item) => {
         console.log(typeof item.price, " ", typeof item.quantity);
         let loggedInCartItemTotalPrice = item.price * item.quantity;
         handleAddToCart(
@@ -183,10 +197,13 @@ export const ShoppingCart = (props) => {
           item.quantity
         );
       });
+      dispatch(setGotLoogedInUserCart(true));
+      window.localStorage.setItem("gotLoggedInUserCart", 'yes')
     }
 
     if (window.localStorage.getItem("token")) {
-      if (!gotLoggedInUserCart) {
+      console.log('got Logged in user cart', gotLoggedInUserCart);
+      if (window.localStorage.getItem("gotLoggedInUserCart") !== 'yes' && !gotLoggedInUserCart) {
         dispatch(setIsLoggedIn(true));
         getLogggedInUserCartItems();
 
@@ -201,6 +218,8 @@ export const ShoppingCart = (props) => {
         dispatch(setIsLoggedIn(false));
         dispatch(setTotalQuantity(0))
         dispatch(deleteCart())
+        dispatch(setGotLoogedInUserCart(false));
+        window.localStorage.removeItem("gotLoggedInUserCart")
         dispatch(
           showNotification({
             open: false
@@ -211,19 +230,6 @@ export const ShoppingCart = (props) => {
 
   }, [dispatch]);
 
-  // async function handleLoggedInUser() {
-  //   setIsLoggedIn(true);
-  //   console.log("inside handleLoggedInUser");
-  //   await getLogggedInUserCartItems();
-  // }
-
-  // async function handleLoggedOutUser() {
-  //   await dispatch(deleteUserCart(1));
-  //   await dispatch(
-  //     addUserCart({ id: 1, total: totalPrice, cartItems: cartItems }) //userId
-  //   );
-  //   setIsLoggedIn(false);
-  // }
 
   cartItems.forEach((item) => {
     console.log("item inside cartItems.forEach ", item);

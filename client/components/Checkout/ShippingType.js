@@ -2,19 +2,9 @@ import React from "react";
 import "./Checkout.css";
 
 export const ShippingType = (props) => {
-  const { setShowPayment, handleShippingType } = props;
+  const { setShowPayment, handleShippingType, dateStr1, dateStr2, dateStr3 } = props;
 
-  const date1 = new Date();
-  date1.setDate(date1.getDate() + 7);
-  let dateStr1 = date1.toString().split(" ");
-
-  const date2 = new Date();
-  date2.setDate(date2.getDate() + 3);
-  let dateStr2 = date2.toString().split(" ");
-
-  const date3 = new Date();
-  date3.setDate(date3.getDate() + 1);
-  let dateStr3 = date3.toString().split(" ");
+  
 
   return (
     <div className="shipping-container">

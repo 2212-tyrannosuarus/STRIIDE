@@ -16,22 +16,32 @@ router.get("/:userId", async (req, res, next) => {
         },
         include: [Cart_Item]
       });
-      let cartItems = []
-      for (let item of cart.cartitems) {
-        let product = await Product.findByPk(item.productId);
-        let cartItem = {
-            id: product.id,
-            name: product.name,
-            price: product.price,
-            image: product.image,
-            color: item.color,
-            size: item.size,
-            quantity: item.quantity
-        }
-        cartItems.push(cartItem)
+      let cartItems = [];
+
+      if (cart === undefined && cart === null) {
+        res.json('No items in user cart')
       }
+      else {
+        for (let item of cart.cartitems) {
+          let product = await Product.findByPk(item.productId);
+          let cartItem = {
+              id: product.id,
+              name: product.name,
+              price: product.price,
+              image: product.image,
+              color: item.color,
+              size: item.size,
+              quantity: item.quantity
+          }
+          cartItems.push(cartItem)
+        }
+        res.json(cartItems);
+      }
+
       
-      res.json(cartItems);
+      
+      
+      
     } catch (err) {
       next(err);
     }
@@ -47,7 +57,7 @@ router.post("/:userId", async (req, res, next) => {
       newCart.setUser(user);
 
       for (let item in cartItems) {
-        console.log('item ', item)
+        // console.log('item ', item)
         let newItem = await Cart_Item.create({quantity: cartItems[item].quantity, size: cartItems[item].size, color: cartItems[item].color});
         let product = await Product.findByPk(cartItems[item].id);
         newItem.setCart(newCart);
@@ -67,6 +77,8 @@ router.delete("/:userId", async (req, res, next) => {
           userId: req.params.userId
         }
       })
+
+      // console.log('inside deleting cart ', cart)
       await cart.destroy();
       const cartItems = await Cart_Item.findAll({
         where: {
@@ -85,7 +97,7 @@ router.delete("/:userId", async (req, res, next) => {
 
   router.get('/user/me', async (req, res, next) => {
     try {
-      console.log('req.headers.authorization ',req.headers.authorization)
+      // console.log('req.headers.authorization ',req.headers.authorization)
       const user = await User.findByToken(req.headers.authorization)
       res.json(user.id)
     } catch (ex) {
@@ -93,32 +105,6 @@ router.delete("/:userId", async (req, res, next) => {
     }
   })
 
-  router.get('/inventory/:id',  async (req, res, next) => {
-    try {
-      console.log('req.body ', req.body)
-      const size = await Size.findOne({
-        where: {
-          size: req.body.size
-        }
-      })
-      console.log('size ', size);
-
-      const color = await Colorway.findOne({
-        where: {
-          color: req.body.color
-        }
-      })
-      const item = await Inventory.findOne({
-        where: {
-          productId: req.params.id,
-          colorwayId: color.id,
-          sizeId: size.id
-        }
-      })
-      res.json(item.count)
-    } catch (ex) {
-      next(ex)
-    }
-  })
+  
 
 
