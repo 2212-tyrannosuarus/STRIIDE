@@ -1,9 +1,31 @@
 import "./AllProductsPage.css";
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 
 export default function ItemIcon(props) {
   const { product, sex } = props;
+  let colors = "";
+  const availableColor = () => {
+    if (product.black_images.length > 0) {
+      colors = colors + "⬛️ ";
+    }
+    if (product.white_images.length > 0) {
+      colors = colors + "⬜️ ";
+    }
+    if (product.blue_images.length > 0) {
+      colors = colors + "🟦 ";
+    }
+    if (product.green_images.length > 0) {
+      colors = colors + "🟩 ";
+    }
+    if (product.pink_images.length > 0) {
+      colors = colors + "🟥 ";
+    }
+    if (product.purple_images.length > 0) {
+      colors = colors + "🟪 ";
+    }
+  };
+  availableColor();
 
   return (
     <div className="allproducts-product-icon">
@@ -14,11 +36,11 @@ export default function ItemIcon(props) {
         </Link>
       </div>
       <div className="bottom">
-        <h2>{product.name}</h2>
+        <h3>{product.name}</h3>
         <p>
           {sex} {product.product_category} Shoe
         </p>
-        [colorway - pending inventory]
+        {colors}
         <p>${product.price}</p>
       </div>
     </div>
