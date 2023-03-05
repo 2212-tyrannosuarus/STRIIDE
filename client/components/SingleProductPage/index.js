@@ -17,6 +17,7 @@ import {
   selectTotalQuantity,
 } from "../../reducers/shoppingCartSlice";
 import { Link, useParams } from "react-router-dom";
+let colorSelected = false;
 
 export const singleProductPage = (props) => {
   const dispatch = useDispatch();
@@ -71,9 +72,10 @@ export const singleProductPage = (props) => {
   // useEffect(() => {
   //   dispatch(fetchSingleProduct(id));
   // }, [dispatch]);
-
   const handleImageClick = (event) => {
+    colorSelected = true;
     setColor(event.target.value);
+    console.log(color);
   };
 
   const handleAddToCart = (name, id, price, color, size, image, quantity) => {
@@ -132,34 +134,89 @@ export const singleProductPage = (props) => {
           )}
           {
             <div className="product-container">
-              <div className="images">
-                <div className="product-image-container">
-                  {singleProduct[color]
-                    ? singleProduct[color].map((colorImage) => {
-                        return (
-                          <img
-                            className="product-image"
-                            src={colorImage}
-                            alt={singleProduct.name}
-                          />
-                        );
-                      })
-                    : null}
-                </div>
+              <div className="product-image-container">
+                {colorSelected
+                  ? singleProduct[color].map((colorImage) => {
+                      console.log("singleproduct color", singleProduct[color]);
+                      return (
+                        <img
+                          className="product-image"
+                          src={colorImage}
+                          alt={singleProduct.name}
+                        />
+                      );
+                    })
+                  : singleProduct.black_images.length > 0
+                  ? singleProduct.black_images.map((colorImage) => {
+                      return (
+                        <img
+                          className="product-image"
+                          src={colorImage}
+                          alt={singleProduct.name}
+                        />
+                      );
+                    })
+                  : singleProduct.white_images.length > 0
+                  ? singleProduct.white_images.map((colorImage) => {
+                      return (
+                        <img
+                          className="product-image"
+                          src={colorImage}
+                          alt={singleProduct.name}
+                        />
+                      );
+                    })
+                  : singleProduct.blue_images.length > 0
+                  ? singleProduct.blue_images.map((colorImage) => {
+                      return (
+                        <img
+                          className="product-image"
+                          src={colorImage}
+                          alt={singleProduct.name}
+                        />
+                      );
+                    })
+                  : singleProduct.green_images.length > 0
+                  ? singleProduct.green_images.map((colorImage) => {
+                      return (
+                        <img
+                          className="product-image"
+                          src={colorImage}
+                          alt={singleProduct.name}
+                        />
+                      );
+                    })
+                  : singleProduct.pink_images.length > 0
+                  ? singleProduct.pink_images.map((colorImage) => {
+                      return (
+                        <img
+                          className="product-image"
+                          src={colorImage}
+                          alt={singleProduct.name}
+                        />
+                      );
+                    })
+                  : singleProduct.purple_images.length > 0
+                  ? singleProduct.purple_images.map((colorImage) => {
+                      return (
+                        <img
+                          className="product-image"
+                          src={colorImage}
+                          alt={singleProduct.name}
+                        />
+                      );
+                    })
+                  : null}
               </div>
-              <div className="details">
-                <Typography className="product-name">
+              <div className="product-details-container">
+                <Typography variant="h4" className="product-name">
                   {singleProduct.name}
                 </Typography>
-                <p className="product-description">
-                  {singleProduct.description}
-                </p>
                 <div className="product-price">${singleProduct.price}</div>
                 <div className="color-category">
                   {singleProduct.color_category}
                 </div>
                 <div className={colorClass} id="color-filter">
-                  <h4>Available Colors</h4>
                   {availableColors.length > 0
                     ? availableColors.map((shoeColor) => {
                         return (
@@ -332,6 +389,9 @@ export const singleProductPage = (props) => {
                 {/* <Link to="/shoppingcart">
                 <div>Shopping Cart</div>
               </Link> */}
+                <Typography className="product-description">
+                  {singleProduct.description}
+                </Typography>
               </div>
             </div>
           }
