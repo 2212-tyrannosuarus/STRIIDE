@@ -1,91 +1,107 @@
 .checkout-form {
-    display: flex;
+  display: flex;
 }
 
 .form-container {
-    /* background-color: #ffffff; */
-    margin-top: 0px;
-    /* border: 2px solid #ffffff; */
-    padding-bottom: 20px;
-    width: 65%;
-    margin-left: 20px
-  }
-
-  .form-title {
-    font-size: large;
-  }
-
-  .form-field {
-    padding: 10px;
-    display: flex;
-    flex-direction: row;
-  }
-
-  .submit-order-btn, .shipping-btn, .payment-btn {
-    background-color: #e2e2e2;
-    font-size: large;
-    border: none;
-    border-radius: 25px;
-    color: #8d8d8d;
-    height: 3em;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    width: 30%;
-  }
-
-  .submit-order-btn:hover, .shipping-btn:hover , .payment-btn:hover{
-    cursor: pointer;
-  }
-
-  .place-order-btn {
-    background-color: black;
-    font-size: large;
-    border: none;
-    border-radius: 25px;
-    color: white;
-    height: 3em;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    width: 30%;
-  }
-
-  .place-order-btn:active, .place-order-btn:hover .place-order-btn:visited {
-    color: white;
-  }
-
-  .checkout-submit-button-container {
-    display: flex;
-    flex-direction: row;
-    justify-content: right;
-  }
-
-  .checkout-form-input {
-    width: 100%;
-    padding: 5px;
-    height: 3em;
-    border: 2px solid #b4b4b4;
-    border-radius: 10px;
-    margin-right: 10px;
-  }
-
-  .in-your-bag {
-    display: flex;
-    flex-direction: column;
-    width: 35%;
-    margin-left: 20px;
-  }
-
-  .checkout-table {
-    width: 90%;
+  /* background-color: #ffffff; */
+  margin-top: 0px;
+  /* border: 2px solid #ffffff; */
+  padding-bottom: 20px;
+  width: 65%;
+  margin-left: 20px;
 }
 
-.checkout-td {    
-    padding-bottom: 10px;
+.form-title {
+  font-size: large;
+}
+
+.form-field {
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+}
+
+.submit-order-btn,
+.shipping-btn,
+.payment-btn {
+  background-color: #e2e2e2;
+  font-size: large;
+  border: none;
+  border-radius: 25px;
+  color: #8d8d8d;
+  height: 3em;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  width: 30%;
+}
+
+.submit-order-btn:hover,
+.shipping-btn:hover,
+.payment-btn:hover {
+  cursor: pointer;
+}
+
+.place-order-btn-link {
+  background-color: black;
+  font-size: large;
+  border: none;
+  border-radius: 25px;
+  color: white;
+  height: 3em;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.place-order-btn {
+  background-color: black;
+  color: white;
+  height: 3em;
+  width: 30%;
+  font-size: large;
+  border-radius: 25px;
+  border: none;
+}
+
+.place-order-btn:active,
+.place-order-btn:hover, .place-order-btn:visited {
+  color: white;
+  cursor: pointer;
+}
+
+.checkout-submit-button-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: right;
+}
+
+.checkout-form-input {
+  width: 100%;
+  padding: 5px;
+  height: 3em;
+  border: 2px solid #b4b4b4;
+  border-radius: 10px;
+  margin-right: 10px;
+}
+
+.in-your-bag {
+  display: flex;
+  flex-direction: column;
+  width: 35%;
+  margin-left: 20px;
+}
+
+.checkout-table {
+  width: 90%;
+}
+
+.checkout-td {
+  padding-bottom: 10px;
 }
 
 .checkout-data-col-right {
-    text-align: right;
-    width: 20%;
+  text-align: right;
+  width: 20%;
 }
 
 .checkout-cart-item-img {
@@ -99,13 +115,13 @@
   flex-direction: column;
 }
 
-.shipping-header, .payment-header {
+.shipping-header,
+.payment-header {
   border-top: 2px solid #ececec;
   padding-top: 5px;
   width: 100%;
   display: flex;
   flex-direction: column;
-
 }
 
 .shipping-option {
@@ -132,7 +148,6 @@
   margin-bottom: 0px;
   color: #8d8d8d;
 }
-
 
 .payment-container {
   display: flex;
@@ -187,7 +202,7 @@
   width: 30%;
 }
 
-.order-review-name-address{
+.order-review-name-address {
   display: flex;
   flex-direction: column;
 }
@@ -206,10 +221,127 @@
   /* margin-left: 25% */
 }
 
-.confirmation-container > h3, .confirmation-container > p {
+.confirmation-container > h3,
+.confirmation-container > p {
   display: flex;
   /* border: 2px solid black; */
   margin: auto;
   width: 50%;
   align-content: center;
+}
+
+.billing-form-field {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 10px;
+}
+
+.billing-form-field-container {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Customize the label (the container) */
+.container {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 16px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: #eee;
+}
+
+/* On mouse-over, add a grey background color */
+.container:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.container input:checked ~ .checkmark {
+  background-color: #2196F3;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.container .checkmark:after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+.shipping-right-col {
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.arrives-by {
+  margin-bottom: 20px;
+}
+
+.cart-items {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.cart-item-card {
+  display: flex;
+  width: 100%;
+  padding-bottom: 20px;
+}
+
+.checkout-cart-item-img {
+  width: 125px;
+}
+
+.checkout-cart-item-right-col, .item-details {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  margin-left: 10px;
+}
+
+.order-history-h2 {
+  margin-left: 20px;
+  margin-bottom: 0px;
 }

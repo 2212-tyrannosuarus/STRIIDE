@@ -17,7 +17,8 @@ import {
   getInventoryQuantity,
   deleteCart,
   getIsLoggedIn,
-  setIsLoggedIn
+  setIsLoggedIn,
+  setGotLoogedInUserCart
 } from "../../reducers/shoppingCartSlice";
 import "./ShoppingCart.css";
 import { Link } from "react-router-dom";
@@ -26,6 +27,7 @@ import { Notification } from "../Notification";
 import { makeStyles } from "@material-ui/core/styles";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
+import { TrafficRounded } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -74,20 +76,22 @@ export const ShoppingCart = (props) => {
     image,
     quantity
   ) => {
+
+    dispatch(
+      showNotification({
+        open: true,
+        message: "Attempting to add item to cart",
+        type: "warning",
+      })
+    );
+
+    color = color[0].toUpperCase() + color.slice(1);
+
+    console.log(id, ' ', color, ' ', size);
     
     let inventoryQuantity = await dispatch(getInventoryQuantity({id: id, color: color, size: size}));
 
-    if (inventoryQuantity === 0) return;
-
-    if (inventoryQuantity < 5) {
-      dispatch(
-        showNotification({
-          open: true,
-          message: "Low inventory",
-          type: "warning",
-        })
-      );
-    }
+    console.log('inventoryQuantity ', inventoryQuantity)
 
     await dispatch(
       addToCart({
@@ -101,20 +105,45 @@ export const ShoppingCart = (props) => {
       })
     );
 
-    // if (isLoggedIn) {
-    //   await dispatch(deleteUserCart(1));
-    //   await dispatch(
-    //     addUserCart({ id: 1, total: totalPrice, cartItems: cartItems }) //id is userId
-    //   );
-    // }
+    if (window.localStorage.getItem("token")) {
+      const userId = await dispatch(getLoggedInUserId());
+      await dispatch(deleteUserCart(userId.payload));
+      await dispatch(
+        addUserCart({ id: userId.payload, total: totalPrice, cartItems: cartItems }) //userId
+      );
+    }
 
-    dispatch(
-      showNotification({
-        open: true,
-        message: "Item successfully added to cart",
-        type: "success",
-      })
-    );
+    
+
+    if (inventoryQuantity.payload === 0){
+      dispatch(
+        showNotification({
+          open: true,
+          message: "Out of stock",
+          type: "error",
+        })
+      );
+    }
+    else if (inventoryQuantity.payload < 5) {
+      dispatch(
+        showNotification({
+          open: true,
+          message: "Low inventory - Item successfully added to cart",
+          type: "warning",
+        })
+      );
+    }
+    else {
+      dispatch(
+        showNotification({
+          open: true,
+          message: "Item successfully added to cart",
+          type: "success",
+        })
+      );
+    }
+
+   
   };
 
   const handleRemoveFromCart = async (id, size, color) => {
@@ -127,11 +156,14 @@ export const ShoppingCart = (props) => {
     );
     await dispatch(removeFromCart({ id, size, color }));
     if (isLoggedIn) {
-      await dispatch(deleteUserCart(1));
+      const userId = await dispatch(getLoggedInUserId());
+      await dispatch(deleteUserCart(userId.payload));
       await dispatch(
-        addUserCart({ id: 1, total: totalPrice, cartItems: cartItems }) //userId
+        addUserCart({ id: userId.payload, total: totalPrice, cartItems: cartItems }) //userId
       );
     }
+
+    
 
     dispatch(
       showNotification({
@@ -170,7 +202,7 @@ export const ShoppingCart = (props) => {
       let { payload } = await dispatch(fetchLoggedInUserCart(userId.payload)); //userId
       console.log("existing ", payload);
 
-      payload.forEach((item) => {
+      payload.length && payload.forEach((item) => {
         console.log(typeof item.price, " ", typeof item.quantity);
         let loggedInCartItemTotalPrice = item.price * item.quantity;
         handleAddToCart(
@@ -183,10 +215,13 @@ export const ShoppingCart = (props) => {
           item.quantity
         );
       });
+      dispatch(setGotLoogedInUserCart(true));
+      window.localStorage.setItem("gotLoggedInUserCart", 'yes')
     }
 
     if (window.localStorage.getItem("token")) {
-      if (!gotLoggedInUserCart) {
+      console.log('got Logged in user cart', gotLoggedInUserCart);
+      if (window.localStorage.getItem("gotLoggedInUserCart") !== 'yes' && !gotLoggedInUserCart) {
         dispatch(setIsLoggedIn(true));
         getLogggedInUserCartItems();
 
@@ -201,6 +236,8 @@ export const ShoppingCart = (props) => {
         dispatch(setIsLoggedIn(false));
         dispatch(setTotalQuantity(0))
         dispatch(deleteCart())
+        dispatch(setGotLoogedInUserCart(false));
+        window.localStorage.removeItem("gotLoggedInUserCart")
         dispatch(
           showNotification({
             open: false
@@ -211,19 +248,6 @@ export const ShoppingCart = (props) => {
 
   }, [dispatch]);
 
-  // async function handleLoggedInUser() {
-  //   setIsLoggedIn(true);
-  //   console.log("inside handleLoggedInUser");
-  //   await getLogggedInUserCartItems();
-  // }
-
-  // async function handleLoggedOutUser() {
-  //   await dispatch(deleteUserCart(1));
-  //   await dispatch(
-  //     addUserCart({ id: 1, total: totalPrice, cartItems: cartItems }) //userId
-  //   );
-  //   setIsLoggedIn(false);
-  // }
 
   cartItems.forEach((item) => {
     console.log("item inside cartItems.forEach ", item);
@@ -232,8 +256,10 @@ export const ShoppingCart = (props) => {
   });
 
   let estimatedTax = 0.0625 * subTotalPrice;
-  let shippingAndHandling = 5;
+  let shippingAndHandling = 8;
   let totalPrice = subTotalPrice + shippingAndHandling + estimatedTax;
+
+  let shippingAndHandlingForNoItems = 0
 
   return (
     <div className="shopping-cart-container">
@@ -349,7 +375,8 @@ export const ShoppingCart = (props) => {
             <tr>
               <td className="data-col-left">Estimated Shipping and Handling</td>
               <td className="data-col-right">
-                ${shippingAndHandling.toFixed(2)}
+                {totalQuantity > 0 ? `$${shippingAndHandling.toFixed(2)}`: `$${shippingAndHandlingForNoItems.toFixed(2)}`}
+                {/* ${shippingAndHandling.toFixed(2)} */}
               </td>
             </tr>
             <tr>
@@ -364,9 +391,26 @@ export const ShoppingCart = (props) => {
             </tr>
           </tbody>
         </table>
-        <Link to="/checkout">
-          <button className="checkout-btn">Checkout</button>
+        {window.localStorage.getItem("token") ? (
+          <Link to="/checkout">
+          {cartItems && cartItems.length === 0 ? (
+            <button className="disabled-checkout-btn" disabled>Checkout</button>
+          ): (
+            <button className="checkout-btn">Checkout</button>
+          )}
+          
         </Link>
+        ) : (
+          <Link to="/checkoutTunnel">
+          {cartItems && cartItems.length === 0 ? (
+            <button className="disabled-checkout-btn" disabled>Checkout</button>
+          ): (
+            <button className="checkout-btn">Checkout</button>
+          )}
+          
+        </Link>
+        )}
+        
       </div>
     </div>
   );
@@ -375,9 +419,11 @@ export const ShoppingCart = (props) => {
 /**
  * CONTAINER
  */
-const mapState = (state) => {
-  return {
-    username: state.auth.username,
-  };
-};
-export default connect(mapState)(ShoppingCart);
+// const mapState = (state) => {
+//   return {
+//     username: state.auth.username,
+//   };
+// };
+// export default connect(mapState)(ShoppingCart);
+
+export default ShoppingCart;

@@ -25,8 +25,8 @@ router.get("/:userId", async (req, res, next) => {
 // POST api/orders/:id
 router.post("/:userId", async (req, res, next) => {
   try {
-    const { total, orderItems } = req.body;
-    const newOrder = await Order_Summary.create({ total_price: total });
+    const { total, orderItems, orderDate } = req.body;
+    const newOrder = await Order_Summary.create({ total_price: total, orderDate: orderDate });
     //   console.log('newCartItems ',cartItems);
     const user = await User.findByPk(req.params.userId);
     newOrder.setUser(user);
