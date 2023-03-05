@@ -105,22 +105,31 @@ export const ShoppingCart = (props) => {
       })
     );
 
-    if (inventoryQuantity.payload < 5) {
-      dispatch(
-        showNotification({
-          open: true,
-          message: "Low inventory - Item successfully added to cart",
-          type: "warning",
-        })
+    if (window.localStorage.getItem("token")) {
+      const userId = await dispatch(getLoggedInUserId());
+      await dispatch(deleteUserCart(userId.payload));
+      await dispatch(
+        addUserCart({ id: userId.payload, total: totalPrice, cartItems: cartItems }) //userId
       );
     }
 
-    else if (inventoryQuantity.payload === 0){
+    
+
+    if (inventoryQuantity.payload === 0){
       dispatch(
         showNotification({
           open: true,
           message: "Out of stock",
           type: "error",
+        })
+      );
+    }
+    else if (inventoryQuantity.payload < 5) {
+      dispatch(
+        showNotification({
+          open: true,
+          message: "Low inventory - Item successfully added to cart",
+          type: "warning",
         })
       );
     }
@@ -147,9 +156,10 @@ export const ShoppingCart = (props) => {
     );
     await dispatch(removeFromCart({ id, size, color }));
     if (isLoggedIn) {
-      await dispatch(deleteUserCart(1));
+      const userId = await dispatch(getLoggedInUserId());
+      await dispatch(deleteUserCart(userId.payload));
       await dispatch(
-        addUserCart({ id: 1, total: totalPrice, cartItems: cartItems }) //userId
+        addUserCart({ id: userId.payload, total: totalPrice, cartItems: cartItems }) //userId
       );
     }
 
@@ -381,7 +391,8 @@ export const ShoppingCart = (props) => {
             </tr>
           </tbody>
         </table>
-        <Link to="/checkout">
+        {window.localStorage.getItem("token") ? (
+          <Link to="/checkout">
           {cartItems && cartItems.length === 0 ? (
             <button className="disabled-checkout-btn" disabled>Checkout</button>
           ): (
@@ -389,6 +400,17 @@ export const ShoppingCart = (props) => {
           )}
           
         </Link>
+        ) : (
+          <Link to="/checkoutTunnel">
+          {cartItems && cartItems.length === 0 ? (
+            <button className="disabled-checkout-btn" disabled>Checkout</button>
+          ): (
+            <button className="checkout-btn">Checkout</button>
+          )}
+          
+        </Link>
+        )}
+        
       </div>
     </div>
   );

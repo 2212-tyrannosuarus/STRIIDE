@@ -197,9 +197,12 @@ async function seed() {
       color: "White",
     }),
   ]);
+
+  let date = new Date(2023, 2, 3);
+  let dateArr = date.toString().split(' ');
   let orderSummaryArr = [];
   for (let i = 1; i < 10; i++) {
-    orderSummaryArr.push(Order_Summary.create({ userId: i }));
+    orderSummaryArr.push(Order_Summary.create({ userId: i, orderDate: `${dateArr[0]}, ${dateArr[1]} ${dateArr[2]}` }));
   }
   const orderSummaryDemo = await Promise.all(orderSummaryArr);
 

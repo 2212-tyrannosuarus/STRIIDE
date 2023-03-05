@@ -133,11 +133,14 @@ export const Checkout = (props) => {
     alert("inside handle submit");
     if (window.localStorage.getItem("token")) {
       const userId = await dispatch(getLoggedInUserId());
+      let date = new Date();
+      let dateArr = date.toString().split(' ');
       await dispatch(
         addOrderSummary({
           userId: userId.payload,
           total: totalPrice,
           orderItems: cartItems,
+          orderDate: `${dateArr[0]}, ${dateArr[1]} ${dateArr[2]}`
         })
       );
     } else {
@@ -148,6 +151,8 @@ export const Checkout = (props) => {
     for (let i = 0; i < cartItems.length; i++) {
       await dispatch(updateInventoryQuantity({id: cartItems[i].id, color: cartItems[i].color, size: cartItems[i].size, count: cartItems[i].quantity}));
     }
+
+    window.localStorage.removeItem("cart");
     history.push({
       pathname: "/orderconfirmation",
       state: {

@@ -14,6 +14,7 @@ import OrderConfirmation from "./components/Checkout/OrderConfirmation";
 import OrderHistory from "./components/OrderHistory";
 import LoginForm from "./components/LoginForm";
 import RegisterForm from "./components/RegisterForm";
+import CheckoutTunnel from "./components/CheckoutTunnel"
 
 /**
  * COMPONENT
@@ -59,6 +60,7 @@ class Routes extends Component {
           <Route path="/shoppingcart" component={ShoppingCart} />
           <Route path="/orderconfirmation" component={OrderConfirmation} />
           <Route path="/orderhistory" component={OrderHistory} />
+          <Route path="/checkoutTunnel" component={CheckoutTunnel} />
           <PrivateRoute exact path="/adminpage">
             <AdminDashBoardPage />
           </PrivateRoute>
@@ -102,6 +104,8 @@ class Routes extends Component {
 
           <Route path="/login" component={LoginForm} />
           <Route path="/signup" component={RegisterForm} />
+
+          <Route path="/" component={HomePage} />
         </Switch>
       </div>
     );

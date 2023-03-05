@@ -42,21 +42,23 @@ router.get('/:id',  async (req, res, next) => {
 // PUT /api/inventory/:id
   router.put('/:id',  async (req, res, next) => {
     try {
-    //   console.log('req.body ', req.body)
+      // console.log('req.body ', req.body)
       const size = await Size.findOne({
         where: {
           size: req.body.size
         }
       })
-    //   console.log('size ', size);
+      // console.log('size ', size);
+
+      let formattedColor = req.body.color[0].toUpperCase() + req.body.color.slice(1);
 
       const color = await Colorway.findOne({
         where: {
-          color: req.body.color
+          color: formattedColor
         }
       })
 
-    //   console.log('color ', color);
+      // console.log('color ', color);
 
       const item = await Inventory.findOne({
         where: {
