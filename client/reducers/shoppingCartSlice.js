@@ -52,6 +52,19 @@ export const getInventoryQuantity = createAsyncThunk(
   }
 );
 
+export const updateInventoryQuantity = createAsyncThunk(
+  "inventoryQuantity/get",
+  async ({ id, color, size, count }) => {
+    // console.log("inside thunk ", id, " ", color, " ", size);
+    const { data } = await axios.put(`/api/inventory/${id}`, {  
+        color: color,
+        size: size,
+        count: count
+    });
+    return data;
+  }
+);
+
 export const shoppingCartSlice = createSlice({
   name: "cart",
   initialState: {
