@@ -15,6 +15,7 @@ import OrderHistory from "./components/OrderHistory";
 import LoginForm from "./components/LoginForm";
 import RegisterForm from "./components/RegisterForm";
 import CheckoutTunnel from "./components/CheckoutTunnel"
+import StripeIntegration from "./components/StripeIntegration";
 
 /**
  * COMPONENT
@@ -55,7 +56,7 @@ class Routes extends Component {
           <Route path="/men/page/:pagenumber" component={AllProductsPage} />
           <Route exact path="/women" component={AllProductsPage} />
           <Route path="/women/page/:pagenumber" component={AllProductsPage} />
-          <Route path="/checkout" component={Checkout} />
+          <Route path="/checkout" component={StripeIntegration} />
           <Route path="/singleproduct/:id" component={singleProductPage} />
           <Route path="/shoppingcart" component={ShoppingCart} />
           <Route path="/orderconfirmation" component={OrderConfirmation} />

@@ -41,7 +41,7 @@ router.get("/:userId", async (req, res, next) => {
   }
 });
 
-// POST api/carts/:id
+// POST api/carts/:userId
 router.post("/:userId", async (req, res, next) => {
   try {
     const { total, cartItems } = req.body;

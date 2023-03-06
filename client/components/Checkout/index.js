@@ -13,15 +13,25 @@ import {
   addUserCart,
   getLoggedInUserId,
   updateInventoryQuantity,
+  deleteCart
 } from "../../reducers/shoppingCartSlice";
 import "./Checkout.css";
 import ShippingType from "./ShippingType";
 import Payment from "./Payment";
 import ReviewOrder from "./ReviewOrder";
 import { addOrderSummary } from "../../reducers/checkoutSlice";
-import { Link, useHistory} from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 import { makeStyles } from "@material-ui/core/styles";
+
+import {
+  Elements,
+  CardElement,
+  useStripe,
+  useElements,
+} from "@stripe/react-stripe-js";
+import ShippingAddress from "./ShippingAddress";
+import InYourBag from "./InYourBag";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,6 +46,7 @@ const useStyles = makeStyles((theme) => ({
  * COMPONENT
  */
 export const Checkout = (props) => {
+  // const {stripe} = props;
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [address, setAddress] = useState("");
@@ -61,6 +72,10 @@ export const Checkout = (props) => {
   const [cardZip, setCardZip] = useState("");
 
   let [arrivesBy, setArrivesBy] = useState("");
+
+  const [isPaymentLoading, setPaymentLoading] = useState(false);
+  const stripe = useStripe();
+  const elements = useElements();
 
   let [shippingAndHandling, setShippingAndHandling] = useState(8);
   const classes = useStyles();
@@ -90,9 +105,9 @@ export const Checkout = (props) => {
   date1.setDate(date1.getDate() + 7);
   let dateStr1 = date1.toString().split(" ");
 
-  useEffect (() => {
+  useEffect(() => {
     setArrivesBy(`${dateStr1[0]}, ${dateStr1[1]} ${dateStr1[2]}`);
-  }, [])
+  }, []);
 
   const date2 = new Date();
   date2.setDate(date2.getDate() + 3);
@@ -128,38 +143,78 @@ export const Checkout = (props) => {
   };
 
   const handleSubmit = async (evt) => {
-    if(evt.keyCode == 13) return;
+    if (evt.keyCode == 13) return;
     evt.preventDefault();
-    alert("inside handle submit");
-    if (window.localStorage.getItem("token")) {
-      const userId = await dispatch(getLoggedInUserId());
-      let date = new Date();
-      let dateArr = date.toString().split(' ');
-      await dispatch(
-        addOrderSummary({
-          userId: userId.payload,
-          total: totalPrice,
-          orderItems: cartItems,
-          orderDate: `${dateArr[0]}, ${dateArr[1]} ${dateArr[2]}`
-        })
-      );
-    } else {
-      console.log("guest user order summary not saved ");
-      // await dispatch(addOrderSummary({userId: 1, total: totalPrice, orderItems: cartItems}));
-    }
+    // alert("inside handle submit");
 
-    for (let i = 0; i < cartItems.length; i++) {
-      await dispatch(updateInventoryQuantity({id: cartItems[i].id, color: cartItems[i].color, size: cartItems[i].size, count: cartItems[i].quantity}));
+    if (!stripe || !elements) {
+      return;
     }
+    setPaymentLoading(true);
 
-    window.localStorage.removeItem("cart");
-    history.push({
-      pathname: "/orderconfirmation",
-      state: {
-        // location state
-        email: email,
+    const response = await fetch("/secret");
+    const { client_secret: clientSecret } = await response.json();
+    console.log("clientSecret ", clientSecret);
+    console.log("card elements ", elements.getElement(CardElement));
+    const paymentResult = await stripe.confirmCardPayment(clientSecret, {
+      payment_method: {
+        card: elements.getElement(CardElement),
+        billing_details: {
+          name: `${firstName} ${lastName}`,
+        },
       },
     });
+    setPaymentLoading(false);
+    if (paymentResult.error) {
+      alert(paymentResult.error.message);
+      history.push('./checkout');
+    } else {
+      if (paymentResult.paymentIntent.status === "succeeded") {
+        alert("Payment successfully submitted!");
+        if (window.localStorage.getItem("token")) {
+          const userId = await dispatch(getLoggedInUserId());
+          let date = new Date();
+          let dateArr = date.toString().split(" ");
+          await dispatch(
+            addOrderSummary({
+              userId: userId.payload,
+              total: totalPrice,
+              orderItems: cartItems,
+              orderDate: `${dateArr[0]}, ${dateArr[1]} ${dateArr[2]}`,
+            })
+          );
+        } else {
+          console.log("guest user order summary not saved ");
+        }
+    
+        for (let i = 0; i < cartItems.length; i++) {
+          await dispatch(
+            updateInventoryQuantity({
+              id: cartItems[i].id,
+              color: cartItems[i].color,
+              size: cartItems[i].size,
+              count: cartItems[i].quantity,
+            })
+          );
+        }
+        await dispatch(deleteCart());
+        await dispatch(setTotalQuantity(0));
+    
+        window.localStorage.removeItem("cart");
+        history.push({
+          pathname: "/orderconfirmation",
+          state: {
+            // location state
+            email: email,
+          },
+        });
+
+
+
+      }
+    }
+
+    
   };
 
   return (
@@ -171,136 +226,49 @@ export const Checkout = (props) => {
             onSubmit={(evt) => handleSubmit(evt)}
             className="column"
           >
-            {reviewOrder ? (
-              <div className="order-review-with-place-order-container">
-                <ReviewOrder
-                  firstName={firstName}
-                  lastName={lastName}
-                  address={address}
-                  city={city}
-                  state={state}
-                  postalCode={postalCode}
-                  phoneNumber={phoneNumber}
-                  email={email}
-                />
-                <div className="checkout-submit-button-container">
-                  <button
-                    type="submit"
-                    onClick={(e) => handleSubmit(e)}
-                    className="place-order-btn"
-                  >
-                    Place Order
-                  </button>
-                </div>
-              </div>
-            ) : (
-              <div className="shipping-address-container">
-                <h2 className="form-title">Shipping Address</h2>
-                <div className="form-field">
-                  <input
-                    value={firstName}
-                    onChange={(evt) => setFirstName(evt.target.value)}
-                    placeholder="First Name *"
-                    className="checkout-form-input"
-                    required
-                  />
-
-                  <input
-                    value={lastName}
-                    onChange={(evt) => setLastName(evt.target.value)}
-                    placeholder="Last Name *"
-                    className="checkout-form-input"
-                    required
-                  />
-                </div>
-
-                <div className="form-field">
-                  <input
-                    value={address}
-                    onChange={(evt) => setAddress(evt.target.value)}
-                    placeholder="Address *"
-                    className="checkout-form-input"
-                    required
-                  />
-                </div>
-
-                <div className="form-field">
-                  <input
-                    value={city}
-                    onChange={(evt) => setCity(evt.target.value)}
-                    placeholder="City *"
-                    className="checkout-form-input"
-                    required
-                  />
-                  <input
-                    value={state}
-                    onChange={(evt) => setState(evt.target.value)}
-                    placeholder="State *"
-                    className="checkout-form-input"
-                    required
-                  />
-                  <input
-                    value={postalCode}
-                    onChange={(evt) => setPostalCode(evt.target.value)}
-                    placeholder="Postal Code *"
-                    className="checkout-form-input"
-                    required
-                  />
-                </div>
-
-                <div className="form-field">
-                  <input
-                    type="email"
-                    value={email}
-                    onChange={(evt) => setEmail(evt.target.value)}
-                    placeholder="Email *"
-                    className="checkout-form-input"
-                    required
-                  />
-
-                  <input
-                    value={phoneNumber}
-                    onChange={(evt) => setPhoneNumber(evt.target.value)}
-                    placeholder="Phone Number *"
-                    className="checkout-form-input"
-                    required
-                  />
-                </div>
-
-                <div className="checkout-submit-button-container">
-                  <button
-                    className="shipping-btn"
-                    onClick={() => setShowShipping(true)}
-                  >
-                    Continue To Shipping
-                  </button>
-
-                  {/* SHIPPING */}
-                </div>
-                {showShipping ? (
-                  <ShippingType
-                    setShowPayment={setShowPayment}
-                    handleShippingType={handleShippingType}
-                    dateStr1={dateStr1}
-                    dateStr2={dateStr2}
-                    dateStr3={dateStr3}
-                  />
-                ) : (
-                  <div className="shipping-header">
-                    <h2>Shipping</h2>
+            {showPayment ? (
+              <>
+                <div className="payment-container">
+                  <div className="payment-header">
+                    <h2>Payment</h2>
                   </div>
-                )}
 
-                {/* PAYMENT */}
-                {showPayment ? (
+                  <label htmlFor="fname">Accepted Cards</label>
+                  <div className="payment-icon-container">
+                    <i
+                      className="payment-icon fa fa-cc-visa"
+                      style={{ color: "navy" }}
+                    ></i>
+                    <i
+                      className="payment-icon fa fa-cc-amex"
+                      style={{ color: "blue" }}
+                    ></i>
+                    <i
+                      className="payment-icon fa fa-cc-mastercard"
+                      style={{ color: "red" }}
+                    ></i>
+                    <i
+                      className="fa fa-cc-discover"
+                      style={{ color: "orange" }}
+                    ></i>
+                  </div>
+
+                  <div className="credit-card-details">
+                    <div className="form-field">
+                      <CardElement
+                        className="card"
+                        options={{
+                          style: {
+                            base: {
+                              backgroundColor: "white",
+                            },
+                          },
+                        }}
+                      />
+                    </div>
+                  </div>
+
                   <Payment
-                    setCardNumber={setCardNumber}
-                    setExpDate={setExpDate}
-                    setSecurityCode={setSecurityCode}
-                    setReviewOrder={setReviewOrder}
-                    cardNumber={cardNumber}
-                    expDate={expDate}
-                    securityCode={securityCode}
                     fullName={fullName}
                     setFullName={setFullName}
                     cardAddress={cardAddress}
@@ -320,9 +288,74 @@ export const Checkout = (props) => {
                     state={state}
                     postalCode={postalCode}
                   />
+                </div>
+
+                <div className="order-review-with-place-order-container">
+                  <ReviewOrder
+                    firstName={firstName}
+                    lastName={lastName}
+                    address={address}
+                    city={city}
+                    state={state}
+                    postalCode={postalCode}
+                    phoneNumber={phoneNumber}
+                    email={email}
+                  />
+                  <div className="checkout-submit-button-container">
+                    <button
+                      type="submit"
+                      onClick={(e) => handleSubmit(e)}
+                      className="place-order-btn"
+                    >
+                      Place Order
+                    </button>
+                  </div>
+                </div>
+              </>
+            ) : (
+              // Shipping Address
+              <div className="shipping-address-container">
+                <h2>Shipping Address</h2>
+                <ShippingAddress
+                  firstName={firstName}
+                  setFirstName={setFirstName}
+                  lastName={lastName}
+                  setLastName={setLastName}
+                  address={address}
+                  setAddress={setAddress}
+                  city={city}
+                  setCity={setCity}
+                  state={state}
+                  setState={setState}
+                  postalCode={postalCode}
+                  setPostalCode={setPostalCode}
+                  phoneNumber={phoneNumber}
+                  setPhoneNumber={setPhoneNumber}
+                  email={email}
+                  setEmail={setEmail}
+                />
+
+                <div className="checkout-submit-button-container">
+                  <button
+                    className="shipping-btn"
+                    onClick={() => setShowShipping(true)}
+                  >
+                    Continue To Shipping
+                  </button>
+                </div>
+
+                {/* Shipping Type */}
+                {showShipping ? (
+                  <ShippingType
+                    setShowPayment={setShowPayment}
+                    handleShippingType={handleShippingType}
+                    dateStr1={dateStr1}
+                    dateStr2={dateStr2}
+                    dateStr3={dateStr3}
+                  />
                 ) : (
-                  <div className="payment-header">
-                    <h2>Payment</h2>
+                  <div className="shipping-header">
+                    <h2>Shipping</h2>
                   </div>
                 )}
               </div>
@@ -331,76 +364,14 @@ export const Checkout = (props) => {
         </div>
       </div>
 
-      <div className="in-your-bag">
-        <h2 className="form-title">In Your Bag</h2>
-        <table className="checkout-table">
-          <tbody>
-            <tr>
-              <td className="data-col-left checkout-td">Subtotal</td>
-              <td className="checkout-data-col-right checkout-td">
-                ${subTotalPrice.toFixed(2)}
-              </td>
-            </tr>
-            <tr>
-              <td className="data-col-left checkout-td">Estimated Shipping</td>
-              <td className="checkout-data-col-right checkout-td">
-                ${shippingAndHandling.toFixed(2)}
-              </td>
-            </tr>
-            <tr>
-              <td className="data-col-left checkout-td">Estimated Tax</td>
-              <td className="checkout-data-col-right checkout-td">
-                ${estimatedTax.toFixed(2)}
-              </td>
-            </tr>
-            <tr className="">
-              <td className="data-col-left checkout-td">Total</td>
-              <td className="checkout-data-col-right checkout-td">
-                ${totalPrice.toFixed(2)}
-              </td>
-            </tr>
-          </tbody>
-        </table>
-
-        <div>
-          <div className="shipping-right-col">Shipping</div>
-          <div className="arrives-by">Arrives by {arrivesBy}</div>
-        </div>
-        <div className="cart-items">
-          {cartItems && cartItems.length ? (
-            cartItems.map((product) => {
-              return (
-                <div
-                  className="cart-item-card"
-                  key={`${product.id}-${product.size}-${product.color}`}
-                >
-                  <div className="cart-item-top">
-                    <div className="cart-item-left-col">
-                      <img
-                        src={product.imageUrl}
-                        className="checkout-cart-item-img"
-                      />
-                    </div>
-                    <div className="checkout-cart-item-right-col">
-                      <div className="item-details">
-                        <h3>{product.name}</h3>
-                        <div>{product.color}</div>
-                        <div>{product.size}</div>
-                        <div>Qty: {product.quantity}</div>
-                        <div>${product.totalPrice.toFixed(2)}</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              );
-            })
-          ) : (
-            <div className="empty-cart">
-              There are no items in your shopping cart
-            </div>
-          )}
-        </div>
-      </div>
+      <InYourBag
+        subTotalPrice={subTotalPrice}
+        shippingAndHandling={shippingAndHandling}
+        estimatedTax={estimatedTax}
+        totalPrice={totalPrice}
+        arrivesBy={arrivesBy}
+        cartItems={cartItems}
+      />
     </div>
   );
 };

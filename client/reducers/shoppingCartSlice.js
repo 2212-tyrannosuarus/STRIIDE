@@ -82,6 +82,7 @@ export const shoppingCartSlice = createSlice({
     },
     addToCart(state, action) {
       const newItem = action.payload;
+      newItem.color = newItem.color[0].toUpperCase() + newItem.color.slice(1)
       const existingItem = state.itemsList.find(
         (item) =>
           item.id === newItem.id &&
