@@ -1,9 +1,7 @@
-import "./AllProductsPage.css";
-import React, { useEffect } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-
-export default function ItemIcon(props) {
-  const { product, sex } = props;
+export default function ProductIconInv(props) {
+  const { product, setDisplay } = props;
   let colors = "";
   const availableColor = () => {
     if (product.black_images.length > 0) {
@@ -28,23 +26,19 @@ export default function ItemIcon(props) {
   availableColor();
 
   return (
-    <div className="allproducts-product-icon">
+    <div className="admin-product-icon">
       <div className="top">
-        <Link to={`/singleproduct/${product.id}`}>
+        <Link
+          to={`/adminpage/inventory/editinv/${product.id}`}
+          onClick={() => setDisplay("manageinv")}
+        >
           {" "}
-          <img
-            src={product.image}
-            width="100%"
-            height="same-as-width"
-            alt={product.name}
-          ></img>
+          <img src={product.image} width="100%" height="same-as-width"></img>
         </Link>
       </div>
       <div className="bottom">
-        <h3>{product.name}</h3>
-        <p>
-          {sex} {product.product_category} Shoe
-        </p>
+        <h2>{product.name}</h2>
+        <p>{product.product_category}</p>
         {colors}
         <p>${product.price}</p>
       </div>

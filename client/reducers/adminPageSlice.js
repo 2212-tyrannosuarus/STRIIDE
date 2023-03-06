@@ -63,6 +63,11 @@ export const updateProduct = createAsyncThunk(
   }
 );
 
+export const grabSizes = createAsyncThunk("admin/getSizes", async () => {
+  const { data } = await axios.get(`/api/products/size`);
+  return data;
+});
+
 export const adminSlice = createSlice({
   name: "adminPage",
   initialState: {
@@ -70,6 +75,16 @@ export const adminSlice = createSlice({
     allUsers: [],
     manageProduct: {},
     manageUser: {},
+    size: [],
+    sizeTable: {
+      firstColumn: [],
+      BlackC: [],
+      WhiteC: [],
+      BlueC: [],
+      GreenC: [],
+      PinkC: [],
+      PurpleC: [],
+    },
     errorMsg: "",
   },
   reducers: {
@@ -79,6 +94,100 @@ export const adminSlice = createSlice({
         (state.manageProduct = {}),
         (state.manageUser = {}),
         (state.errorMsg = "");
+    },
+    manifestShoeTable(state) {},
+    fillShoeTable(state) {
+      for (let i = 0; i < state.size.length; i++) {
+        state.sizeTable.firstColumn.push(state.size[i].size);
+        if (state.manageProduct.black_images.length === 0) {
+          state.sizeTable.BlackC.push(0);
+        } else {
+          for (let j = 0; j < state.manageProduct.inventories.length; j++) {
+            if (
+              state.manageProduct.inventories[j].colorwayId === 1 &&
+              state.manageProduct.inventories[j].sizeId === i + 1
+            ) {
+              state.sizeTable.BlackC.push(
+                state.manageProduct.inventories[j].count
+              );
+            }
+          }
+        }
+        if (state.manageProduct.white_images.length === 0) {
+          state.sizeTable.WhiteC.push(0);
+        } else {
+          for (let j = 0; j < state.manageProduct.inventories.length; j++) {
+            if (
+              state.manageProduct.inventories[j].colorwayId === 2 &&
+              state.manageProduct.inventories[j].sizeId === i + 1
+            ) {
+              state.sizeTable.WhiteC.push(
+                state.manageProduct.inventories[j].count
+              );
+            }
+          }
+        }
+        if (state.manageProduct.blue_images.length === 0) {
+          state.sizeTable.BlueC.push(0);
+        } else {
+          for (let j = 0; j < state.manageProduct.inventories.length; j++) {
+            console.log(state.manageProduct.inventories[i].colorwayId);
+            if (
+              state.manageProduct.inventories[j].colorwayId === 3 &&
+              state.manageProduct.inventories[j].sizeId === i + 1
+            ) {
+              state.sizeTable.BlueC.push(
+                state.manageProduct.inventories[j].count
+              );
+            }
+          }
+        }
+        if (state.manageProduct.green_images.length === 0) {
+          state.sizeTable.GreenC.push(0);
+        } else {
+          for (let j = 0; j < state.manageProduct.inventories.length; j++) {
+            console.log(state.manageProduct.inventories[i].colorwayId);
+            if (
+              state.manageProduct.inventories[j].colorwayId === 4 &&
+              state.manageProduct.inventories[j].sizeId === i + 1
+            ) {
+              state.sizeTable.GreenC.push(
+                state.manageProduct.inventories[j].count
+              );
+            }
+          }
+        }
+        if (state.manageProduct.pink_images.length === 0) {
+          state.sizeTable.PinkC.push(0);
+        } else {
+          for (let j = 0; j < state.manageProduct.inventories.length; j++) {
+            console.log(state.manageProduct.inventories[i].colorwayId);
+            if (
+              state.manageProduct.inventories[j].colorwayId === 5 &&
+              state.manageProduct.inventories[j].sizeId === i + 1
+            ) {
+              state.sizeTable.PinkC.push(
+                state.manageProduct.inventories[j].count
+              );
+            }
+          }
+        }
+        if (state.manageProduct.purple_images.length === 0) {
+          state.sizeTable.PurpleC.push(0);
+        } else {
+          for (let j = 0; j < state.manageProduct.inventories.length; j++) {
+            console.log(state.manageProduct.inventories[i].colorwayId);
+            if (
+              state.manageProduct.inventories[j].colorwayId === 6 &&
+              state.manageProduct.inventories[j].sizeId === i + 1
+            ) {
+              state.sizeTable.PurpleC.push(
+                state.manageProduct.inventories[j].count
+              );
+            }
+          }
+        }
+      }
     },
   },
   extraReducers: (build) => {
@@ -90,6 +199,15 @@ export const adminSlice = createSlice({
         state.allUsers = action.payload;
       })
       .addCase(fetchSingleProduct.fulfilled, (state, action) => {
+        state.sizeTable = {
+          firstColumn: [],
+          BlackC: [],
+          WhiteC: [],
+          BlueC: [],
+          GreenC: [],
+          PinkC: [],
+          PurpleC: [],
+        };
         state.manageProduct = action.payload;
       })
       .addCase(fetchSingleUser.fulfilled, (state, action) => {
@@ -100,6 +218,9 @@ export const adminSlice = createSlice({
       })
       .addCase(updateProduct.fulfilled, (state, action) => {
         state.manageProduct = action.payload;
+      })
+      .addCase(grabSizes.fulfilled, (state, action) => {
+        state.size = action.payload;
       });
   },
 });
@@ -115,6 +236,12 @@ export const selectOneAdminProduct = (state) => {
 };
 export const selectOneAdminUser = (state) => {
   return state.admin.manageUser;
+};
+export const selectSizes = (state) => {
+  return state.admin.size;
+};
+export const selectSizesTable = (state) => {
+  return state.admin.sizeTable;
 };
 export const adminReduce = adminSlice.actions;
 
