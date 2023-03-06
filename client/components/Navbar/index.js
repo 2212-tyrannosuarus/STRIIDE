@@ -100,6 +100,10 @@ const UserMenu = (props) => {
     navigate.push("/adminpage");
   };
 
+  const handleOrderHistoryPanel = () => {
+    navigate.push("/orderhistory");
+  };
+
   const classes = useStyles();
 
   return (
@@ -126,6 +130,7 @@ const UserMenu = (props) => {
           <MenuItem onClick={handleAdminPanel}>Admin Panel</MenuItem>
         ) : null}
         <MenuItem onClick={handleLogout}>Logout</MenuItem>
+        <MenuItem onClick={handleOrderHistoryPanel}>Order History</MenuItem>
       </Menu>
     </div>
   );
@@ -194,8 +199,6 @@ const Navbar = (props) => {
 
 const mapState = (state) => {
   return {
-    // Being 'logged in' for our purposes will be defined has having a state.auth that has a truthy id.
-    // Otherwise, state.auth will be an empty object, and state.auth.id will be falsey
     user: state.auth,
     isLoggedIn: !!state.auth.id,
   };
