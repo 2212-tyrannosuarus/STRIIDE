@@ -19,9 +19,16 @@ import ShippingType from "./ShippingType";
 import Payment from "./Payment";
 import ReviewOrder from "./ReviewOrder";
 import { addOrderSummary } from "../../reducers/checkoutSlice";
-import { Link, useHistory} from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 import { makeStyles } from "@material-ui/core/styles";
+
+import {
+  Elements,
+  CardElement,
+  useStripe,
+  useElements,
+} from "@stripe/react-stripe-js";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,6 +43,7 @@ const useStyles = makeStyles((theme) => ({
  * COMPONENT
  */
 export const Checkout = (props) => {
+  // const {stripe} = props;
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [address, setAddress] = useState("");
@@ -61,6 +69,10 @@ export const Checkout = (props) => {
   const [cardZip, setCardZip] = useState("");
 
   let [arrivesBy, setArrivesBy] = useState("");
+
+  const [isPaymentLoading, setPaymentLoading] = useState(false);
+  const stripe = useStripe();
+  const elements = useElements();
 
   let [shippingAndHandling, setShippingAndHandling] = useState(8);
   const classes = useStyles();
@@ -90,9 +102,9 @@ export const Checkout = (props) => {
   date1.setDate(date1.getDate() + 7);
   let dateStr1 = date1.toString().split(" ");
 
-  useEffect (() => {
+  useEffect(() => {
     setArrivesBy(`${dateStr1[0]}, ${dateStr1[1]} ${dateStr1[2]}`);
-  }, [])
+  }, []);
 
   const date2 = new Date();
   date2.setDate(date2.getDate() + 3);
@@ -128,19 +140,46 @@ export const Checkout = (props) => {
   };
 
   const handleSubmit = async (evt) => {
-    if(evt.keyCode == 13) return;
+    if (evt.keyCode == 13) return;
     evt.preventDefault();
     alert("inside handle submit");
+
+    if (!stripe || !elements) {
+      return;
+    }
+    setPaymentLoading(true);
+
+    const response = await fetch("/secret");
+    const { client_secret: clientSecret } = await response.json();
+    console.log("clientSecret ", clientSecret);
+    console.log("card elements ", elements.getElement(CardElement));
+    const paymentResult = await stripe.confirmCardPayment(clientSecret, {
+      payment_method: {
+        card: elements.getElement(CardElement),
+        billing_details: {
+          name: `${firstName} ${lastName}`,
+        },
+      },
+    });
+    setPaymentLoading(false);
+    if (paymentResult.error) {
+      alert(paymentResult.error.message);
+    } else {
+      if (paymentResult.paymentIntent.status === "succeeded") {
+        alert("Success!");
+      }
+    }
+
     if (window.localStorage.getItem("token")) {
       const userId = await dispatch(getLoggedInUserId());
       let date = new Date();
-      let dateArr = date.toString().split(' ');
+      let dateArr = date.toString().split(" ");
       await dispatch(
         addOrderSummary({
           userId: userId.payload,
           total: totalPrice,
           orderItems: cartItems,
-          orderDate: `${dateArr[0]}, ${dateArr[1]} ${dateArr[2]}`
+          orderDate: `${dateArr[0]}, ${dateArr[1]} ${dateArr[2]}`,
         })
       );
     } else {
@@ -149,7 +188,14 @@ export const Checkout = (props) => {
     }
 
     for (let i = 0; i < cartItems.length; i++) {
-      await dispatch(updateInventoryQuantity({id: cartItems[i].id, color: cartItems[i].color, size: cartItems[i].size, count: cartItems[i].quantity}));
+      await dispatch(
+        updateInventoryQuantity({
+          id: cartItems[i].id,
+          color: cartItems[i].color,
+          size: cartItems[i].size,
+          count: cartItems[i].quantity,
+        })
+      );
     }
 
     window.localStorage.removeItem("cart");
@@ -171,31 +217,95 @@ export const Checkout = (props) => {
             onSubmit={(evt) => handleSubmit(evt)}
             className="column"
           >
-            {reviewOrder ? (
-              <div className="order-review-with-place-order-container">
-                <ReviewOrder
-                  firstName={firstName}
-                  lastName={lastName}
-                  address={address}
-                  city={city}
-                  state={state}
-                  postalCode={postalCode}
-                  phoneNumber={phoneNumber}
-                  email={email}
-                />
-                <div className="checkout-submit-button-container">
-                  <button
-                    type="submit"
-                    onClick={(e) => handleSubmit(e)}
-                    className="place-order-btn"
-                  >
-                    Place Order
-                  </button>
+            {showPayment ? (
+              <>
+                <div className="payment-container">
+                  <div className="payment-header">
+                    <h2>Payment</h2>
+                  </div>
+
+                  <label htmlFor="fname">Accepted Cards</label>
+                  <div className="payment-icon-container">
+                    <i
+                      className="payment-icon fa fa-cc-visa"
+                      style={{ color: "navy" }}
+                    ></i>
+                    <i
+                      className="payment-icon fa fa-cc-amex"
+                      style={{ color: "blue" }}
+                    ></i>
+                    <i
+                      className="payment-icon fa fa-cc-mastercard"
+                      style={{ color: "red" }}
+                    ></i>
+                    <i
+                      className="fa fa-cc-discover"
+                      style={{ color: "orange" }}
+                    ></i>
+                  </div>
+
+                  <div className="credit-card-details">
+                    <div className="form-field">
+                      <CardElement
+                        className="card"
+                        options={{
+                          style: {
+                            base: {
+                              backgroundColor: "white",
+                            },
+                          },
+                        }}
+                      />
+                    </div>
+                  </div>
+
+                  <Payment
+                    fullName={fullName}
+                    setFullName={setFullName}
+                    cardAddress={cardAddress}
+                    setCardAddress={setCardAddress}
+                    cardCity={cardCity}
+                    setCardCity={setCardCity}
+                    cardEmail={cardEmail}
+                    setCardEmail={setCardEmail}
+                    cardState={cardState}
+                    setCardState={setCardState}
+                    cardZip={cardZip}
+                    setCardZip={setCardZip}
+                    handleChange={handleChange}
+                    checked={checked}
+                    address={address}
+                    city={city}
+                    state={state}
+                    postalCode={postalCode}
+                  />
                 </div>
-              </div>
+
+                <div className="order-review-with-place-order-container">
+                  <ReviewOrder
+                    firstName={firstName}
+                    lastName={lastName}
+                    address={address}
+                    city={city}
+                    state={state}
+                    postalCode={postalCode}
+                    phoneNumber={phoneNumber}
+                    email={email}
+                  />
+                  <div className="checkout-submit-button-container">
+                    <button
+                      type="submit"
+                      onClick={(e) => handleSubmit(e)}
+                      className="place-order-btn"
+                    >
+                      Place Order
+                    </button>
+                  </div>
+                </div>
+              </>
             ) : (
               <div className="shipping-address-container">
-                <h2 className="form-title">Shipping Address</h2>
+                <h2 >Shipping Address</h2>
                 <div className="form-field">
                   <input
                     value={firstName}
@@ -292,39 +402,16 @@ export const Checkout = (props) => {
                 )}
 
                 {/* PAYMENT */}
-                {showPayment ? (
-                  <Payment
-                    setCardNumber={setCardNumber}
-                    setExpDate={setExpDate}
-                    setSecurityCode={setSecurityCode}
-                    setReviewOrder={setReviewOrder}
-                    cardNumber={cardNumber}
-                    expDate={expDate}
-                    securityCode={securityCode}
-                    fullName={fullName}
-                    setFullName={setFullName}
-                    cardAddress={cardAddress}
-                    setCardAddress={setCardAddress}
-                    cardCity={cardCity}
-                    setCardCity={setCardCity}
-                    cardEmail={cardEmail}
-                    setCardEmail={setCardEmail}
-                    cardState={cardState}
-                    setCardState={setCardState}
-                    cardZip={cardZip}
-                    setCardZip={setCardZip}
-                    handleChange={handleChange}
-                    checked={checked}
-                    address={address}
-                    city={city}
-                    state={state}
-                    postalCode={postalCode}
-                  />
+                {/* {showPayment ? (
+                  <>
+                  
+            </>
+                  
                 ) : (
                   <div className="payment-header">
-                    <h2>Payment</h2>
+                    <h2>Order Review and Payment</h2>
                   </div>
-                )}
+                )} */}
               </div>
             )}
           </form>

@@ -115,13 +115,13 @@
   flex-direction: column;
 }
 
-.shipping-header,
-.payment-header {
+.shipping-header{
   border-top: 2px solid #ececec;
   padding-top: 5px;
   width: 100%;
   display: flex;
   flex-direction: column;
+  border-bottom: 2px solid #ececec;
 }
 
 .shipping-option {
@@ -212,23 +212,28 @@
   margin-top: 0px;
 }
 
+.confirmation-flex-container {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
 .confirmation-container {
   display: flex;
   justify-content: center;
   flex-direction: column;
-  width: 100%;
-  /* border: 2px solid black; */
-  /* margin-left: 25% */
+  width: 50%;
+  border: 2px solid #cccccc;
+  border-radius: 10px;
+  margin-top: 50px;
+  padding-bottom: 30px;
 }
 
-.confirmation-container > h3,
-.confirmation-container > p {
-  display: flex;
-  /* border: 2px solid black; */
-  margin: auto;
-  width: 50%;
-  align-content: center;
+.confirmation-text {
+  text-align: center;
+
 }
+
 
 .billing-form-field {
   display: flex;
@@ -344,4 +349,22 @@
 .order-history-h2 {
   margin-left: 20px;
   margin-bottom: 0px;
+}
+
+.shopping-bag-icon-container {
+  display: flex;
+  justify-content: center;
+  /* border: 2px solid black; */
+  width: 90px;
+  margin-left: 22vw;
+  margin-top: 20px;
+}
+
+.card {
+  background-color: white;
+  padding: 10px 20px 11px;
+  border-radius: 5px;
+  width: 100%;
+  border: 1px solid #afafaf;
+  box-shadow: 0px 4px 5.5px 0px rgba(0, 0, 0, 0.07);
 }

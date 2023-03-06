@@ -376,7 +376,6 @@ export const ShoppingCart = (props) => {
               <td className="data-col-left">Estimated Shipping and Handling</td>
               <td className="data-col-right">
                 {totalQuantity > 0 ? `$${shippingAndHandling.toFixed(2)}`: `$${shippingAndHandlingForNoItems.toFixed(2)}`}
-                {/* ${shippingAndHandling.toFixed(2)} */}
               </td>
             </tr>
             <tr>
@@ -386,7 +385,7 @@ export const ShoppingCart = (props) => {
             <tr className="">
               <td className="data-col-left total-row">Total</td>
               <td className="data-col-right total-row">
-                ${totalPrice.toFixed(2)}
+              {totalQuantity > 0 ? `$${totalPrice.toFixed(2)}`: `$${shippingAndHandlingForNoItems.toFixed(2)}`}
               </td>
             </tr>
           </tbody>

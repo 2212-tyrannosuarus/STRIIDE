@@ -22,7 +22,7 @@ export const ReviewOrder = (props) => {
     return (
         <div className="order-review-container">
               <div className="order-review-delivery">
-                <h3>Delivery Options</h3>
+                <h2>Order Review - Delivery Options</h2>
                 <div className="order-review-name-address">
                   <p>{firstName} {lastName}</p>
                   <p>{address}</p>
