@@ -101,7 +101,7 @@ const UserMenu = (props) => {
   };
 
   const handleProfilePanel = () => {
-    navigate.push("/profilepage");
+    navigate.push("/profile");
   };
 
   const handleOrderHistoryPanel = () => {

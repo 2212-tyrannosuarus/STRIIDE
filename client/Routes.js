@@ -16,7 +16,6 @@ import LoginForm from "./components/LoginForm";
 import RegisterForm from "./components/RegisterForm";
 import CheckoutTunnel from "./components/CheckoutTunnel";
 import StripeIntegration from "./components/StripeIntegration";
-import Profile from "./components/Profile";
 
 /**
  * COMPONENT
@@ -63,7 +62,6 @@ class Routes extends Component {
           <Route path="/orderconfirmation" component={OrderConfirmation} />
           <Route path="/orderhistory" component={OrderHistory} />
           <Route path="/checkoutTunnel" component={CheckoutTunnel} />
-          <Route path="/profile" component={Profile} />
 
           <PrivateRoute exact path="/adminpage">
             <AdminDashBoardPage />
