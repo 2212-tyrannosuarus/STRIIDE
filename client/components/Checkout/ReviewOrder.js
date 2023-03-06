@@ -1,18 +1,6 @@
 import { Email } from "@material-ui/icons";
 import React, { useEffect, useState } from "react";
 import { connect, useDispatch, useSelector } from "react-redux";
-import {
-  selectAllCartItems,
-  fetchAllProducts,
-  addToCart,
-  setShowCart,
-  removeFromCart,
-  selectTotalQuantity,
-  setTotalQuantity,
-  fetchLoggedInUserCart,
-  deleteUserCart,
-  addUserCart,
-} from "../../reducers/shoppingCartSlice";
 import "./Checkout.css";
 
 export const ReviewOrder = (props) => {

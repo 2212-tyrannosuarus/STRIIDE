@@ -244,6 +244,7 @@
 .billing-form-field-container {
   display: flex;
   flex-direction: column;
+  padding-top: 15px;
 }
 
 /* Customize the label (the container) */

@@ -18,7 +18,7 @@ import {
   deleteCart,
   getIsLoggedIn,
   setIsLoggedIn,
-  setGotLoogedInUserCart
+  setGotLoogedInUserCart,
 } from "../../reducers/shoppingCartSlice";
 import "./ShoppingCart.css";
 import { Link } from "react-router-dom";
@@ -28,6 +28,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { TrafficRounded } from "@material-ui/icons";
+import CartSummary from "./CartSummary";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -43,20 +44,17 @@ const useStyles = makeStyles((theme) => ({
  */
 export const ShoppingCart = (props) => {
   const classes = useStyles();
-  //   const {username} = props
   const cartItems = useSelector(selectAllCartItems);
   let totalQuantity = useSelector(selectTotalQuantity);
   console.log("cart items", cartItems);
   const dispatch = useDispatch();
   let subTotalPrice = 0;
-  // const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const isLoggedIn = useSelector(getIsLoggedIn)
+  const isLoggedIn = useSelector(getIsLoggedIn);
   let notification = useSelector((state) => state.notification.notification);
   let gotLoggedInUserCart = useSelector(selectgotLoggedInUserCart);
 
   const date = new Date();
   date.setDate(date.getDate() + 7);
-  console.log("date ", date);
   let dateStr = date.toString().split(" ");
 
   if (window.localStorage.getItem("cart")) {
@@ -67,6 +65,7 @@ export const ShoppingCart = (props) => {
     dispatch(setTotalQuantity(totalQuantity));
   }
 
+  // Adding items to cart when user increments cart items by clicking '+'
   const handleAddToCart = async (
     name,
     id,
@@ -76,7 +75,7 @@ export const ShoppingCart = (props) => {
     image,
     quantity
   ) => {
-
+    // notify user while the process of adding item is taking place
     dispatch(
       showNotification({
         open: true,
@@ -85,13 +84,11 @@ export const ShoppingCart = (props) => {
       })
     );
 
+    //check inventory before adding item
     color = color[0].toUpperCase() + color.slice(1);
-
-    console.log(id, ' ', color, ' ', size);
-    
-    let inventoryQuantity = await dispatch(getInventoryQuantity({id: id, color: color, size: size}));
-
-    console.log('inventoryQuantity ', inventoryQuantity)
+    let inventoryQuantity = await dispatch(
+      getInventoryQuantity({ id: id, color: color, size: size })
+    );
 
     await dispatch(
       addToCart({
@@ -105,17 +102,21 @@ export const ShoppingCart = (props) => {
       })
     );
 
+    // for logged in users delete cart in database and add new cart on every addition of cart item
     if (window.localStorage.getItem("token")) {
       const userId = await dispatch(getLoggedInUserId());
       await dispatch(deleteUserCart(userId.payload));
       await dispatch(
-        addUserCart({ id: userId.payload, total: totalPrice, cartItems: cartItems }) //userId
+        addUserCart({
+          id: userId.payload,
+          total: totalPrice,
+          cartItems: cartItems,
+        }) 
       );
     }
 
-    
-
-    if (inventoryQuantity.payload === 0){
+    //notification alerting user for success, low inventory or out of stock items
+    if (inventoryQuantity.payload <= 0) {
       dispatch(
         showNotification({
           open: true,
@@ -123,8 +124,7 @@ export const ShoppingCart = (props) => {
           type: "error",
         })
       );
-    }
-    else if (inventoryQuantity.payload < 5) {
+    } else if (inventoryQuantity.payload < 5) {
       dispatch(
         showNotification({
           open: true,
@@ -132,8 +132,7 @@ export const ShoppingCart = (props) => {
           type: "warning",
         })
       );
-    }
-    else {
+    } else {
       dispatch(
         showNotification({
           open: true,
@@ -142,11 +141,11 @@ export const ShoppingCart = (props) => {
         })
       );
     }
-
-   
   };
 
+  // Removing items from cart when user decrements cart items by clicking '-'
   const handleRemoveFromCart = async (id, size, color) => {
+    // notify user while the process of removing item is taking place
     dispatch(
       showNotification({
         open: true,
@@ -154,17 +153,23 @@ export const ShoppingCart = (props) => {
         type: "warning",
       })
     );
+
     await dispatch(removeFromCart({ id, size, color }));
-    if (isLoggedIn) {
+
+    // for logged in users delete cart in database and add new cart on every removal of cart item
+    if (window.localStorage.getItem("token")) {
       const userId = await dispatch(getLoggedInUserId());
       await dispatch(deleteUserCart(userId.payload));
       await dispatch(
-        addUserCart({ id: userId.payload, total: totalPrice, cartItems: cartItems }) //userId
+        addUserCart({
+          id: userId.payload,
+          total: totalPrice,
+          cartItems: cartItems,
+        }) //userId
       );
     }
 
-    
-
+    //notification alerting user for successful removal of cart item
     dispatch(
       showNotification({
         open: true,
@@ -174,10 +179,11 @@ export const ShoppingCart = (props) => {
     );
   };
 
+  // Removing items from cart when user clicks the 'trash' icon
   const handleDeleteFromCart = async (id, quantity, color, size) => {
-    alert("inside delete");
     await dispatch(deleteFromCart({ id, quantity, color, size }));
-    console.log('cart after clicking delete from cart ', cartItems);
+
+    // for logged in users delete cart in database and add new cart on every removal of cart item
     if (window.localStorage.getItem("token")) {
       const userId = await dispatch(getLoggedInUserId());
       await dispatch(deleteUserCart(userId.payload));
@@ -186,10 +192,11 @@ export const ShoppingCart = (props) => {
       );
     }
 
+    //notification alerting user for successful removal of cart item
     dispatch(
       showNotification({
         open: true,
-        message: "Item successfully removed from cart",
+        message: "Item(s) successfully removed from cart",
         type: "success",
       })
     );
@@ -197,69 +204,64 @@ export const ShoppingCart = (props) => {
 
   useEffect(() => {
     async function getLogggedInUserCartItems() {
-      const userId = await dispatch(getLoggedInUserId());
-      console.log("userId ", userId.payload);
-      let { payload } = await dispatch(fetchLoggedInUserCart(userId.payload)); //userId
-      console.log("existing ", payload);
+      const userId = await dispatch(getLoggedInUserId()); //get userId for current logged in user
+      let { payload } = await dispatch(fetchLoggedInUserCart(userId.payload));
 
-      payload.length && payload.forEach((item) => {
-        console.log(typeof item.price, " ", typeof item.quantity);
-        let loggedInCartItemTotalPrice = item.price * item.quantity;
-        handleAddToCart(
-          item.name,
-          item.id,
-          loggedInCartItemTotalPrice,
-          item.color,
-          item.size,
-          item.image,
-          item.quantity
-        );
-      });
+      payload.length &&
+        payload.forEach((item) => {
+          let loggedInCartItemTotalPrice = item.price * item.quantity;
+          handleAddToCart(
+            item.name,
+            item.id,
+            loggedInCartItemTotalPrice,
+            item.color,
+            item.size,
+            item.image,
+            item.quantity
+          );
+        });
       dispatch(setGotLoogedInUserCart(true));
-      window.localStorage.setItem("gotLoggedInUserCart", 'yes')
+      window.localStorage.setItem("gotLoggedInUserCart", "yes");
     }
 
+    // for logged in users get saved cart items
     if (window.localStorage.getItem("token")) {
-      console.log('got Logged in user cart', gotLoggedInUserCart);
-      if (window.localStorage.getItem("gotLoggedInUserCart") !== 'yes' && !gotLoggedInUserCart) {
+      if (
+        window.localStorage.getItem("gotLoggedInUserCart") !== "yes" &&
+        !gotLoggedInUserCart
+      ) {
         dispatch(setIsLoggedIn(true));
         getLogggedInUserCartItems();
-
       }
     }
 
+    // once user logs out, perform actions below
     if (!window.localStorage.getItem("token")) {
-      console.log('inside !window.localStorage');
       if (isLoggedIn) {
-        console.log('inside is LoggedIn');
         window.localStorage.removeItem("cart");
         dispatch(setIsLoggedIn(false));
-        dispatch(setTotalQuantity(0))
-        dispatch(deleteCart())
+        dispatch(setTotalQuantity(0));
+        dispatch(deleteCart());
         dispatch(setGotLoogedInUserCart(false));
-        window.localStorage.removeItem("gotLoggedInUserCart")
+        window.localStorage.removeItem("gotLoggedInUserCart");
         dispatch(
           showNotification({
-            open: false
+            open: false,
           })
         );
       }
     }
-
   }, [dispatch]);
 
-
+  // calculating subtotal price for entire order, everytime user adds or removes item from cart
   cartItems.forEach((item) => {
-    console.log("item inside cartItems.forEach ", item);
     subTotalPrice += item.totalPrice;
-    console.log("subtotal price ", subTotalPrice);
   });
 
   let estimatedTax = 0.0625 * subTotalPrice;
   let shippingAndHandling = 8;
   let totalPrice = subTotalPrice + shippingAndHandling + estimatedTax;
-
-  let shippingAndHandlingForNoItems = 0
+  let shippingAndHandlingForNoItems = 0;
 
   return (
     <div className="shopping-cart-container">
@@ -319,25 +321,25 @@ export const ShoppingCart = (props) => {
                           >
                             -
                           </button>
-                          <div className={classes.root} onClick={() =>
-                                handleDeleteFromCart(
-                                  product.id,
-                                  product.quantity,
-                                  product.color,
-                                  product.size,
-                                )
-                              }>
+                          <div
+                            className={classes.root}
+                            onClick={() =>
+                              handleDeleteFromCart(
+                                product.id,
+                                product.quantity,
+                                product.color,
+                                product.size
+                              )
+                            }
+                          >
                             <IconButton
                               aria-label="delete"
                               disabled
                               color="primary"
                               className="add-delete-btn"
-                              
                             >
                               <DeleteIcon />
                             </IconButton>
-
-                      
                           </div>
                         </div>
                       </div>
@@ -363,54 +365,15 @@ export const ShoppingCart = (props) => {
           )}
         </div>
       </div>
-
-      <div className="cart-summary">
-        <h2>Summary</h2>
-        <table>
-          <tbody>
-            <tr>
-              <td className="data-col-left">Subtotal</td>
-              <td className="data-col-right">${subTotalPrice.toFixed(2)}</td>
-            </tr>
-            <tr>
-              <td className="data-col-left">Estimated Shipping and Handling</td>
-              <td className="data-col-right">
-                {totalQuantity > 0 ? `$${shippingAndHandling.toFixed(2)}`: `$${shippingAndHandlingForNoItems.toFixed(2)}`}
-              </td>
-            </tr>
-            <tr>
-              <td className="data-col-left">Estimated Tax</td>
-              <td className="data-col-right">${estimatedTax.toFixed(2)}</td>
-            </tr>
-            <tr className="">
-              <td className="data-col-left total-row">Total</td>
-              <td className="data-col-right total-row">
-              {totalQuantity > 0 ? `$${totalPrice.toFixed(2)}`: `$${shippingAndHandlingForNoItems.toFixed(2)}`}
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        {window.localStorage.getItem("token") ? (
-          <Link to="/checkout">
-          {cartItems && cartItems.length === 0 ? (
-            <button className="disabled-checkout-btn" disabled>Checkout</button>
-          ): (
-            <button className="checkout-btn">Checkout</button>
-          )}
-          
-        </Link>
-        ) : (
-          <Link to="/checkoutTunnel">
-          {cartItems && cartItems.length === 0 ? (
-            <button className="disabled-checkout-btn" disabled>Checkout</button>
-          ): (
-            <button className="checkout-btn">Checkout</button>
-          )}
-          
-        </Link>
-        )}
-        
-      </div>
+      <CartSummary
+        subTotalPrice={subTotalPrice}
+        totalQuantity={totalQuantity}
+        shippingAndHandling={shippingAndHandling}
+        shippingAndHandlingForNoItems={shippingAndHandlingForNoItems}
+        estimatedTax={estimatedTax}
+        totalPrice={totalPrice}
+        cartItems={cartItems}
+      />
     </div>
   );
 };
