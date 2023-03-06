@@ -16,6 +16,17 @@ router.get("/", async (req, res, next) => {
   }
 });
 
+router.get("/size", async (req, res, next) => {
+  try {
+    const products = await Size.findAll({
+      include: [],
+    });
+    res.json(products);
+  } catch (err) {
+    next(err);
+  }
+});
+
 router.get("/men", async (req, res, next) => {
   try {
     const products = await Product.findAll({
