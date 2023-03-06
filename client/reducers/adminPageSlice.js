@@ -131,7 +131,6 @@ export const adminSlice = createSlice({
           state.sizeTable.BlueC.push(0);
         } else {
           for (let j = 0; j < state.manageProduct.inventories.length; j++) {
-            console.log(state.manageProduct.inventories[i].colorwayId);
             if (
               state.manageProduct.inventories[j].colorwayId === 3 &&
               state.manageProduct.inventories[j].sizeId === i + 1
@@ -146,7 +145,6 @@ export const adminSlice = createSlice({
           state.sizeTable.GreenC.push(0);
         } else {
           for (let j = 0; j < state.manageProduct.inventories.length; j++) {
-            console.log(state.manageProduct.inventories[i].colorwayId);
             if (
               state.manageProduct.inventories[j].colorwayId === 4 &&
               state.manageProduct.inventories[j].sizeId === i + 1
@@ -161,7 +159,6 @@ export const adminSlice = createSlice({
           state.sizeTable.PinkC.push(0);
         } else {
           for (let j = 0; j < state.manageProduct.inventories.length; j++) {
-            console.log(state.manageProduct.inventories[i].colorwayId);
             if (
               state.manageProduct.inventories[j].colorwayId === 5 &&
               state.manageProduct.inventories[j].sizeId === i + 1
@@ -176,7 +173,6 @@ export const adminSlice = createSlice({
           state.sizeTable.PurpleC.push(0);
         } else {
           for (let j = 0; j < state.manageProduct.inventories.length; j++) {
-            console.log(state.manageProduct.inventories[i].colorwayId);
             if (
               state.manageProduct.inventories[j].colorwayId === 6 &&
               state.manageProduct.inventories[j].sizeId === i + 1

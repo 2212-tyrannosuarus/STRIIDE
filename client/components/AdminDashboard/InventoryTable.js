@@ -259,7 +259,7 @@ export default function InventoryTable() {
       <Table className={classes.table} aria-label="customized table">
         <TableHead>
           <TableRow>
-            <StyledTableCell>{product.name} </StyledTableCell>
+            <StyledTableCell>{product.name}</StyledTableCell>
             <StyledTableCell align="right">Black</StyledTableCell>
             <StyledTableCell align="right">White</StyledTableCell>
             <StyledTableCell align="right">Blue</StyledTableCell>
