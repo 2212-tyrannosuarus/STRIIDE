@@ -22,7 +22,7 @@ function Footer() {
         {"."}
       </Typography>
       <Typography variant="body2" color="textSecondary" align="center">
-        Hi Tasneem, Yao, Miro!
+        Hello from Tasneem, Yao, Miro, & Chance!
       </Typography>
     </Box>
   );
