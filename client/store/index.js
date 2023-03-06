@@ -33,7 +33,7 @@ export const store = configureStore({
     checkout: checkoutSlice,
     auth: auth,
     admin: adminSlice,
-    notification: notificationSlice
+    notification: notificationSlice,
   },
 });
 

@@ -14,7 +14,7 @@ import OrderConfirmation from "./components/Checkout/OrderConfirmation";
 import OrderHistory from "./components/OrderHistory";
 import LoginForm from "./components/LoginForm";
 import RegisterForm from "./components/RegisterForm";
-import CheckoutTunnel from "./components/CheckoutTunnel"
+import CheckoutTunnel from "./components/CheckoutTunnel";
 import StripeIntegration from "./components/StripeIntegration";
 
 /**
@@ -62,6 +62,7 @@ class Routes extends Component {
           <Route path="/orderconfirmation" component={OrderConfirmation} />
           <Route path="/orderhistory" component={OrderHistory} />
           <Route path="/checkoutTunnel" component={CheckoutTunnel} />
+
           <PrivateRoute exact path="/adminpage">
             <AdminDashBoardPage />
           </PrivateRoute>

@@ -12,9 +12,10 @@ import MenuItem from "@material-ui/core/MenuItem";
 
 const useStyles = makeStyles((theme) => ({
   navbar: {
-    height: 70,
+    height: 80,
     backgroundColor: "#fff",
     borderBottom: `1px solid ${theme.palette.grey["100"]}`,
+    padding: 5,
   },
   wrapper: {
     maxWidth: "100%",
@@ -100,6 +101,14 @@ const UserMenu = (props) => {
     navigate.push("/adminpage");
   };
 
+  const handleProfilePanel = () => {
+    navigate.push("/profile");
+  };
+
+  const handleOrderHistoryPanel = () => {
+    navigate.push("/orderhistory");
+  };
+
   const classes = useStyles();
 
   return (
@@ -125,6 +134,8 @@ const UserMenu = (props) => {
         {user.status === "admin" ? (
           <MenuItem onClick={handleAdminPanel}>Admin Panel</MenuItem>
         ) : null}
+        <MenuItem onclick={handleProfilePanel}>Profile</MenuItem>
+        <MenuItem onClick={handleOrderHistoryPanel}>Order History</MenuItem>
         <MenuItem onClick={handleLogout}>Logout</MenuItem>
       </Menu>
     </div>
@@ -194,8 +205,6 @@ const Navbar = (props) => {
 
 const mapState = (state) => {
   return {
-    // Being 'logged in' for our purposes will be defined has having a state.auth that has a truthy id.
-    // Otherwise, state.auth will be an empty object, and state.auth.id will be falsey
     user: state.auth,
     isLoggedIn: !!state.auth.id,
   };
