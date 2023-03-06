@@ -100,6 +100,10 @@ const UserMenu = (props) => {
     navigate.push("/adminpage");
   };
 
+  const handleProfilePanel = () => {
+    navigate.push("/profilepage");
+  };
+
   const handleOrderHistoryPanel = () => {
     navigate.push("/orderhistory");
   };
@@ -129,8 +133,9 @@ const UserMenu = (props) => {
         {user.status === "admin" ? (
           <MenuItem onClick={handleAdminPanel}>Admin Panel</MenuItem>
         ) : null}
-        <MenuItem onClick={handleLogout}>Logout</MenuItem>
+        <MenuItem onclick={handleProfilePanel}>Profile</MenuItem>
         <MenuItem onClick={handleOrderHistoryPanel}>Order History</MenuItem>
+        <MenuItem onClick={handleLogout}>Logout</MenuItem>
       </Menu>
     </div>
   );
