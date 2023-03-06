@@ -20,6 +20,7 @@ const arrayOfShoes = [
     product_category: "Lifestyle",
     color_category: "",
     gender: "Women",
+    summer_collection: true,
   },
   {
     name: "Nike Air Force 1 ‘07 SE",
@@ -42,6 +43,7 @@ const arrayOfShoes = [
     product_category: "Lifestyle",
     color_category: "",
     gender: "Women",
+    summer_collection: true,
   },
   {
     name: "Nike Air Max 90 Futura",
@@ -69,6 +71,7 @@ const arrayOfShoes = [
     product_category: "Lifestyle",
     color_category: "",
     gender: "Women",
+    summer_collection: true,
   },
   {
     name: "Nike Air Max 270",
@@ -436,6 +439,7 @@ const arrayOfShoes = [
     product_category: "Lifestyle",
     color_category: "",
     gender: "Men",
+    summer_collection: true,
   },
   {
     name: "Nike Blazer Mid '77 Vintage",
@@ -468,6 +472,7 @@ const arrayOfShoes = [
     product_category: "Lifestyle",
     color_category: "",
     gender: "Men",
+    summer_collection: true,
   },
   // {
   //   name: "",
@@ -525,6 +530,7 @@ const arrayOfShoes = [
     product_category: "Running",
     color_category: "",
     gender: "Men",
+    summer_collection: true,
   },
   {
     name: "Nike React Infinity 3",

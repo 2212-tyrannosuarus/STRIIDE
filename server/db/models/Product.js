@@ -47,6 +47,10 @@ const Product = db.define("product", {
     type: Sequelize.ENUM,
     values: ["Men", "Women"],
   },
+  summer_collection: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false,
+  },
 });
 
 module.exports = Product;
