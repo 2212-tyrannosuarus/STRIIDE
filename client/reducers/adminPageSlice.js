@@ -86,6 +86,8 @@ export const adminSlice = createSlice({
       PurpleC: [],
     },
     errorMsg: "",
+    errorType: "",
+    errorColor: "",
   },
   reducers: {
     clearState(state) {
@@ -95,8 +97,8 @@ export const adminSlice = createSlice({
         (state.manageUser = {}),
         (state.errorMsg = "");
     },
-    manifestShoeTable(state) {},
     fillShoeTable(state) {
+      //Function will check if (a. DB schema colorway is empty -- then that indicates shoe is not available in that color) (b. DB schema colorway is not empty -- then it will check which size is available for that colorway by colorID & product ID so that size is specific to color & product);
       for (let i = 0; i < state.size.length; i++) {
         state.sizeTable.firstColumn.push(state.size[i].size);
         if (state.manageProduct.black_images.length === 0) {
@@ -131,7 +133,6 @@ export const adminSlice = createSlice({
           state.sizeTable.BlueC.push(0);
         } else {
           for (let j = 0; j < state.manageProduct.inventories.length; j++) {
-            console.log(state.manageProduct.inventories[i].colorwayId);
             if (
               state.manageProduct.inventories[j].colorwayId === 3 &&
               state.manageProduct.inventories[j].sizeId === i + 1
@@ -146,7 +147,6 @@ export const adminSlice = createSlice({
           state.sizeTable.GreenC.push(0);
         } else {
           for (let j = 0; j < state.manageProduct.inventories.length; j++) {
-            console.log(state.manageProduct.inventories[i].colorwayId);
             if (
               state.manageProduct.inventories[j].colorwayId === 4 &&
               state.manageProduct.inventories[j].sizeId === i + 1
@@ -161,7 +161,6 @@ export const adminSlice = createSlice({
           state.sizeTable.PinkC.push(0);
         } else {
           for (let j = 0; j < state.manageProduct.inventories.length; j++) {
-            console.log(state.manageProduct.inventories[i].colorwayId);
             if (
               state.manageProduct.inventories[j].colorwayId === 5 &&
               state.manageProduct.inventories[j].sizeId === i + 1
@@ -176,7 +175,6 @@ export const adminSlice = createSlice({
           state.sizeTable.PurpleC.push(0);
         } else {
           for (let j = 0; j < state.manageProduct.inventories.length; j++) {
-            console.log(state.manageProduct.inventories[i].colorwayId);
             if (
               state.manageProduct.inventories[j].colorwayId === 6 &&
               state.manageProduct.inventories[j].sizeId === i + 1
@@ -221,6 +219,22 @@ export const adminSlice = createSlice({
       })
       .addCase(grabSizes.fulfilled, (state, action) => {
         state.size = action.payload;
+      })
+      .addCase(createUser.fulfilled, (state, action) => {
+        state.errorMsg = "Successfully Added";
+        state.errorType = "success";
+      })
+      .addCase(createUser.rejected, (state, action) => {
+        state.errorMsg = "Please make sure all inputs are valid. ";
+        state.errorType = "warning";
+      })
+      .addCase(createProduct.fulfilled, (state, action) => {
+        state.errorMsg = "Successfully Added";
+        state.errorType = "success";
+      })
+      .addCase(createProduct.rejected, (state, action) => {
+        state.errorMsg = "Please make sure all inputs are valid. ";
+        state.errorType = "warning";
       });
   },
 });
@@ -243,6 +257,13 @@ export const selectSizes = (state) => {
 export const selectSizesTable = (state) => {
   return state.admin.sizeTable;
 };
+export const selectError = (state) => {
+  return state.admin.errorMsg;
+};
+export const selectErrorType = (state) => {
+  return state.admin.errorType;
+};
+
 export const adminReduce = adminSlice.actions;
 
 export default adminSlice.reducer;

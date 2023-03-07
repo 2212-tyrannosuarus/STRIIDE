@@ -28,8 +28,8 @@ export const OrderHistory = (props) => {
         orders.map((order) => {
           return (
             <div className="order-summary" key={order.id}>
-              <p key={order.id}>Order Placed On: {order.orderDate}</p>
-              <p key={order.id}>
+              <p >Order Placed On: {order.orderDate}</p>
+              <p >
                 Order Total Price: ${order.total_price.toFixed(2)}
               </p>
               {order["orderdetails"] && order["orderdetails"].length
@@ -37,7 +37,7 @@ export const OrderHistory = (props) => {
                     return (
                       <div
                         className="order-detail"
-                        key={order["orderdetails"].name}
+                        key={orderDetail.name}
                       >
                         <div className="order-history-left-col">
                           <img src={orderDetail.image} width="150px" />
