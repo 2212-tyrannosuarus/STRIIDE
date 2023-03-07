@@ -18,9 +18,6 @@ import CheckoutTunnel from "./components/CheckoutTunnel";
 import StripeIntegration from "./components/StripeIntegration";
 import PageNotFound from "./components/PageNotFound/PageNotFound";
 
-/**
- * COMPONENT
- */
 class Routes extends Component {
   componentDidMount() {
     this.props.loadInitialData();
@@ -104,8 +101,6 @@ class Routes extends Component {
             component={AdminDashBoardPage}
           />
 
-          {/* <Redirect to="/allproduct" /> */}
-
           <Route path="/login" component={LoginForm} />
           <Route path="/signup" component={RegisterForm} />
 
@@ -116,13 +111,8 @@ class Routes extends Component {
   }
 }
 
-/**
- * CONTAINER
- */
 const mapState = (state) => {
   return {
-    // Being 'logged in' for our purposes will be defined has having a state.auth that has a truthy id.
-    // Otherwise, state.auth will be an empty object, and state.auth.id will be falsey
     isLoggedIn: !!state.auth.id,
     isAdmin: state.auth.status === "admin",
   };
@@ -136,6 +126,4 @@ const mapDispatch = (dispatch) => {
   };
 };
 
-// The `withRouter` wrapper makes sure that updates are not blocked
-// when the url changes
 export default withRouter(connect(mapState, mapDispatch)(Routes));
