@@ -13,13 +13,13 @@ import {
   addUserCart,
   getLoggedInUserId,
   updateInventoryQuantity,
-  deleteCart
+  deleteCart,
 } from "../../reducers/shoppingCartSlice";
 import "./Checkout.css";
 import ShippingType from "./ShippingType";
 import Payment from "./Payment";
 import ReviewOrder from "./ReviewOrder";
-import { addOrderSummary } from "../../reducers/checkoutSlice";
+import { addOrderSummary, addShippingInfo } from "../../reducers/checkoutSlice";
 import { Link, useHistory } from "react-router-dom";
 
 import { makeStyles } from "@material-ui/core/styles";
@@ -32,6 +32,8 @@ import {
 } from "@stripe/react-stripe-js";
 import ShippingAddress from "./ShippingAddress";
 import InYourBag from "./InYourBag";
+import { showNotification } from "../../reducers/notificationSlice";
+import { Notification } from "../Notification";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -46,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
  * COMPONENT
  */
 export const Checkout = (props) => {
-  // const {stripe} = props;
+  const classes = useStyles();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [address, setAddress] = useState("");
@@ -70,6 +72,13 @@ export const Checkout = (props) => {
   const [cardCity, setCardCity] = useState("");
   const [cardState, setCardState] = useState("");
   const [cardZip, setCardZip] = useState("");
+  const [promoCode, setPromoCode] = useState("");
+  let [totalPrice, setTotalPrice] = useState(0);
+  let [subTotalPrice, setSubTotalPrice] = useState(0);
+  let [appliedPromoCode, setAppliedPromoCode] = useState(false);
+  let [invalidCode, setInvalidCode] = useState(false);
+
+  let notification = useSelector((state) => state.notification.notification);
 
   let [arrivesBy, setArrivesBy] = useState("");
 
@@ -78,7 +87,6 @@ export const Checkout = (props) => {
   const elements = useElements();
 
   let [shippingAndHandling, setShippingAndHandling] = useState(8);
-  const classes = useStyles();
 
   const [checked, setChecked] = useState(false);
   const handleChange = () => {
@@ -90,16 +98,34 @@ export const Checkout = (props) => {
   const cartItems = useSelector(selectAllCartItems);
   let totalQuantity = useSelector(selectTotalQuantity);
   const dispatch = useDispatch();
-  let subTotalPrice = 0;
 
-  cartItems.forEach((item) => {
-    console.log("item inside cartItems.forEach ", item);
-    subTotalPrice += item.totalPrice;
-    console.log("subtotal price ", subTotalPrice);
-  });
+  
 
   let estimatedTax = 0.0625 * subTotalPrice;
-  let totalPrice = subTotalPrice + shippingAndHandling + estimatedTax;
+
+  const handlePromoCode = () => {
+    if (promoCode === "SPRING20") {
+      subTotalPrice = subTotalPrice - (0.2 * totalPrice);
+      setSubTotalPrice(subTotalPrice);
+      totalPrice = totalPrice - 0.2 * totalPrice;
+      setTotalPrice(totalPrice);
+      setAppliedPromoCode(true);
+      dispatch(showNotification({
+        open: true,
+        message: "Promo Code applied successfully",
+        type: "success",
+      })
+      )
+    } else {
+      dispatch(showNotification({
+        open: true,
+        message: "Invalid Promo Code",
+        type: "error",
+      })
+      )
+    
+    }
+  };
 
   const date1 = new Date();
   date1.setDate(date1.getDate() + 7);
@@ -107,7 +133,15 @@ export const Checkout = (props) => {
 
   useEffect(() => {
     setArrivesBy(`${dateStr1[0]}, ${dateStr1[1]} ${dateStr1[2]}`);
-  }, []);
+
+    cartItems.forEach((item) => {
+      subTotalPrice += item.totalPrice;
+      setSubTotalPrice(subTotalPrice);
+    });
+    
+    totalPrice = subTotalPrice + shippingAndHandling + estimatedTax;
+    setTotalPrice(totalPrice);
+  }, [setTotalPrice, setArrivesBy]);
 
   const date2 = new Date();
   date2.setDate(date2.getDate() + 3);
@@ -145,7 +179,6 @@ export const Checkout = (props) => {
   const handleSubmit = async (evt) => {
     if (evt.keyCode == 13) return;
     evt.preventDefault();
-    // alert("inside handle submit");
 
     if (!stripe || !elements) {
       return;
@@ -154,8 +187,6 @@ export const Checkout = (props) => {
 
     const response = await fetch("/secret");
     const { client_secret: clientSecret } = await response.json();
-    console.log("clientSecret ", clientSecret);
-    console.log("card elements ", elements.getElement(CardElement));
     const paymentResult = await stripe.confirmCardPayment(clientSecret, {
       payment_method: {
         card: elements.getElement(CardElement),
@@ -167,7 +198,7 @@ export const Checkout = (props) => {
     setPaymentLoading(false);
     if (paymentResult.error) {
       alert(paymentResult.error.message);
-      history.push('./checkout');
+      history.push("./checkout");
     } else {
       if (paymentResult.paymentIntent.status === "succeeded") {
         alert("Payment successfully submitted!");
@@ -183,10 +214,17 @@ export const Checkout = (props) => {
               orderDate: `${dateArr[0]}, ${dateArr[1]} ${dateArr[2]}`,
             })
           );
-        } else {
-          console.log("guest user order summary not saved ");
-        }
-    
+
+          
+          await dispatch(addShippingInfo({
+            userId: userId.payload,
+            address: address,
+            city: city,
+            state: state,
+            zipcode: postalCode,
+          }))
+        } 
+
         for (let i = 0; i < cartItems.length; i++) {
           await dispatch(
             updateInventoryQuantity({
@@ -199,7 +237,7 @@ export const Checkout = (props) => {
         }
         await dispatch(deleteCart());
         await dispatch(setTotalQuantity(0));
-    
+
         window.localStorage.removeItem("cart");
         history.push({
           pathname: "/orderconfirmation",
@@ -209,16 +247,34 @@ export const Checkout = (props) => {
           },
         });
 
-
-
       }
     }
-
-    
   };
+
+  const handleContinueToShipping = (e) => {
+    e.preventDefault();
+    if (firstName === '' || lastName === '' || address === '' || city === '' || postalCode === '' || email === '' ||
+    phoneNumber === '') {
+      dispatch(showNotification({
+        open: true,
+        message: "Please fill in form fields First Name, Last Name, Address, City, State, Zip Code, Email and Phone Number",
+        type: "error",
+      })
+      )
+    }
+    else {
+      dispatch(showNotification({
+        open: false,
+      })
+      )
+      setShowShipping(true);
+    }
+    
+  }
 
   return (
     <div className="checkout-form">
+      
       <div className="form-container">
         <div className="column">
           <form
@@ -304,7 +360,7 @@ export const Checkout = (props) => {
                   <div className="checkout-submit-button-container">
                     <button
                       type="submit"
-                      onClick={(e) => handleSubmit(e)}
+                      // onClick={(e) => handleSubmit(e)}
                       className="place-order-btn"
                     >
                       Place Order
@@ -338,7 +394,7 @@ export const Checkout = (props) => {
                 <div className="checkout-submit-button-container">
                   <button
                     className="shipping-btn"
-                    onClick={() => setShowShipping(true)}
+                    onClick={(e) => handleContinueToShipping(e)}
                   >
                     Continue To Shipping
                   </button>
@@ -365,12 +421,17 @@ export const Checkout = (props) => {
       </div>
 
       <InYourBag
-        subTotalPrice={subTotalPrice}
         shippingAndHandling={shippingAndHandling}
         estimatedTax={estimatedTax}
         totalPrice={totalPrice}
         arrivesBy={arrivesBy}
         cartItems={cartItems}
+        promoCode={promoCode}
+        setPromoCode={setPromoCode}
+        handlePromoCode={handlePromoCode}
+        appliedPromoCode={appliedPromoCode}
+        notification={notification}
+        subTotalPrice={subTotalPrice}
       />
     </div>
   );

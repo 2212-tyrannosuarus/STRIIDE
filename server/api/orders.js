@@ -27,12 +27,10 @@ router.post("/:userId", async (req, res, next) => {
   try {
     const { total, orderItems, orderDate } = req.body;
     const newOrder = await Order_Summary.create({ total_price: total, orderDate: orderDate });
-    //   console.log('newCartItems ',cartItems);
     const user = await User.findByPk(req.params.userId);
     newOrder.setUser(user);
 
     for (let item in orderItems) {
-      console.log("item ", item);
       let newOrderItem = await Order_Detail.create({
         historic_price: total,
         quantity: orderItems[item].quantity,
@@ -50,3 +48,5 @@ router.post("/:userId", async (req, res, next) => {
     next(err);
   }
 });
+
+

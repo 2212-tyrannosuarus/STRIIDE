@@ -3,9 +3,7 @@
 }
 
 .form-container {
-  /* background-color: #ffffff; */
   margin-top: 0px;
-  /* border: 2px solid #ffffff; */
   padding-bottom: 20px;
   width: 65%;
   margin-left: 20px;
@@ -368,4 +366,54 @@
   width: 100%;
   border: 1px solid #afafaf;
   box-shadow: 0px 4px 5.5px 0px rgba(0, 0, 0, 0.07);
+}
+
+.promo-code-applied {
+  margin-bottom: 20px;
+}
+
+.promo-container {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+}
+
+.checkout-promo-code {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 10px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.promo-text {
+  display: flex;
+  font-weight: bold;
+  width: 50%;
+}
+
+.promo-code-input {
+  display: flex;
+  border: 2px solid #b4b4b4;
+  border-radius: 3px;
+  width: 40%;
+  margin-right: 10px;
+  height: 2em;
+}
+
+.promo-btn {
+  width: 40%;
+  background-color: black;
+  color: white;
+  border: none;
+  height: 2em;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  margin-right: 10px;
+}
+
+.promo-apply-btn-container {
+  display: flex;
+  justify-content: flex-end;
+
 }

@@ -1,15 +1,23 @@
 import { Email } from "@material-ui/icons";
 import React, { useEffect, useState } from "react";
 import { connect, useDispatch, useSelector } from "react-redux";
+import Notification from "../Notification";
 
 import "./Checkout.css";
 
 export const InYourBag = (props) => {
 
-    const {subTotalPrice, shippingAndHandling, estimatedTax, totalPrice, arrivesBy, cartItems} = props;
+    const {subTotalPrice, shippingAndHandling, estimatedTax, totalPrice, arrivesBy, cartItems, promoCode, 
+      setPromoCode, handlePromoCode, appliedPromoCode, notification} = props;
 
     return (
         <div className="in-your-bag">
+          {notification && (
+          <Notification
+            type={notification.type}
+            message={notification.message}
+          />
+        )}
         <h2 className="form-title">In Your Bag</h2>
         <table className="checkout-table">
           <tbody>
@@ -44,6 +52,30 @@ export const InYourBag = (props) => {
           <div className="shipping-right-col">Shipping</div>
           <div className="arrives-by">Arrives by {arrivesBy}</div>
         </div>
+
+        {appliedPromoCode ? (
+          <div className="promo-code-applied">
+            <div className="shipping-right-col">Promo Code 'SPRING20' applied to your order</div>
+          </div>
+        ) : (
+          <div className="promo-container">
+        <div className="checkout-promo-code">
+          <div className="promo-text">Add Promo Code</div>
+          <input
+          value={promoCode}
+          onChange={(evt) => setPromoCode(evt.target.value)}
+          placeholder="Promo Code"
+          className="promo-code-input"
+        />
+      
+        </div>
+        <div className="promo-apply-btn-container">
+        <button onClick={() => handlePromoCode()} className="promo-btn">Apply</button>
+        </div>
+        </div>
+        )}
+        
+
         <div className="cart-items">
           {cartItems && cartItems.length ? (
             cartItems.map((product) => {
@@ -65,7 +97,11 @@ export const InYourBag = (props) => {
                         <div>{product.color}</div>
                         <div>{product.size}</div>
                         <div>Qty: {product.quantity}</div>
-                        <div>${product.totalPrice.toFixed(2)}</div>
+                        {appliedPromoCode ? (
+                          <div>${(product.totalPrice - (product.totalPrice * 0.2)).toFixed(2)}</div>
+                        ) : (
+                          <div>${product.totalPrice.toFixed(2)}</div>
+                        )}
                       </div>
                     </div>
                   </div>

@@ -21,7 +21,7 @@ import {
   setGotLoogedInUserCart,
 } from "../../reducers/shoppingCartSlice";
 import "./ShoppingCart.css";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { showNotification } from "../../reducers/notificationSlice";
 import { Notification } from "../Notification";
 import { makeStyles } from "@material-ui/core/styles";
@@ -46,24 +46,26 @@ export const ShoppingCart = (props) => {
   const classes = useStyles();
   const cartItems = useSelector(selectAllCartItems);
   let totalQuantity = useSelector(selectTotalQuantity);
-  console.log("cart items", cartItems);
   const dispatch = useDispatch();
   let subTotalPrice = 0;
   const isLoggedIn = useSelector(getIsLoggedIn);
   let notification = useSelector((state) => state.notification.notification);
   let gotLoggedInUserCart = useSelector(selectgotLoggedInUserCart);
+  const history = useHistory();
 
   const date = new Date();
   date.setDate(date.getDate() + 7);
   let dateStr = date.toString().split(" ");
 
-  if (window.localStorage.getItem("cart")) {
-    totalQuantity = 0;
-    cartItems.forEach((item) => {
-      totalQuantity += item.quantity;
-    });
-    dispatch(setTotalQuantity(totalQuantity));
-  }
+  useEffect(() => {
+    if (window.localStorage.getItem("cart")) {
+      totalQuantity = 0;
+      cartItems.forEach((item) => {
+        totalQuantity += item.quantity;
+      });
+      dispatch(setTotalQuantity(totalQuantity));
+    }
+  }, [dispatch, setTotalQuantity]);
 
   // Adding items to cart when user increments cart items by clicking '+'
   const handleAddToCart = async (
@@ -111,7 +113,7 @@ export const ShoppingCart = (props) => {
           id: userId.payload,
           total: totalPrice,
           cartItems: cartItems,
-        }) 
+        })
       );
     }
 
@@ -263,6 +265,19 @@ export const ShoppingCart = (props) => {
   let totalPrice = subTotalPrice + shippingAndHandling + estimatedTax;
   let shippingAndHandlingForNoItems = 0;
 
+  const handleCheckout = () => {
+    dispatch(
+      showNotification({
+        open: false,
+      })
+    );
+    if (window.localStorage.getItem("token")) {
+      history.push("./checkout");
+    } else {
+      history.push("./checkoutTunnel");
+    }
+  };
+
   return (
     <div className="shopping-cart-container">
       <div className="cart-left-column">
@@ -373,6 +388,7 @@ export const ShoppingCart = (props) => {
         estimatedTax={estimatedTax}
         totalPrice={totalPrice}
         cartItems={cartItems}
+        handleCheckout={handleCheckout}
       />
     </div>
   );
