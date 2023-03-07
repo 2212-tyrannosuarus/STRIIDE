@@ -24,7 +24,7 @@ export default function UpdateProduct() {
     setDescription(product.description || "");
     setImage(product.image || "");
     setPrice(product.price || "");
-    setProduct_category(product.product_category || "Grocery");
+    setProduct_category(product.product_category || "Lifestyle");
     setColor_category(product.color_category || "Black");
     setGender(product.setGender || "Women");
   }, [product]);
@@ -39,8 +39,7 @@ export default function UpdateProduct() {
           name,
           description,
           image,
-          price,
-          //drop downs
+          price: intPrice,
           product_category,
           color_category,
           gender,
@@ -86,9 +85,9 @@ export default function UpdateProduct() {
           name="product_category"
           onChange={(e) => setProduct_category(e.target.value)}
         >
-          <option value="Grocery">Grocery</option>
-          <option value="Outdoors">Outdoors</option>
-          <option value="Electronics">Electronics</option>
+          <option value="Lifestyle">Lifestyle</option>
+          <option value="Running">Running</option>
+          <option value="Training">Training</option>
         </select>
         <br />
 
@@ -114,14 +113,6 @@ export default function UpdateProduct() {
         <Button type="submit">Submit</Button>
         <br />
       </form>
-
-      <div className="drops">
-        <div className="drop drop-1"></div>
-        <div className="drop drop-2"></div>
-        <div className="drop drop-3"></div>
-        <div className="drop drop-4"></div>
-        <div className="drop drop-5"></div>
-      </div>
     </div>
   );
 }

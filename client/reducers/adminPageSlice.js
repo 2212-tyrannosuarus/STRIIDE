@@ -86,6 +86,7 @@ export const adminSlice = createSlice({
       PurpleC: [],
     },
     errorMsg: "",
+    errorType: "",
   },
   reducers: {
     clearState(state) {
@@ -217,6 +218,22 @@ export const adminSlice = createSlice({
       })
       .addCase(grabSizes.fulfilled, (state, action) => {
         state.size = action.payload;
+      })
+      .addCase(createUser.fulfilled, (state, action) => {
+        state.errorMsg = "Successfully Added";
+        state.errorType = "success";
+      })
+      .addCase(createUser.rejected, (state, action) => {
+        state.errorMsg = "Please make sure all inputs are valid. ";
+        state.errorType = "warning";
+      })
+      .addCase(createProduct.fulfilled, (state, action) => {
+        state.errorMsg = "Successfully Added";
+        state.errorType = "success";
+      })
+      .addCase(createProduct.rejected, (state, action) => {
+        state.errorMsg = "Please make sure all inputs are valid. ";
+        state.errorType = "warning";
       });
   },
 });
@@ -239,6 +256,13 @@ export const selectSizes = (state) => {
 export const selectSizesTable = (state) => {
   return state.admin.sizeTable;
 };
+export const selectError = (state) => {
+  return state.admin.errorMsg;
+};
+export const selectErrorType = (state) => {
+  return state.admin.errorType;
+};
+
 export const adminReduce = adminSlice.actions;
 
 export default adminSlice.reducer;
