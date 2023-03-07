@@ -37,7 +37,7 @@ export const OrderHistory = (props) => {
                     return (
                       <div
                         className="order-detail"
-                        key={order["orderdetails"].id}
+                        key={order["orderdetails"].name}
                       >
                         <div className="order-history-left-col">
                           <img src={orderDetail.image} width="150px" />
@@ -64,4 +64,11 @@ export const OrderHistory = (props) => {
   );
 };
 
-export default OrderHistory;
+const mapState = (state) => {
+  return {
+    username: state.auth.username,
+  };
+};
+export default connect(mapState)(OrderHistory);
+
+// export default OrderHistory;
