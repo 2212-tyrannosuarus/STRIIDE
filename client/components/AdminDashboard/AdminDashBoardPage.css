@@ -61,3 +61,14 @@
   box-shadow: 8px 8px 12px #030303;
   width: 25%; */
 }
+
+.adduser-container-div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+}
+
+.test-form-container {
+  justify-content: center;
+}

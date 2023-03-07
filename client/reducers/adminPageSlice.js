@@ -86,6 +86,7 @@ export const adminSlice = createSlice({
       PurpleC: [],
     },
     errorMsg: "",
+    errorType: "",
   },
   reducers: {
     clearState(state) {
@@ -131,7 +132,6 @@ export const adminSlice = createSlice({
           state.sizeTable.BlueC.push(0);
         } else {
           for (let j = 0; j < state.manageProduct.inventories.length; j++) {
-            console.log(state.manageProduct.inventories[i].colorwayId);
             if (
               state.manageProduct.inventories[j].colorwayId === 3 &&
               state.manageProduct.inventories[j].sizeId === i + 1
@@ -146,7 +146,6 @@ export const adminSlice = createSlice({
           state.sizeTable.GreenC.push(0);
         } else {
           for (let j = 0; j < state.manageProduct.inventories.length; j++) {
-            console.log(state.manageProduct.inventories[i].colorwayId);
             if (
               state.manageProduct.inventories[j].colorwayId === 4 &&
               state.manageProduct.inventories[j].sizeId === i + 1
@@ -161,7 +160,6 @@ export const adminSlice = createSlice({
           state.sizeTable.PinkC.push(0);
         } else {
           for (let j = 0; j < state.manageProduct.inventories.length; j++) {
-            console.log(state.manageProduct.inventories[i].colorwayId);
             if (
               state.manageProduct.inventories[j].colorwayId === 5 &&
               state.manageProduct.inventories[j].sizeId === i + 1
@@ -176,7 +174,6 @@ export const adminSlice = createSlice({
           state.sizeTable.PurpleC.push(0);
         } else {
           for (let j = 0; j < state.manageProduct.inventories.length; j++) {
-            console.log(state.manageProduct.inventories[i].colorwayId);
             if (
               state.manageProduct.inventories[j].colorwayId === 6 &&
               state.manageProduct.inventories[j].sizeId === i + 1
@@ -221,6 +218,22 @@ export const adminSlice = createSlice({
       })
       .addCase(grabSizes.fulfilled, (state, action) => {
         state.size = action.payload;
+      })
+      .addCase(createUser.fulfilled, (state, action) => {
+        state.errorMsg = "Successfully Added";
+        state.errorType = "success";
+      })
+      .addCase(createUser.rejected, (state, action) => {
+        state.errorMsg = "Please make sure all inputs are valid. ";
+        state.errorType = "warning";
+      })
+      .addCase(createProduct.fulfilled, (state, action) => {
+        state.errorMsg = "Successfully Added";
+        state.errorType = "success";
+      })
+      .addCase(createProduct.rejected, (state, action) => {
+        state.errorMsg = "Please make sure all inputs are valid. ";
+        state.errorType = "warning";
       });
   },
 });
@@ -243,6 +256,13 @@ export const selectSizes = (state) => {
 export const selectSizesTable = (state) => {
   return state.admin.sizeTable;
 };
+export const selectError = (state) => {
+  return state.admin.errorMsg;
+};
+export const selectErrorType = (state) => {
+  return state.admin.errorType;
+};
+
 export const adminReduce = adminSlice.actions;
 
 export default adminSlice.reducer;

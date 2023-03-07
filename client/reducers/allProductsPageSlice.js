@@ -85,7 +85,6 @@ export const allProductsPageSlice = createSlice({
               tempArr.push(item);
             }
           });
-          console.log(tempArr);
         }
         state.displayProductsArr = tempArr;
         state.totalProducts = state.displayProductsArr.length;
@@ -116,7 +115,6 @@ export const allProductsPageSlice = createSlice({
       state.displayProductsArr = state.displayProductsArr.sort(
         (a, b) => b.id - a.id
       );
-      console.log("sortedTime");
       state.totalProducts = state.displayProductsArr.length;
       state.paginatedDisplay = state.displayProductsArr.slice(0, 9);
     },
