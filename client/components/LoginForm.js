@@ -50,8 +50,8 @@ const LoginForm = (props) => {
         </form>
 
         <Box display="flex" alignItems="center" justifyContent="center" mt={2}>
-          <Typography>Dont have an account?</Typography>
-          <Link to="/signup">Register Here</Link>
+          <Typography>Dont have an account? </Typography>
+          <Link to="/signup"> Register Here</Link>
         </Box>
       </Box>
     </Container>
