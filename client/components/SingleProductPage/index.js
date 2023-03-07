@@ -3,7 +3,7 @@ import { Button, ButtonGroup, Typography } from "@material-ui/core";
 import { showNotification } from "../../reducers/notificationSlice";
 import { Notification } from "../Notification";
 import { makeStyles } from "@material-ui/core/styles";
-import { Badge, IconButton, InputBase } from "@material-ui/core";
+import { Badge, IconButton } from "@material-ui/core";
 import { ShoppingCart } from "@material-ui/icons";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -27,6 +27,7 @@ export const singleProductPage = (props) => {
   const cartItemsQuantity = useSelector(selectTotalQuantity);
 
   const [size, setSize] = useState("");
+  //sizeClass and colorClass are used to append a red-box to their respective class names
   const [sizeClass, setSizeClass] = useState("");
   const [colorClass, setColorClass] = useState("");
 
@@ -34,6 +35,7 @@ export const singleProductPage = (props) => {
     dispatch(fetchSingleProduct(id));
   }, [dispatch]);
 
+  //this hook removes the size class red-box and removes a notification about size being a required field
   useEffect(() => {
     setSizeClass("");
     dispatch(
@@ -45,14 +47,17 @@ export const singleProductPage = (props) => {
     );
   }, [size]);
 
-  const useStyles = makeStyles({
+  //create styles for use with material UI components
+  const makeMuiStyles = makeStyles({
     button: {
       backgroundColor: "black",
       color: "white",
     },
   });
-  const classes = useStyles();
+  const muiStyleClasses = makeMuiStyles();
 
+  //checks for properties of a product which are arrays of length 4
+  //this will only ever be a populated array of color images titled white_images or {someColor_images}
   const getShoeColors = () => {
     let colors = [];
     for (let property in singleProduct) {
@@ -63,12 +68,14 @@ export const singleProductPage = (props) => {
     return colors;
   };
   const availableColors = getShoeColors();
+  //the color state below is used to render the appropriate images based on the selected color
   const [color, setColor] = useState(availableColors[0]);
   useEffect(() => {
     setColor(availableColors[0]);
   }, []);
 
-  const handleImageClick = (event) => {
+  const handleColorImageClick = (event) => {
+    //colorSelected = true shifts the method of rendering the appropriate images from default - which was implemented to prevent the page loading without any images shown
     colorSelected = true;
     setColor(event.target.value);
     console.log(color);
@@ -76,6 +83,7 @@ export const singleProductPage = (props) => {
 
   const handleAddToCart = (name, id, price, color, size, image, quantity) => {
     if (color === "" && size !== "") {
+      //checks if a color and size are selected-> creates user-friendly error if not
       setColorClass("red-box");
       dispatch(
         showNotification({
@@ -86,6 +94,7 @@ export const singleProductPage = (props) => {
       );
       return;
     }
+    //checks to see if size is selected and adds a red box to the className of the size buttons div
     if (color !== "" && size === "") {
       setSizeClass("red-box");
       dispatch(
@@ -131,6 +140,11 @@ export const singleProductPage = (props) => {
           {
             <div className="product-container">
               <div className="product-image-container">
+                {/*
+                 the following string of ternary statements is a solution to images not loading on initial render or page refresh
+                the issue is with the color state being undefined at the time of initial load. Here, we check manually for the first
+                populated color array
+                */}
                 {colorSelected
                   ? singleProduct[color].map((colorImage) => {
                       console.log("singleproduct color", singleProduct[color]);
@@ -220,7 +234,7 @@ export const singleProductPage = (props) => {
                             type={"image"}
                             value={shoeColor}
                             key={`${singleProduct.id}${shoeColor}`}
-                            onClick={handleImageClick}
+                            onClick={handleColorImageClick}
                             className="single-product-color-picker"
                             src={singleProduct[shoeColor][0]}
                           />
@@ -340,20 +354,11 @@ export const singleProductPage = (props) => {
                       }
                     })}
                   </ButtonGroup>
-                  {/* <button onClick={() => setSize("M 6 / W 7.5")}>
-                  M 6 / W 7.5
-                </button>
-                <button onClick={() => setSize("M 7 / W 8.5")}>7</button>
-                <button onClick={() => setSize("M 8 / W 9.5")}>8</button>
-                <button onClick={() => setSize("M 9 / W 10.5")}>9</button>
-                <button onClick={() => setSize("M 10 / W 11.5")}>10</button>
-                <button onClick={() => setSize("M 11 / W 12.5")}>11</button>
-                <button onClick={() => setSize("M 12 / W 13.5")}>12</button> */}
                 </div>
                 <div>
                   <Button
                     variant="contained"
-                    className={classes.button}
+                    className={muiStyleClasses.button}
                     fullWidth="true"
                     onClick={() =>
                       handleAddToCart(
@@ -370,7 +375,6 @@ export const singleProductPage = (props) => {
                     Add to Cart
                   </Button>
                 </div>
-                {/* <div>Total Shopping cart quantity {cartItemsQuantity}</div> */}
                 <IconButton aria-label="cart">
                   <Link to="/shoppingcart">
                     <Badge
@@ -382,9 +386,6 @@ export const singleProductPage = (props) => {
                     </Badge>
                   </Link>
                 </IconButton>
-                {/* <Link to="/shoppingcart">
-                <div>Shopping Cart</div>
-              </Link> */}
                 <Typography className="product-description">
                   {singleProduct.description}
                 </Typography>

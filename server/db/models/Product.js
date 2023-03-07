@@ -14,21 +14,27 @@ const Product = db.define("product", {
   },
   black_images: {
     type: Sequelize.ARRAY(Sequelize.STRING),
+    defaultValue: {},
   },
   white_images: {
     type: Sequelize.ARRAY(Sequelize.STRING),
+    defaultValue: {},
   },
   blue_images: {
     type: Sequelize.ARRAY(Sequelize.STRING),
+    defaultValue: {},
   },
   green_images: {
     type: Sequelize.ARRAY(Sequelize.STRING),
+    defaultValue: {},
   },
   pink_images: {
     type: Sequelize.ARRAY(Sequelize.STRING),
+    defaultValue: {},
   },
   purple_images: {
     type: Sequelize.ARRAY(Sequelize.STRING),
+    defaultValue: {},
   },
 
   price: {
@@ -46,10 +52,6 @@ const Product = db.define("product", {
   gender: {
     type: Sequelize.ENUM,
     values: ["Men", "Women"],
-  },
-  summer_collection: {
-    type: Sequelize.BOOLEAN,
-    defaultValue: false,
   },
 });
 
