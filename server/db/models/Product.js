@@ -14,27 +14,27 @@ const Product = db.define("product", {
   },
   black_images: {
     type: Sequelize.ARRAY(Sequelize.STRING),
-    defaultValue: {},
+    defaultValue: [],
   },
   white_images: {
     type: Sequelize.ARRAY(Sequelize.STRING),
-    defaultValue: {},
+    defaultValue: [],
   },
   blue_images: {
     type: Sequelize.ARRAY(Sequelize.STRING),
-    defaultValue: {},
+    defaultValue: [],
   },
   green_images: {
     type: Sequelize.ARRAY(Sequelize.STRING),
-    defaultValue: {},
+    defaultValue: [],
   },
   pink_images: {
     type: Sequelize.ARRAY(Sequelize.STRING),
-    defaultValue: {},
+    defaultValue: [],
   },
   purple_images: {
     type: Sequelize.ARRAY(Sequelize.STRING),
-    defaultValue: {},
+    defaultValue: [],
   },
 
   price: {
