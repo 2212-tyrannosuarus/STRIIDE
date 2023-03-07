@@ -3,9 +3,7 @@ import { connect } from "react-redux";
 import { withRouter, Route, Switch, Redirect } from "react-router-dom";
 import HomePage from "./components/HomePage";
 import AllProductsPage from "./components/AllProductsPage";
-import SingleProductPage, {
-  singleProductPage,
-} from "./components/SingleProductPage";
+import { singleProductPage } from "./components/SingleProductPage";
 import ShoppingCart from "./components/ShoppingCart";
 import AdminDashBoardPage from "./components/AdminDashboard";
 import Checkout from "./components/Checkout";
