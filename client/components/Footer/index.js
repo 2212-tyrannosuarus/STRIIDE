@@ -7,8 +7,10 @@ function Footer() {
   return (
     <Box py={3}>
       <Typography variant="body2" color="textSecondary" align="center">
-        {"Copyright "}
-        {"THIS IS OUR WEBSITE NAME"}
+        {"STRIIDE"}
+      </Typography>
+      <Typography variant="body2" color="textSecondary" align="center">
+        {"Copyright  "}
         {new Date().getFullYear()}
         {"."}
       </Typography>

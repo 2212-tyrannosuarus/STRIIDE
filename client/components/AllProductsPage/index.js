@@ -89,6 +89,36 @@ export const allProducts = (props) => {
       setShoeButtonColor135("");
       setShoeButtonColor14("");
     }
+
+    if (window.location.pathname === "/women/training") {
+      setPath("/women/training");
+      setSex("Women's");
+      handleFetchWomen("Training");
+    }
+
+    if (window.location.pathname === "/women/lifestyle") {
+      setPath("/women/lifestyle");
+      setSex("Women's");
+      handleFetchWomen("Lifestyle");
+    }
+
+    if (window.location.pathname === "/women/summer-collection") {
+      setPath("/women/summer-collection");
+      setSex("Women's");
+      handleFetchWomen("Running");
+    }
+
+    if (window.location.pathname === "/men/training") {
+      setPath("/men/training");
+      setSex("Men's");
+      handleFetchMen("Training");
+    }
+
+    if (window.location.pathname === "/men/lifestyle") {
+      setPath("/men/lifestyle");
+      setSex("Men's");
+      handleFetchMen("Lifestyle");
+    }
   }, [dispatch, window.location.pathname]);
 
   useEffect(() => {
@@ -101,6 +131,16 @@ export const allProducts = (props) => {
   for (let i = 1; i <= maxPaginationNum; i++) {
     paginationArr.push(i);
   }
+
+  const handleFetchWomen = async (filter) => {
+    await dispatch(fetchAllWomenProductsPage());
+    await dispatch(filters.categoryFilter(filter));
+  };
+
+  const handleFetchMen = async (filter) => {
+    await dispatch(fetchAllMenProductsPage());
+    await dispatch(filters.categoryFilter(filter));
+  };
 
   const handleFilter = (filter) => {
     const action = filters.categoryFilter(filter);
