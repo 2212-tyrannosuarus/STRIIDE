@@ -235,7 +235,6 @@ export const singleProductPage = (props) => {
                             value={shoeColor}
                             key={`${singleProduct.id}${shoeColor}`}
                             onClick={handleColorImageClick}
-                            onClick={handleColorImageClick}
                             className="single-product-color-picker"
                             src={singleProduct[shoeColor][0]}
                           />
@@ -359,7 +358,6 @@ export const singleProductPage = (props) => {
                 <div>
                   <Button
                     variant="contained"
-                    className={muiStyleClasses.button}
                     className={muiStyleClasses.button}
                     fullWidth="true"
                     onClick={() =>
