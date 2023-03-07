@@ -30,6 +30,7 @@ Order_Summary.belongsTo(User);
 
 Order_Summary.hasMany(Order_Detail);
 Order_Detail.belongsTo(Order_Summary);
+Order_Summary.hasOne(Shipping_Info);
 
 Cart.hasMany(Cart_Item);
 Cart_Item.belongsTo(Cart);

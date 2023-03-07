@@ -7,20 +7,15 @@ import {getLoggedInUserId} from "../../reducers/shoppingCartSlice"
 export const OrderHistory = (props) => {
   let orders = useSelector(selectAllOrderSummary);
   const dispatch = useDispatch();
-  console.log('orders ', orders);
 
   useEffect(() => {
-    console.log('inside useEffect')
-
      async function getOrderHistory () {
       const userId = await dispatch(getLoggedInUserId());
-      console.log('userId ', userId);
       orders = await dispatch(getAllOrderSummary(userId.payload));
     }
     if (window.localStorage.getItem("token")) {
       getOrderHistory();
     }
-    
   },[dispatch])
 
   

@@ -5,7 +5,6 @@ export const fetchLoggedInUserCart = createAsyncThunk(
   "cartLoggedInUser/fetch",
   async (id) => {
     const { data } = await axios.get(`/api/carts/${id}`);
-    console.log("data from logged inuser cart ", data);
     return data;
   }
 );
@@ -20,7 +19,6 @@ export const deleteUserCart = createAsyncThunk(
 export const addUserCart = createAsyncThunk(
   "cartLoggedInUser/post",
   async ({ id, total, cartItems }) => {
-    console.log("inside thunk for adding user cart - cartItems ", cartItems);
     const { data } = await axios.post(`/api/carts/${id}`, { total, cartItems });
     return data;
   }
@@ -41,7 +39,6 @@ export const getLoggedInUserId = createAsyncThunk("userId/get", async () => {
 export const getInventoryQuantity = createAsyncThunk(
   "inventoryQuantity/get",
   async ({ id, color, size }) => {
-    console.log("inside thunk ", id, " ", color, " ", size);
     const { data } = await axios.get(`/api/inventory/${id}`, {
       headers: {
         color: color,
@@ -55,7 +52,6 @@ export const getInventoryQuantity = createAsyncThunk(
 export const updateInventoryQuantity = createAsyncThunk(
   "inventoryQuantity/get",
   async ({ id, color, size, count }) => {
-    // console.log("inside thunk ", id, " ", color, " ", size);
     const { data } = await axios.put(`/api/inventory/${id}`, {  
         color: color,
         size: size,
@@ -90,11 +86,9 @@ export const shoppingCartSlice = createSlice({
           item.color === newItem.color
       );
       if (existingItem) {
-        console.log("inside if statement for existing item ");
         existingItem.quantity += newItem.quantity;
         existingItem.totalPrice += newItem.price;
       } else {
-        console.log("inside else statement for existing item ");
         state.itemsList.push({
           id: newItem.id,
           price: newItem.price,
@@ -108,14 +102,9 @@ export const shoppingCartSlice = createSlice({
       }
       state.totalQuantity++;
       window.localStorage.removeItem("cart");
-      console.log(
-        "inside add item state.itemsList ========",
-        JSON.stringify(state.itemsList)
-      );
       window.localStorage.setItem("cart", JSON.stringify(state.itemsList));
     },
     removeFromCart(state, action) {
-      console.log("action.payload inside remove from cart ", action.payload);
       const id = action.payload.id;
       const color = action.payload.color;
       const size = action.payload.size;
@@ -132,10 +121,6 @@ export const shoppingCartSlice = createSlice({
       }
       window.localStorage.removeItem("cart");
       if (state.itemsList.length > 0) {
-        console.log(
-          "inside remove item state.itemsList ========",
-          JSON.stringify(state.itemsList)
-        );
         window.localStorage.setItem("cart", JSON.stringify(state.itemsList));
       }
     },
@@ -143,7 +128,6 @@ export const shoppingCartSlice = createSlice({
       state.showCart = true;
     },
     deleteFromCart(state, action) {
-      console.log("action.payload inside delete from cart ", action.payload);
       const id = action.payload.id;
       const size = action.payload.size;
       const color = action.payload.color;
@@ -159,10 +143,6 @@ export const shoppingCartSlice = createSlice({
 
       window.localStorage.removeItem("cart");
       if (state.itemsList.length > 0) {
-        console.log(
-          "inside remove item state.itemsList ========",
-          JSON.stringify(state.itemsList)
-        );
         window.localStorage.setItem("cart", JSON.stringify(state.itemsList));
       }
     },
@@ -181,7 +161,6 @@ export const shoppingCartSlice = createSlice({
       .addCase(fetchLoggedInUserCart.fulfilled, (state, action) => {
         state.loggedInUserCart = action.payload;
         state.gotLoggedInUserCart = true;
-        console.log("state.gotLoggedInUserCart ", state.gotLoggedInUserCart);
       })
       .addCase(getLoggedInUserId.fulfilled, (state, action) => {
         state.userId = action.payload;
