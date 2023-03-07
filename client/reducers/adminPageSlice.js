@@ -87,6 +87,7 @@ export const adminSlice = createSlice({
     },
     errorMsg: "",
     errorType: "",
+    errorColor: "",
   },
   reducers: {
     clearState(state) {
