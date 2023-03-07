@@ -13,6 +13,7 @@ export const CartSummary = (props) => {
     estimatedTax,
     totalPrice,
     cartItems,
+    handleCheckout
   } = props;
 
   return (
@@ -46,7 +47,7 @@ export const CartSummary = (props) => {
           </tr>
         </tbody>
       </table>
-      {window.localStorage.getItem("token") ? (
+      {/* {window.localStorage.getItem("token") ? (
         <Link to="/checkout">
           {cartItems && cartItems.length === 0 ? (
             <button className="disabled-checkout-btn" disabled>
@@ -56,17 +57,20 @@ export const CartSummary = (props) => {
             <button className="checkout-btn">Checkout</button>
           )}
         </Link>
-      ) : (
-        <Link to="/checkoutTunnel">
+      ) : ( */}
+        <>
+        {/* <Link to="/checkoutTunnel"> */}
           {cartItems && cartItems.length === 0 ? (
             <button className="disabled-checkout-btn" disabled>
               Checkout
             </button>
           ) : (
-            <button className="checkout-btn">Checkout</button>
+            <button className="checkout-btn" onClick={() => handleCheckout()}>Checkout</button>
           )}
-        </Link>
-      )}
+        {/* </Link> */}
+        </>
+      
+      {/* // )} */}
     </div>
   );
 };

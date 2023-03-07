@@ -20,8 +20,7 @@
 }
 
 .product-image {
-  width: 48%;
-
+  width: 45%;
   padding: 5px;
 }
 
@@ -39,7 +38,7 @@
 .product-details-container {
   display: flex;
   flex-direction: column;
-  flex-basis: 30%;
+  flex-basis: 25%;
   align-content: flex-start;
   padding-left: 10px;
 }

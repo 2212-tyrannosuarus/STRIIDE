@@ -10,21 +10,17 @@ module.exports = router;
 //GET /api/inventory/:id
 router.get('/:id',  async (req, res, next) => {
     try {
-    //   console.log('req.headers.size ', req.headers.size, typeof(req.headers.size))
       const size = await Size.findOne({
         where: {
           size: req.headers.size
         }
       })
-    //   console.log('size ', size);
 
       const color = await Colorway.findOne({
         where: {
           color: req.headers.color
         }
       })
-
-    //   console.log('color ', color);
 
       const item = await Inventory.findOne({
         where: {
@@ -42,13 +38,11 @@ router.get('/:id',  async (req, res, next) => {
 // PUT /api/inventory/:id
   router.put('/:id',  async (req, res, next) => {
     try {
-      // console.log('req.body ', req.body)
       const size = await Size.findOne({
         where: {
           size: req.body.size
         }
       })
-      // console.log('size ', size);
 
       let formattedColor = req.body.color[0].toUpperCase() + req.body.color.slice(1);
 
@@ -57,8 +51,6 @@ router.get('/:id',  async (req, res, next) => {
           color: formattedColor
         }
       })
-
-      // console.log('color ', color);
 
       const item = await Inventory.findOne({
         where: {
@@ -69,6 +61,8 @@ router.get('/:id',  async (req, res, next) => {
       })
 
       let updatedCount = item.count - req.body.count;
+
+      if (updatedCount < 0) updatedCount = 0;
 
       let updatedItem = await Inventory.update({count: updatedCount},{
         where: {

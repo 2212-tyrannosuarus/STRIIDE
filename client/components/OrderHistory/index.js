@@ -7,20 +7,15 @@ import {getLoggedInUserId} from "../../reducers/shoppingCartSlice"
 export const OrderHistory = (props) => {
   let orders = useSelector(selectAllOrderSummary);
   const dispatch = useDispatch();
-  console.log('orders ', orders);
 
   useEffect(() => {
-    console.log('inside useEffect')
-
      async function getOrderHistory () {
       const userId = await dispatch(getLoggedInUserId());
-      console.log('userId ', userId);
       orders = await dispatch(getAllOrderSummary(userId.payload));
     }
     if (window.localStorage.getItem("token")) {
       getOrderHistory();
     }
-    
   },[dispatch])
 
   
@@ -32,7 +27,7 @@ export const OrderHistory = (props) => {
         ? orders.map((order) => {
             return (<div className="order-summary" key={order.id}>
               <p key={order.id}>Order Placed On: {order.orderDate}</p>
-              <p key={order.id}>Order Total Price: {order.total_price}</p>
+              <p key={order.id}>Order Total Price: ${order.total_price.toFixed(2)}</p>
                 {order["orderdetails"] && order["orderdetails"].length ? (
                     order["orderdetails"].map((orderDetail) => {
                         return (
