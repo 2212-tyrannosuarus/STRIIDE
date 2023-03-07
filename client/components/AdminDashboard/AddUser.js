@@ -20,9 +20,8 @@ export default function AddUser() {
   const [phone_number, setPhone_number] = useState("");
   const [status, setStatus] = useState("guest");
   let notification = useSelector((state) => state.notification.notification);
-  const errorMsg = useSelector(selectError);
-  const errorMsgType = useSelector(selectErrorType);
 
+  //Client-side check for valid inputs
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (
