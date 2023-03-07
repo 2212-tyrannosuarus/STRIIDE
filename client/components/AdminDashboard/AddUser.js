@@ -12,7 +12,7 @@ export default function AddUser() {
   const [lastname, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [phone_number, setPhone_number] = useState("");
-  const [status, setStatus] = useState("guess");
+  const [status, setStatus] = useState("guest");
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -79,7 +79,7 @@ export default function AddUser() {
           name="status"
           onChange={(e) => setStatus(e.target.value)}
         >
-          <option value="guess">Guess</option>
+          <option value="guest">Guest</option>
           <option value="admin">Admin</option>
         </select>
         <br />

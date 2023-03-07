@@ -106,6 +106,7 @@ export const allProducts = (props) => {
     const action = filters.categoryFilter(filter);
     dispatch(action);
   };
+
   const handleColorFilter = (color) => {
     const action = filters.colorFilter(color);
     dispatch(action);
@@ -277,7 +278,6 @@ export const allProducts = (props) => {
   const clickShoeSize105 = () => {
     if (shoeButtonColor105 === "") {
       setShoeButtonColor105("shoesize");
-      setShoeButtonColor10("shoesize");
       if (sex === "Men's") {
         handleSizePush("M 10.5 / W 12");
         handleSizeFilter();
