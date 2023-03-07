@@ -134,7 +134,7 @@ const UserMenu = (props) => {
         {user.status === "admin" ? (
           <MenuItem onClick={handleAdminPanel}>Admin Panel</MenuItem>
         ) : null}
-        <MenuItem onclick={handleProfilePanel}>Profile</MenuItem>
+        <MenuItem onClick={handleProfilePanel}>Profile</MenuItem>
         <MenuItem onClick={handleOrderHistoryPanel}>Order History</MenuItem>
         <MenuItem onClick={handleLogout}>Logout</MenuItem>
       </Menu>
