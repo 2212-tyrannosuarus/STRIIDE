@@ -96,8 +96,8 @@ export const adminSlice = createSlice({
         (state.manageUser = {}),
         (state.errorMsg = "");
     },
-    manifestShoeTable(state) {},
     fillShoeTable(state) {
+      //Function will check if (a. DB schema colorway is empty -- then that indicates shoe is not available in that color) (b. DB schema colorway is not empty -- then it will check which size is available for that colorway by colorID & product ID so that size is specific to color & product);
       for (let i = 0; i < state.size.length; i++) {
         state.sizeTable.firstColumn.push(state.size[i].size);
         if (state.manageProduct.black_images.length === 0) {

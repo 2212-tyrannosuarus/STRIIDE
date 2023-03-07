@@ -1,4 +1,3 @@
-import { assert } from "chai";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -21,9 +20,8 @@ export default function Test() {
   const [color_category, setColor_category] = useState("Black");
   const [gender, setGender] = useState("Women");
   let notification = useSelector((state) => state.notification.notification);
-  const errorMsg = useSelector(selectError);
-  const errorMsgType = useSelector(selectErrorType);
 
+  //Client-side check for valid inputs
   const handleSubmit = async (event) => {
     event.preventDefault();
     let intPrice = parseInt(price);
