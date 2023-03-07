@@ -3,15 +3,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import { Box, Button, Container, Grid } from "@material-ui/core";
 
-// const useStyles = makeStyles((theme) => ({
-//   root: {
-//     bottom: 0,
-//     width: "100%",
-//     backgroundColor: theme.palette.background.paper,
-//     padding: theme.spacing(4),
-//   },
-// }));
-
 function Footer() {
   return (
     <Box py={3}>
