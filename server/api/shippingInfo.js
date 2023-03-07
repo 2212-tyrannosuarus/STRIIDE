@@ -9,6 +9,7 @@ module.exports = router;
 //POST /api/shippinginfo/:userId
 router.post("/:userId", async (req, res, next) => {
     try {
+
       const shippingAddress = await Shipping_Info.create({
         address1: req.body.address,
         city: req.body.city,
@@ -17,7 +18,7 @@ router.post("/:userId", async (req, res, next) => {
         country: 'USA'
       })
   
-      const user = User.findByPk(req.params.userId);
+      const user = await User.findByPk(req.params.userId);
       shippingAddress.setUser(user);
       res.status(201).json(shippingAddress);
     } catch (err) {

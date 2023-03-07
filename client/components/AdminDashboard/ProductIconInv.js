@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 export default function ProductIconInv(props) {
   const { product, setDisplay } = props;
   let colors = "";
+
+  //Empty column in DB determines if that colorway is available, this checks will render available colorway display
   const availableColor = () => {
     if (product.black_images.length > 0) {
       colors = colors + "⬛️ ";

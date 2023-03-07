@@ -64,6 +64,8 @@ export const allProductsPageSlice = createSlice({
       state.sizeArr = [];
     },
     sizeFilter(state) {
+      //Allows for the available to filter for 1 particular size or an array of particular size
+      //Due to complexity of size filtering - the Allproducts size handler functions was not refractored as we did not have enough time yet. But it'll start here when it does refractor
       if (state.sizeArr.length === 0) {
         state.displayProductsArr = state.allProducts;
         state.totalProducts = state.displayProductsArr.length;

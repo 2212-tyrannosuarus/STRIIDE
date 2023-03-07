@@ -1,17 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { connect, useDispatch, useSelector } from "react-redux";
-import {
-  selectAllCartItems,
-  fetchAllProducts,
-  addToCart,
-  setShowCart,
-  removeFromCart,
-  selectTotalQuantity,
-  setTotalQuantity,
-  fetchLoggedInUserCart,
-  deleteUserCart,
-  addUserCart,
-} from "../../reducers/shoppingCartSlice";
 import "./Checkout.css";
 import { useLocation } from "react-router-dom";
 import ShoppingBag from "@material-ui/icons/LocalMall";
@@ -36,7 +24,9 @@ export const OrderConfirmation = (props) => {
     <div className="confirmation-flex-container">
       <div className="confirmation-container">
         <div className="shopping-bag-icon-container">
-        <div className={classes.root}><ShoppingBag style={{ fontSize: 60}}/></div>
+          <div className={classes.root}>
+            <ShoppingBag style={{ fontSize: 60 }} />
+          </div>
         </div>
         <h1 className="confirmation-text">Thank you for your Order!</h1>
         <p className="confirmation-text">

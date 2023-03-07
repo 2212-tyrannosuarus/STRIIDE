@@ -52,6 +52,11 @@ class Routes extends Component {
           <Route path="/men/page/:pagenumber" component={AllProductsPage} />
           <Route exact path="/women" component={AllProductsPage} />
           <Route path="/women/page/:pagenumber" component={AllProductsPage} />
+          <Route path="/women/training" component={AllProductsPage} />
+          <Route path="/women/lifestyle" component={AllProductsPage} />
+          <Route path="/women/summer-collection" component={AllProductsPage} />
+          <Route path="/men/training" component={AllProductsPage} />
+          <Route path="/men/lifestyle" component={AllProductsPage} />
           <Route path="/checkout" component={StripeIntegration} />
           <Route path="/singleproduct/:id" component={singleProductPage} />
           <Route path="/shoppingcart" component={ShoppingCart} />

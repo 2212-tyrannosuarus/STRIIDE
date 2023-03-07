@@ -24,42 +24,51 @@ export const OrderHistory = (props) => {
   return (
     <div className="order-history-container">
       <h2 className="order-history-h2">Your recent orders</h2>
-      {orders && orders.length
-        ? orders.map((order) => {
-            return (
-              <div className="order-summary" key={order.id}>
-                <p key={order.id}>Order Placed On: {order.orderDate}</p>
-                <p key={order.id}>
-                  Order Total Price: ${order.total_price.toFixed(2)}
-                </p>
-                {order["orderdetails"] && order["orderdetails"].length
-                  ? order["orderdetails"].map((orderDetail) => {
-                      return (
-                        <div
-                          className="order-detail"
-                          key={order["orderdetails"].id}
-                        >
-                          <div className="order-history-left-col">
-                            <img src={orderDetail.image} width="150px" />
-                          </div>
-
-                          <div className="order-history-right-col">
-                            <h3>{orderDetail.name}</h3>
-                            <p>{orderDetail.color}</p>
-                            <p>{orderDetail.size}</p>
-                            <p>Qty: {orderDetail.quantity}</p>
-                            <p>${orderDetail.historic_price.toFixed(2)}</p>
-                          </div>
+      {orders && orders.length ? (
+        orders.map((order) => {
+          return (
+            <div className="order-summary" key={order.id}>
+              <p >Order Placed On: {order.orderDate}</p>
+              <p >
+                Order Total Price: ${order.total_price.toFixed(2)}
+              </p>
+              {order["orderdetails"] && order["orderdetails"].length
+                ? order["orderdetails"].map((orderDetail) => {
+                    return (
+                      <div
+                        className="order-detail"
+                        key={orderDetail.name}
+                      >
+                        <div className="order-history-left-col">
+                          <img src={orderDetail.image} width="150px" />
                         </div>
-                      );
-                    })
-                  : null}
-              </div>
-            );
-          })
-        : "No recent orders"}
+
+                        <div className="order-history-right-col">
+                          <h3>{orderDetail.name}</h3>
+                          <p>{orderDetail.color}</p>
+                          <p>{orderDetail.size}</p>
+                          <p>Qty: {orderDetail.quantity}</p>
+                          <p>${orderDetail.historic_price.toFixed(2)}</p>
+                        </div>
+                      </div>
+                    );
+                  })
+                : null}
+            </div>
+          );
+        })
+      ) : (
+        <div className="no-order-history">No recent orders</div>
+      )}
     </div>
   );
 };
 
-export default OrderHistory;
+const mapState = (state) => {
+  return {
+    username: state.auth.username,
+  };
+};
+export default connect(mapState)(OrderHistory);
+
+// export default OrderHistory;

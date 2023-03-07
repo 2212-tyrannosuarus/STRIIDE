@@ -190,7 +190,7 @@ export const ShoppingCart = (props) => {
       const userId = await dispatch(getLoggedInUserId());
       await dispatch(deleteUserCart(userId.payload));
       await dispatch(
-        addUserCart({ id: userId, total: totalPrice, cartItems: cartItems }) //userId
+        addUserCart({ id: userId.payload, total: totalPrice, cartItems: cartItems }) //userId
       );
     }
 
@@ -397,11 +397,11 @@ export const ShoppingCart = (props) => {
 /**
  * CONTAINER
  */
-// const mapState = (state) => {
-//   return {
-//     username: state.auth.username,
-//   };
-// };
-// export default connect(mapState)(ShoppingCart);
+const mapState = (state) => {
+  return {
+    username: state.auth.username,
+  };
+};
+export default connect(mapState)(ShoppingCart);
 
-export default ShoppingCart;
+// export default ShoppingCart;

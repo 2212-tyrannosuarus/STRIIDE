@@ -1,6 +1,6 @@
 import "./AdminDashBoardPage.css";
-import React, { useEffect, useState } from "react";
-import { connect, useDispatch, useSelector } from "react-redux";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
   fetchAdminAllProducts,
   fetchAdminAllUsers,
@@ -9,7 +9,6 @@ import {
   adminReduce,
 } from "../../reducers/adminPageSlice";
 import { Link, useParams } from "react-router-dom";
-import UserIcon from "./UserIcon";
 import AddUser from "./AddUser";
 import ProductIcon from "./ProductIcon";
 import ManageProduct from "./ManageProduct";
@@ -31,7 +30,6 @@ import AddProduct from "./AddProduct";
 import PersonIcon from "@material-ui/icons/Person";
 import PersonAddIcon from "@material-ui/icons/PersonAdd";
 import AddIcon from "@material-ui/icons/Add";
-import AttachMoneyIcon from "@material-ui/icons/AttachMoney";
 import ShowChartIcon from "@material-ui/icons/ShowChart";
 import InventoryTable from "./InventoryTable";
 import ProductIconInv from "./ProductIconInv";
@@ -64,6 +62,7 @@ export default function AdminDashBoardPage(props) {
     setOpenUser(!openUser);
   };
 
+  //Handlers for rendering specific aspects of page
   const handleGetProducts = async (event) => {
     dispatch(adminReduce.clearState());
     await dispatch(fetchAdminAllProducts());
@@ -139,9 +138,10 @@ export default function AdminDashBoardPage(props) {
               component="nav"
               aria-labelledby="nested-list-subheader"
               subheader={
-                <ListSubheader component="div" id="nested-list-subheader">
-                  {/* {placeholder for text} */}
-                </ListSubheader>
+                <ListSubheader
+                  component="div"
+                  id="nested-list-subheader"
+                ></ListSubheader>
               }
               className={classes.root}
             >

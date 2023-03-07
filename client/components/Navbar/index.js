@@ -12,10 +12,10 @@ import MenuItem from "@material-ui/core/MenuItem";
 
 const useStyles = makeStyles((theme) => ({
   navbar: {
-    height: 80,
+    maxHeight: 80,
     backgroundColor: "#fff",
     borderBottom: `1px solid ${theme.palette.grey["100"]}`,
-    padding: 5,
+    padding: 10,
   },
   wrapper: {
     maxWidth: "100%",

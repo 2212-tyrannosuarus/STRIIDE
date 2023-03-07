@@ -14,9 +14,8 @@ import {
   grabSizes,
   selectSizesTable,
 } from "../../reducers/adminPageSlice";
-import UpdateProduct from "./UpdateProduct";
-import { Link, useParams } from "react-router-dom";
-import { connect, useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -53,6 +52,7 @@ export default function InventoryTable() {
     return { name, black, white, blue, green, pink, purple };
   }
 
+  //With more time, an area of improvement to functionally generate rows
   const rows = [
     createData(
       sizeTable.firstColumn[0],
@@ -247,7 +247,6 @@ export default function InventoryTable() {
 
   useEffect(() => {
     let string = window.location.pathname;
-    let productinvId = "";
     string = string.slice(0, 25);
     if (string === "/adminpage/inventory/edit") {
       handleGetProduct(id);
