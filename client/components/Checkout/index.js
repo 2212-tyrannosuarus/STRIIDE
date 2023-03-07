@@ -34,6 +34,7 @@ import ShippingAddress from "./ShippingAddress";
 import InYourBag from "./InYourBag";
 import { showNotification } from "../../reducers/notificationSlice";
 import { Notification } from "../Notification";
+import Spinner from "./Spinner";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -62,10 +63,6 @@ export const Checkout = (props) => {
   const [showPayment, setShowPayment] = useState(false);
   const [reviewOrder, setReviewOrder] = useState(false);
 
-  const [cardNumber, setCardNumber] = useState("");
-  const [expDate, setExpDate] = useState("");
-  const [securityCode, setSecurityCode] = useState("");
-
   const [fullName, setFullName] = useState("");
   const [cardAddress, setCardAddress] = useState("");
   const [cardEmail, setCardEmail] = useState("");
@@ -76,7 +73,7 @@ export const Checkout = (props) => {
   let [totalPrice, setTotalPrice] = useState(0);
   let [subTotalPrice, setSubTotalPrice] = useState(0);
   let [appliedPromoCode, setAppliedPromoCode] = useState(false);
-  let [invalidCode, setInvalidCode] = useState(false);
+  const [loading, setIsLoading] = useState(false);
 
   let notification = useSelector((state) => state.notification.notification);
 
@@ -184,6 +181,7 @@ export const Checkout = (props) => {
       return;
     }
     setPaymentLoading(true);
+    setIsLoading(true);
 
     const response = await fetch("/secret");
     const { client_secret: clientSecret } = await response.json();
@@ -198,10 +196,14 @@ export const Checkout = (props) => {
     setPaymentLoading(false);
     if (paymentResult.error) {
       alert(paymentResult.error.message);
+      setIsLoading(false);
       history.push("./checkout");
     } else {
       if (paymentResult.paymentIntent.status === "succeeded") {
+        setIsLoading(false);
         alert("Payment successfully submitted!");
+        let placeOrderbtn = document.querySelector('.place-order-btn');
+        placeOrderbtn.disabled = true;
         if (window.localStorage.getItem("token")) {
           const userId = await dispatch(getLoggedInUserId());
           let date = new Date();
@@ -358,13 +360,20 @@ export const Checkout = (props) => {
                     email={email}
                   />
                   <div className="checkout-submit-button-container">
-                    <button
-                      type="submit"
-                      // onClick={(e) => handleSubmit(e)}
-                      className="place-order-btn"
-                    >
-                      Place Order
-                    </button>
+                    {isPaymentLoading ? (
+                      <div>
+                        <Spinner/>
+                      </div>
+                    ):(
+                        <button
+                        type="submit"
+                        // onClick={(e) => handleSubmit(e)}
+                        className="place-order-btn"
+                      >
+                        Place Order
+                      </button>
+                    )}
+                    
                   </div>
                 </div>
               </>

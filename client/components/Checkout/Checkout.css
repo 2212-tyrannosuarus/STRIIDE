@@ -62,7 +62,8 @@
 }
 
 .place-order-btn:active,
-.place-order-btn:hover, .place-order-btn:visited {
+.place-order-btn:hover,
+.place-order-btn:visited {
   color: white;
   cursor: pointer;
 }
@@ -113,7 +114,7 @@
   flex-direction: column;
 }
 
-.shipping-header{
+.shipping-header {
   border-top: 2px solid #ececec;
   padding-top: 5px;
   width: 100%;
@@ -229,9 +230,7 @@
 
 .confirmation-text {
   text-align: center;
-
 }
-
 
 .billing-form-field {
   display: flex;
@@ -285,7 +284,7 @@
 
 /* When the checkbox is checked, add a blue background */
 .container input:checked ~ .checkmark {
-  background-color: #2196F3;
+  background-color: #2196f3;
 }
 
 /* Create the checkmark/indicator (hidden when not checked) */
@@ -338,7 +337,8 @@
   width: 125px;
 }
 
-.checkout-cart-item-right-col, .item-details {
+.checkout-cart-item-right-col,
+.item-details {
   display: flex;
   width: 100%;
   flex-direction: column;
@@ -415,5 +415,12 @@
 .promo-apply-btn-container {
   display: flex;
   justify-content: flex-end;
+}
 
+.checkout-spinner {
+  width: 100px;
+  margin: auto;
+  display: "block";
+  color: black;
+  margin-right: 30px;
 }
