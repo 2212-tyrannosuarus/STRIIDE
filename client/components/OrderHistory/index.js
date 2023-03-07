@@ -27,7 +27,7 @@ export const OrderHistory = (props) => {
         ? orders.map((order) => {
             return (<div className="order-summary" key={order.id}>
               <p key={order.id}>Order Placed On: {order.orderDate}</p>
-              <p key={order.id}>Order Total Price: {order.total_price}</p>
+              <p key={order.id}>Order Total Price: ${order.total_price.toFixed(2)}</p>
                 {order["orderdetails"] && order["orderdetails"].length ? (
                     order["orderdetails"].map((orderDetail) => {
                         return (

@@ -104,7 +104,6 @@ export const Checkout = (props) => {
   let estimatedTax = 0.0625 * subTotalPrice;
 
   const handlePromoCode = () => {
-    alert("inside promo code");
     if (promoCode === "SPRING20") {
       subTotalPrice = subTotalPrice - (0.2 * totalPrice);
       setSubTotalPrice(subTotalPrice);
