@@ -353,7 +353,6 @@
 .shopping-bag-icon-container {
   display: flex;
   justify-content: center;
-  /* border: 2px solid black; */
   width: 90px;
   margin-left: 22vw;
   margin-top: 20px;

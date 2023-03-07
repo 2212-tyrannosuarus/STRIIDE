@@ -9,7 +9,6 @@
     flex-direction: column;
     width: 100%;
     margin: 10px 10px 20px 30px;
-    /* background-color: #e2e2e2; */
 }
 
 .order-detail {
@@ -18,10 +17,6 @@
     border-bottom: 2px solid #ececec;
     padding-bottom: 30px;
     padding-top: 30px;
-}
-
-.order-history-left-col {
-
 }
 
 .order-history-right-col {
@@ -38,4 +33,8 @@
 .order-history-right-col > p {
     margin-top: 0px;
     margin-bottom: 10px;
+}
+
+.no-order-history {
+    margin-left: 30px;
 }
