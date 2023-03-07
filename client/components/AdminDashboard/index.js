@@ -115,10 +115,7 @@ export default function AdminDashBoardPage(props) {
         </div>
         <div id="left-bottomb">
           <hr></hr>
-          <Button onClick={handleGetUsers}>
-            <AttachMoneyIcon />
-            <Link to="/adminpage/users">Manage Sales</Link>
-          </Button>
+
           <Button onClick={handleInventory}>
             <ShowChartIcon />
             <Link to="/adminpage/addusers">Manage Inventories</Link>
