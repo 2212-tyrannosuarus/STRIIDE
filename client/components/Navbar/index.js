@@ -167,7 +167,7 @@ const Navbar = (props) => {
         </div>
         <div className={classes.center}>
           <Link to="/home">
-            <h1 className={classes.logo}>OUR NAME</h1>
+            <h1 className={classes.logo}>STRIIDE</h1>
           </Link>
         </div>
         <div className={classes.right}>

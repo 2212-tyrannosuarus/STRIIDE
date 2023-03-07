@@ -1,8 +1,20 @@
 import React from "react";
 import "./HomePage.css";
 import { Link } from "react-router-dom";
+import { connect, useDispatch, useSelector } from "react-redux";
+import {
+  selectPaginatedDisplay,
+  fetchAllMenProductsPage,
+  fetchAllWomenProductsPage,
+  filters,
+  selectTotalProducts,
+} from "../../reducers/allProductsPageSlice";
 
 export const Home = () => {
+  const scrollToTop = () => {
+    window.scrollTo(0, 0);
+  };
+
   return (
     <div>
       <div>
@@ -19,7 +31,7 @@ export const Home = () => {
         <section className="featured-section">
           <div className="featured-card">
             <img src="https://images.unsplash.com/photo-1560362614-89027598847b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80" />
-            <Link to="PATH TO WOMENS RUNNING SHOES">
+            <Link to="">
               <h3 className="card-title">Womens Running Shoes</h3>
             </Link>
           </div>
@@ -37,8 +49,10 @@ export const Home = () => {
           </div>
           <div className="featured-card">
             <img src="https://images.unsplash.com/photo-1538805060514-97d9cc17730c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80" />
-            <Link to="PATH TO WOMENS RUNNING SHOES">
-              <h3 className="card-title">Womens Training Shoes</h3>
+            <Link to="/women">
+              <h3 className="card-title" onClick={scrollToTop}>
+                Womens Training Shoes
+              </h3>
             </Link>
           </div>
         </section>
