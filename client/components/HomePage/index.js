@@ -6,12 +6,14 @@ import {
   FeaturedProductFour,
 } from "../Images";
 import "./HomePage.css";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 export const Home = () => {
   const scrollToTop = () => {
     window.scrollTo(0, 0);
   };
+
+  const navigate = useHistory();
 
   return (
     <div>
@@ -19,7 +21,9 @@ export const Home = () => {
         <section className="hero-section">
           <div className="hero-overlay"></div>
           <h1 className="hero-title">Summer Collection</h1>
-          <button className="hero-button">Shop Now</button>
+          <Link to="/women/summer-collection" className="hero-button">
+            Shop Now
+          </Link>
         </section>
       </div>
       <div>
@@ -29,25 +33,25 @@ export const Home = () => {
         <section className="featured-section">
           <div className="featured-card">
             <img src={FeaturedProductOne} />
-            <Link to="PATH TO WOMENS RUNNING SHOES">
-              <h3 className="card-title">Womens Running Shoes</h3>
+            <Link to="/women/lifestyle">
+              <h3 className="card-title">Womens Lifestyle Shoes</h3>
             </Link>
           </div>
           <div className="featured-card">
             <img src={FeaturedProductTwo} />
-            <Link to="PATH TO MENS TRAINING SHOES">
+            <Link to="/men/training">
               <h3 className="card-title">Mens Training Shoes</h3>
             </Link>
           </div>
           <div className="featured-card">
             <img src={FeaturedProductThree} />
-            <Link to="PATH TO MENS LIFESTYLE SHOES">
+            <Link to="/men/lifestyle">
               <h3 className="card-title">Mens Lifestyle Shoes</h3>
             </Link>
           </div>
           <div className="featured-card">
             <img src={FeaturedProductFour} />
-            <Link to="/women">
+            <Link to="/women/training">
               <h3 className="card-title" onClick={scrollToTop}>
                 Womens Training Shoes
               </h3>
