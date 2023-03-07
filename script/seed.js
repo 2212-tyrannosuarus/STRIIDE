@@ -83,8 +83,8 @@ async function seed() {
     count: 4,
     productId: 8,
     sizeId: 1,
-    colorwayId: 2,
-  });
+    colorwayId: 2
+   })
 
   const seededInventory = products.forEach(async (shoe) => {
     if (shoe.black_images.length > 0) {
@@ -149,6 +149,8 @@ async function seed() {
     }
   });
 
+
+
   // const inventory = await Inventory.bulkCreate(seededInventory);
 
   const shippinginfos = await Promise.all([
@@ -197,26 +199,18 @@ async function seed() {
   ]);
 
   let date = new Date(2023, 2, 3);
-  let dateArr = date.toString().split(" ");
+  let dateArr = date.toString().split(' ');
   let orderSummaryArr = [];
   for (let i = 1; i < 10; i++) {
-    orderSummaryArr.push(
-      Order_Summary.create({
-        userId: i,
-        orderDate: `${dateArr[0]}, ${dateArr[1]} ${dateArr[2]}`,
-      })
-    );
+    orderSummaryArr.push(Order_Summary.create({ userId: i, orderDate: `${dateArr[0]}, ${dateArr[1]} ${dateArr[2]}` }));
   }
   const orderSummaryDemo = await Promise.all(orderSummaryArr);
 
-  await Order_Summary.update(
-    { total_price: 300 },
-    {
-      where: {
-        userId: 1,
-      },
+  await Order_Summary.update ({total_price: 300}, {
+    where: {
+      userId: 1
     }
-  );
+  })
 
   const orderDetailsDemo = await Promise.all([
     Order_Detail.create({

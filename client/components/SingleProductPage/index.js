@@ -4,8 +4,7 @@ import { showNotification } from "../../reducers/notificationSlice";
 import { Notification } from "../Notification";
 import { makeStyles } from "@material-ui/core/styles";
 import { Badge, IconButton, InputBase } from "@material-ui/core";
-import { Search, ShoppingCart } from "@material-ui/icons";
-const { sizes } = require("../../../script/sizes");
+import { ShoppingCart } from "@material-ui/icons";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -15,35 +14,25 @@ import {
 import {
   addToCart,
   selectTotalQuantity,
-  getInventoryQuantity,
 } from "../../reducers/shoppingCartSlice";
 import { Link, useParams } from "react-router-dom";
+const { sizes } = require("../../../script/sizes");
 let colorSelected = false;
 
 export const singleProductPage = (props) => {
   const dispatch = useDispatch();
-  let notification = useSelector((state) => state.notification.notification);
   const { id } = useParams();
-  useEffect(() => {
-    dispatch(fetchSingleProduct(id));
-  }, [dispatch]);
+  let notification = useSelector((state) => state.notification.notification);
   const singleProduct = useSelector(selectSingleProduct);
   const cartItemsQuantity = useSelector(selectTotalQuantity);
+
   const [size, setSize] = useState("");
   const [sizeClass, setSizeClass] = useState("");
   const [colorClass, setColorClass] = useState("");
-  const [inventory, setInventory] = useState(20);
-  const useStyles = makeStyles({
-    workingAddToCart: {
-      backgroundColor: "black",
-      color: "white",
-    },
-    outOfStock: {
-      backgroundColor: "grey",
-      color: "black",
-    },
-  });
-  const classes = useStyles();
+
+  useEffect(() => {
+    dispatch(fetchSingleProduct(id));
+  }, [dispatch]);
 
   useEffect(() => {
     setSizeClass("");
@@ -56,52 +45,34 @@ export const singleProductPage = (props) => {
     );
   }, [size]);
 
-  let availableColors = [];
+  const useStyles = makeStyles({
+    button: {
+      backgroundColor: "black",
+      color: "white",
+    },
+  });
+  const classes = useStyles();
 
-  const getShoeColors = (product) => {
+  const getShoeColors = () => {
     let colors = [];
-    for (let property in product) {
-      if (product[property].length === 4) {
+    for (let property in singleProduct) {
+      if (singleProduct[property].length === 4) {
         colors.push(property);
       }
     }
     return colors;
   };
-
-  //  availableColors = getShoeColors();
-
+  const availableColors = getShoeColors();
   const [color, setColor] = useState(availableColors[0]);
-
-  useEffect(async () => {
-    let product = await dispatch(fetchSingleProduct(id));
-    console.log("product", product.payload);
-    availableColors = getShoeColors(product.payload);
-    console.log("available colors", availableColors);
+  useEffect(() => {
     setColor(availableColors[0]);
   }, []);
 
-  // useEffect(() => {
-  //   dispatch(
-  //     fetchSingleProductInventory({ id: id, color: "black", size: size })
-  //   );
-  // }, [dispatch]);
-
-  // const handleImageClick = (event) => {
-  //   console.log("INV QTY", singleProductInventory, color, size, id);
-  //   colorSelected = true;
-  //   setColor(event.target.value);
-  //   console.log(color);
-  // };
-
-  // const handleSizeClick = async () => {
-  //   setSize(sizeObj.size);
-  //   let inventory = await fetchSingleProductInventory({
-  //     id: id,
-  //     color: "black",
-  //     size: size,
-  //   });
-  //   console.log("please,", inventory);
-  // };
+  const handleImageClick = (event) => {
+    colorSelected = true;
+    setColor(event.target.value);
+    console.log(color);
+  };
 
   const handleAddToCart = (name, id, price, color, size, image, quantity) => {
     if (color === "" && size !== "") {
@@ -146,7 +117,7 @@ export const singleProductPage = (props) => {
       })
     );
   };
-  //singleProduct && color && availableColors && singleProduct.id
+
   return (
     <>
       {singleProduct && availableColors && singleProduct.id ? (
@@ -162,6 +133,7 @@ export const singleProductPage = (props) => {
               <div className="product-image-container">
                 {colorSelected
                   ? singleProduct[color].map((colorImage) => {
+                      console.log("singleproduct color", singleProduct[color]);
                       return (
                         <img
                           className="product-image"
@@ -248,9 +220,7 @@ export const singleProductPage = (props) => {
                             type={"image"}
                             value={shoeColor}
                             key={`${singleProduct.id}${shoeColor}`}
-                            onClick={() => {
-                              return 1;
-                            }}
+                            onClick={handleImageClick}
                             className="single-product-color-picker"
                             src={singleProduct[shoeColor][0]}
                           />
@@ -275,24 +245,7 @@ export const singleProductPage = (props) => {
                       }
                       if (idx < 4) {
                         return (
-                          <Button
-                            onClick={async () => {
-                              setSize(sizeObj.size);
-                              console.log("size", sizeObj);
-                              let tempColor =
-                                color.split("_")[0][0].toUpperCase() +
-                                color.split("_")[0].slice(1);
-                              let inventory = await dispatch(
-                                getInventoryQuantity({
-                                  id: id,
-                                  color: "Black",
-                                  size: sizeObj.size,
-                                })
-                              );
-                              setInventory(inventory.payload);
-                              console.log("please,", inventory.payload);
-                            }}
-                          >
+                          <Button onClick={() => setSize(sizeObj.size)}>
                             {sizeBySex}
                           </Button>
                         );
@@ -314,24 +267,7 @@ export const singleProductPage = (props) => {
                       }
                       if (idx >= 4 && idx < 8) {
                         return (
-                          <Button
-                            onClick={async () => {
-                              setSize(sizeObj.size);
-                              console.log("size", sizeObj);
-                              let tempColor =
-                                color.split("_")[0][0].toUpperCase() +
-                                color.split("_")[0].slice(1);
-                              let inventory = await dispatch(
-                                getInventoryQuantity({
-                                  id: id,
-                                  color: "Black",
-                                  size: sizeObj.size,
-                                })
-                              );
-                              setInventory(inventory.payload);
-                              console.log("please,", inventory.payload);
-                            }}
-                          >
+                          <Button onClick={() => setSize(sizeObj.size)}>
                             {sizeBySex}
                           </Button>
                         );
@@ -353,24 +289,7 @@ export const singleProductPage = (props) => {
                       }
                       if (idx >= 8 && idx < 12) {
                         return (
-                          <Button
-                            onClick={async () => {
-                              setSize(sizeObj.size);
-                              console.log("size", sizeObj);
-                              let tempColor =
-                                color.split("_")[0][0].toUpperCase() +
-                                color.split("_")[0].slice(1);
-                              let inventory = await dispatch(
-                                getInventoryQuantity({
-                                  id: id,
-                                  color: "Black",
-                                  size: sizeObj.size,
-                                })
-                              );
-                              setInventory(inventory.payload);
-                              console.log("please,", inventory.payload);
-                            }}
-                          >
+                          <Button onClick={() => setSize(sizeObj.size)}>
                             {sizeBySex}
                           </Button>
                         );
@@ -392,24 +311,7 @@ export const singleProductPage = (props) => {
                       }
                       if (idx >= 12 && idx < 16) {
                         return (
-                          <Button
-                            onClick={async () => {
-                              setSize(sizeObj.size);
-                              console.log("size", sizeObj);
-                              let tempColor =
-                                color.split("_")[0][0].toUpperCase() +
-                                color.split("_")[0].slice(1);
-                              let inventory = await dispatch(
-                                getInventoryQuantity({
-                                  id: id,
-                                  color: "Black",
-                                  size: sizeObj.size,
-                                })
-                              );
-                              setInventory(inventory.payload);
-                              console.log("please,", inventory.payload);
-                            }}
-                          >
+                          <Button onClick={() => setSize(sizeObj.size)}>
                             {sizeBySex}
                           </Button>
                         );
@@ -431,23 +333,7 @@ export const singleProductPage = (props) => {
                       }
                       if (idx >= 16 && idx < 20) {
                         return (
-                          <Button
-                            onClick={async () => {
-                              setSize(sizeObj.size);
-                              console.log("size", sizeObj);
-                              let tempColor =
-                                color.split("_")[0][0].toUpperCase() +
-                                color.split("_")[0].slice(1);
-                              let inventory = await dispatch(
-                                getInventoryQuantity({
-                                  id: id,
-                                  color: "Black",
-                                  size: sizeObj.size,
-                                })
-                              );
-                              setInventory(inventory.payload);
-                            }}
-                          >
+                          <Button onClick={() => setSize(sizeObj.size)}>
                             {sizeBySex}
                           </Button>
                         );
@@ -465,38 +351,24 @@ export const singleProductPage = (props) => {
                 <button onClick={() => setSize("M 12 / W 13.5")}>12</button> */}
                 </div>
                 <div>
-                  {inventory > 0 ? (
-                    <Button
-                      variant="contained"
-                      className={classes.workingAddToCart}
-                      fullWidth="true"
-                      onClick={() => {
-                        console.log("inventory", inventory);
-                        handleAddToCart(
-                          singleProduct.name,
-                          singleProduct.id,
-                          singleProduct.price,
-                          color.split("_")[0],
-                          size,
-                          singleProduct.image,
-                          1
-                        );
-                      }}
-                    >
-                      Add to Cart
-                    </Button>
-                  ) : (
-                    <Button
-                      variant="contained"
-                      className={classes.outOfStock}
-                      fullWidth="true"
-                      onClick={() => {
-                        console.log("inventory", inventory);
-                      }}
-                    >
-                      Out Of Stock
-                    </Button>
-                  )}
+                  <Button
+                    variant="contained"
+                    className={classes.button}
+                    fullWidth="true"
+                    onClick={() =>
+                      handleAddToCart(
+                        singleProduct.name,
+                        singleProduct.id,
+                        singleProduct.price,
+                        color.split("_")[0],
+                        size,
+                        singleProduct.image,
+                        1
+                      )
+                    }
+                  >
+                    Add to Cart
+                  </Button>
                 </div>
                 {/* <div>Total Shopping cart quantity {cartItemsQuantity}</div> */}
                 <IconButton aria-label="cart">
