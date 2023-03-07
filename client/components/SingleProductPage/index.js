@@ -4,8 +4,7 @@ import { showNotification } from "../../reducers/notificationSlice";
 import { Notification } from "../Notification";
 import { makeStyles } from "@material-ui/core/styles";
 import { Badge, IconButton, InputBase } from "@material-ui/core";
-import { Search, ShoppingCart } from "@material-ui/icons";
-const { sizes } = require("../../../script/sizes");
+import { ShoppingCart } from "@material-ui/icons";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -17,28 +16,23 @@ import {
   selectTotalQuantity,
 } from "../../reducers/shoppingCartSlice";
 import { Link, useParams } from "react-router-dom";
+const { sizes } = require("../../../script/sizes");
 let colorSelected = false;
 
 export const singleProductPage = (props) => {
   const dispatch = useDispatch();
-  let notification = useSelector((state) => state.notification.notification);
   const { id } = useParams();
-  useEffect(() => {
-    dispatch(fetchSingleProduct(id));
-  }, [dispatch]);
+  let notification = useSelector((state) => state.notification.notification);
   const singleProduct = useSelector(selectSingleProduct);
   const cartItemsQuantity = useSelector(selectTotalQuantity);
+
   const [size, setSize] = useState("");
   const [sizeClass, setSizeClass] = useState("");
   const [colorClass, setColorClass] = useState("");
 
-  const useStyles = makeStyles({
-    button: {
-      backgroundColor: "black",
-      color: "white",
-    },
-  });
-  const classes = useStyles();
+  useEffect(() => {
+    dispatch(fetchSingleProduct(id));
+  }, [dispatch]);
 
   useEffect(() => {
     setSizeClass("");
@@ -51,6 +45,14 @@ export const singleProductPage = (props) => {
     );
   }, [size]);
 
+  const useStyles = makeStyles({
+    button: {
+      backgroundColor: "black",
+      color: "white",
+    },
+  });
+  const classes = useStyles();
+
   const getShoeColors = () => {
     let colors = [];
     for (let property in singleProduct) {
@@ -60,18 +62,12 @@ export const singleProductPage = (props) => {
     }
     return colors;
   };
-
   const availableColors = getShoeColors();
-
   const [color, setColor] = useState(availableColors[0]);
-
   useEffect(() => {
     setColor(availableColors[0]);
   }, []);
 
-  // useEffect(() => {
-  //   dispatch(fetchSingleProduct(id));
-  // }, [dispatch]);
   const handleImageClick = (event) => {
     colorSelected = true;
     setColor(event.target.value);
@@ -121,7 +117,7 @@ export const singleProductPage = (props) => {
       })
     );
   };
-  //singleProduct && color && availableColors && singleProduct.id
+
   return (
     <>
       {singleProduct && availableColors && singleProduct.id ? (
