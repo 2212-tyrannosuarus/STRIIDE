@@ -83,6 +83,7 @@ export const singleProductPage = (props) => {
 
   const handleAddToCart = (name, id, price, color, size, image, quantity) => {
     if (color === "" && size !== "") {
+      //checks if a color and size are selected-> creates user-friendly error if not
       setColorClass("red-box");
       dispatch(
         showNotification({
@@ -139,8 +140,11 @@ export const singleProductPage = (props) => {
           {
             <div className="product-container">
               <div className="product-image-container">
-                {/* the below string of ternary operators solved the issue of images not rendering on initial page load or page refresh.
-                the issue is that the color state is undefined at the time of initial page load, and therefore some other method of rendering is necessary */}
+                {/*
+                 the following string of ternary statements is a solution to images not loading on initial render or page refresh
+                the issue is with the color state being undefined at the time of initial load. Here, we check manually for the first
+                populated color array
+                */}
                 {colorSelected
                   ? singleProduct[color].map((colorImage) => {
                       console.log("singleproduct color", singleProduct[color]);
@@ -230,6 +234,7 @@ export const singleProductPage = (props) => {
                             type={"image"}
                             value={shoeColor}
                             key={`${singleProduct.id}${shoeColor}`}
+                            onClick={handleColorImageClick}
                             onClick={handleColorImageClick}
                             className="single-product-color-picker"
                             src={singleProduct[shoeColor][0]}
@@ -354,6 +359,7 @@ export const singleProductPage = (props) => {
                 <div>
                   <Button
                     variant="contained"
+                    className={muiStyleClasses.button}
                     className={muiStyleClasses.button}
                     fullWidth="true"
                     onClick={() =>
