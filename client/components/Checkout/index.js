@@ -34,6 +34,7 @@ import ShippingAddress from "./ShippingAddress";
 import InYourBag from "./InYourBag";
 import { showNotification } from "../../reducers/notificationSlice";
 import { Notification } from "../Notification";
+import Spinner from "./Spinner";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -62,10 +63,6 @@ export const Checkout = (props) => {
   const [showPayment, setShowPayment] = useState(false);
   const [reviewOrder, setReviewOrder] = useState(false);
 
-  const [cardNumber, setCardNumber] = useState("");
-  const [expDate, setExpDate] = useState("");
-  const [securityCode, setSecurityCode] = useState("");
-
   const [fullName, setFullName] = useState("");
   const [cardAddress, setCardAddress] = useState("");
   const [cardEmail, setCardEmail] = useState("");
@@ -76,7 +73,7 @@ export const Checkout = (props) => {
   let [totalPrice, setTotalPrice] = useState(0);
   let [subTotalPrice, setSubTotalPrice] = useState(0);
   let [appliedPromoCode, setAppliedPromoCode] = useState(false);
-  let [invalidCode, setInvalidCode] = useState(false);
+  const [loading, setIsLoading] = useState(false);
 
   let notification = useSelector((state) => state.notification.notification);
 
@@ -99,31 +96,30 @@ export const Checkout = (props) => {
   let totalQuantity = useSelector(selectTotalQuantity);
   const dispatch = useDispatch();
 
-  
-
   let estimatedTax = 0.0625 * subTotalPrice;
 
   const handlePromoCode = () => {
     if (promoCode === "SPRING20") {
-      subTotalPrice = subTotalPrice - (0.2 * totalPrice);
+      subTotalPrice = subTotalPrice - 0.2 * totalPrice;
       setSubTotalPrice(subTotalPrice);
       totalPrice = totalPrice - 0.2 * totalPrice;
       setTotalPrice(totalPrice);
       setAppliedPromoCode(true);
-      dispatch(showNotification({
-        open: true,
-        message: "Promo Code applied successfully",
-        type: "success",
-      })
-      )
+      dispatch(
+        showNotification({
+          open: true,
+          message: "Promo Code applied successfully",
+          type: "success",
+        })
+      );
     } else {
-      dispatch(showNotification({
-        open: true,
-        message: "Invalid Promo Code",
-        type: "error",
-      })
-      )
-    
+      dispatch(
+        showNotification({
+          open: true,
+          message: "Invalid Promo Code",
+          type: "error",
+        })
+      );
     }
   };
 
@@ -138,7 +134,7 @@ export const Checkout = (props) => {
       subTotalPrice += item.totalPrice;
       setSubTotalPrice(subTotalPrice);
     });
-    
+
     totalPrice = subTotalPrice + shippingAndHandling + estimatedTax;
     setTotalPrice(totalPrice);
   }, [setTotalPrice, setArrivesBy]);
@@ -184,6 +180,7 @@ export const Checkout = (props) => {
       return;
     }
     setPaymentLoading(true);
+    setIsLoading(true);
 
     const response = await fetch("/secret");
     const { client_secret: clientSecret } = await response.json();
@@ -198,10 +195,13 @@ export const Checkout = (props) => {
     setPaymentLoading(false);
     if (paymentResult.error) {
       alert(paymentResult.error.message);
+      setIsLoading(false);
       history.push("./checkout");
     } else {
       if (paymentResult.paymentIntent.status === "succeeded") {
-        alert("Payment successfully submitted!");
+        setIsLoading(false);
+        // let placeOrderbtn = document.querySelector(".place-order-btn");
+        // placeOrderbtn.disabled = true;
         if (window.localStorage.getItem("token")) {
           const userId = await dispatch(getLoggedInUserId());
           let date = new Date();
@@ -215,15 +215,16 @@ export const Checkout = (props) => {
             })
           );
 
-          
-          await dispatch(addShippingInfo({
-            userId: userId.payload,
-            address: address,
-            city: city,
-            state: state,
-            zipcode: postalCode,
-          }))
-        } 
+          await dispatch(
+            addShippingInfo({
+              userId: userId.payload,
+              address: address,
+              city: city,
+              state: state,
+              zipcode: postalCode,
+            })
+          );
+        }
 
         for (let i = 0; i < cartItems.length; i++) {
           await dispatch(
@@ -246,35 +247,41 @@ export const Checkout = (props) => {
             email: email,
           },
         });
-
       }
     }
   };
 
   const handleContinueToShipping = (e) => {
     e.preventDefault();
-    if (firstName === '' || lastName === '' || address === '' || city === '' || postalCode === '' || email === '' ||
-    phoneNumber === '') {
-      dispatch(showNotification({
-        open: true,
-        message: "Please fill in form fields First Name, Last Name, Address, City, State, Zip Code, Email and Phone Number",
-        type: "error",
-      })
-      )
-    }
-    else {
-      dispatch(showNotification({
-        open: false,
-      })
-      )
+    if (
+      firstName === "" ||
+      lastName === "" ||
+      address === "" ||
+      city === "" ||
+      postalCode === "" ||
+      email === "" ||
+      phoneNumber === ""
+    ) {
+      dispatch(
+        showNotification({
+          open: true,
+          message:
+            "Please fill in form fields First Name, Last Name, Address, City, State, Zip Code, Email and Phone Number",
+          type: "error",
+        })
+      );
+    } else {
+      dispatch(
+        showNotification({
+          open: false,
+        })
+      );
       setShowShipping(true);
     }
-    
-  }
+  };
 
   return (
     <div className="checkout-form">
-      
       <div className="form-container">
         <div className="column">
           <form
@@ -358,13 +365,19 @@ export const Checkout = (props) => {
                     email={email}
                   />
                   <div className="checkout-submit-button-container">
-                    <button
-                      type="submit"
-                      // onClick={(e) => handleSubmit(e)}
-                      className="place-order-btn"
-                    >
-                      Place Order
-                    </button>
+                    {isPaymentLoading ? (
+                      <div>
+                        <Spinner />
+                      </div>
+                    ) : (
+                      <button
+                        type="submit"
+                        // onClick={(e) => handleSubmit(e)}
+                        className="place-order-btn"
+                      >
+                        Place Order
+                      </button>
+                    )}
                   </div>
                 </div>
               </>

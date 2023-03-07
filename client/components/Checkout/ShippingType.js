@@ -2,10 +2,10 @@ import React from "react";
 import "./Checkout.css";
 
 export const ShippingType = (props) => {
-  const { setShowPayment, handleShippingType, dateStr1, dateStr2, dateStr3 } = props;
+  const { setShowPayment, handleShippingType, dateStr1, dateStr2, dateStr3 } =
+    props;
 
-  
-
+  // change shipping cost and 'arrives by' date based on user selction
   return (
     <div className="shipping-container">
       <div className="shipping-header">

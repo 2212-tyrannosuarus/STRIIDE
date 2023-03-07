@@ -52,10 +52,10 @@ export const getInventoryQuantity = createAsyncThunk(
 export const updateInventoryQuantity = createAsyncThunk(
   "inventoryQuantity/get",
   async ({ id, color, size, count }) => {
-    const { data } = await axios.put(`/api/inventory/${id}`, {  
-        color: color,
-        size: size,
-        count: count
+    const { data } = await axios.put(`/api/inventory/${id}`, {
+      color: color,
+      size: size,
+      count: count,
     });
     return data;
   }
@@ -76,9 +76,12 @@ export const shoppingCartSlice = createSlice({
     setTotalQuantity(state, action) {
       state.totalQuantity = action.payload;
     },
+
+    // while adding item to cart check if item already exists in cart, if so increament quantiyt of
+    // existing item else add new item to cart
     addToCart(state, action) {
       const newItem = action.payload;
-      newItem.color = newItem.color[0].toUpperCase() + newItem.color.slice(1)
+      newItem.color = newItem.color[0].toUpperCase() + newItem.color.slice(1);
       const existingItem = state.itemsList.find(
         (item) =>
           item.id === newItem.id &&
@@ -104,6 +107,9 @@ export const shoppingCartSlice = createSlice({
       window.localStorage.removeItem("cart");
       window.localStorage.setItem("cart", JSON.stringify(state.itemsList));
     },
+
+    // while decrementing item from cart, if quantity in cart is more than one, decrement existing item quantity
+    // else remove item from cart.
     removeFromCart(state, action) {
       const id = action.payload.id;
       const color = action.payload.color;
@@ -127,6 +133,8 @@ export const shoppingCartSlice = createSlice({
     setShowCart(state) {
       state.showCart = true;
     },
+
+    // remove item from cart when trash icon is clicked
     deleteFromCart(state, action) {
       const id = action.payload.id;
       const size = action.payload.size;
@@ -138,7 +146,6 @@ export const shoppingCartSlice = createSlice({
       const index = state.itemsList.indexOf(existingItem);
       state.itemsList.splice(index, 1);
 
-      // state.itemsList = state.itemsList.filter((item) => item.id !== id && item.size !== size && item.color !== color);
       state.totalQuantity -= quantity;
 
       window.localStorage.removeItem("cart");
@@ -146,6 +153,8 @@ export const shoppingCartSlice = createSlice({
         window.localStorage.setItem("cart", JSON.stringify(state.itemsList));
       }
     },
+
+    // delete cart once user has purchased order or logged in user has logged out
     deleteCart(state) {
       state.itemsList = [];
     },
