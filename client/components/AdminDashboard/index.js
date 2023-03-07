@@ -6,8 +6,6 @@ import {
   fetchAdminAllUsers,
   selectAllAdminProducts,
   selectAllAdminUsers,
-  selectOneAdminProduct,
-  selectOneAdminUser,
   adminReduce,
 } from "../../reducers/adminPageSlice";
 import { Link, useParams } from "react-router-dom";
@@ -36,6 +34,7 @@ import AddIcon from "@material-ui/icons/Add";
 import AttachMoneyIcon from "@material-ui/icons/AttachMoney";
 import ShowChartIcon from "@material-ui/icons/ShowChart";
 import InventoryTable from "./InventoryTable";
+import ProductIconInv from "./ProductIconInv";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -84,6 +83,8 @@ export default function AdminDashBoardPage(props) {
     setDisplay("adduser");
   };
   const handleInventory = async (event) => {
+    dispatch(adminReduce.clearState());
+    await dispatch(fetchAdminAllProducts());
     setDisplay("inventory");
   };
 
@@ -220,8 +221,18 @@ export default function AdminDashBoardPage(props) {
             <ManageProduct />
           ) : display === "manageuser" ? (
             <ManageUser />
-          ) : display === "inventory" ? (
+          ) : display === "manageinv" ? (
             <InventoryTable />
+          ) : display === "inventory" ? (
+            products.map((product) => {
+              return (
+                <ProductIconInv
+                  key={product.id}
+                  product={product}
+                  setDisplay={setDisplay}
+                />
+              );
+            })
           ) : (
             <AddProduct />
           )
