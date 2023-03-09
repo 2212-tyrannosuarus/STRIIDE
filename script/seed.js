@@ -65,6 +65,16 @@ async function seed() {
     }),
   ]);
 
+  const usersForTesting = await User.create({
+    password: "test",
+    firstname: "mochaChai",
+    lastname: "ChaiMocha",
+    username: "mocha.chai",
+    email: "mochaChai@chai.com",
+    status: "guest",
+    phone_number: "1234561234",
+  });
+
   const users = await User.bulkCreate(seededUsers);
   const products = await Product.bulkCreate(shoes);
 
