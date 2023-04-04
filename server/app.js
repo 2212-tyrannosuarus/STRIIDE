@@ -1,3 +1,4 @@
+require('dotenv').config();
 const path = require("path");
 const express = require("express");
 const morgan = require("morgan");
@@ -16,7 +17,7 @@ app.use("/api", require("./api"));
 
 // Set your secret key. Remember to switch to your live secret key in production.
 // See your keys here: https://dashboard.stripe.com/apikeys
-const stripe = require("stripe")("sk_test_51MiQAdHC3W9AIr3tpdLhPN0zspKuhdPib2G8O5h2TU6LGdvub34Bikggz8x62S5WkbtbkyLilyGMP0j5TtRnbE0F00ghf4Jcz8");
+const stripe = require("stripe")(process.env.STRIPE_SK);
 
 app.get("/secret", async (req, res) => {
   const intent = await stripe.paymentIntents.create({
