@@ -1,11 +1,13 @@
 <div align="center">
 
    <!-- <img src="https://i.imgur.com/vad5L2s.png" alt="logo" width="10%" height="10%" /> -->
-  <h1>Welcome to Striide!</h1>
+  <h1>Welcome to STRIIDE!</h1>
+  
   By: <a href="https://github.com/yaosterg">Yao Guan</a> |
 <a href="https://github.com/miro-maleb">Miro Malebranche</a> |
 <a href="https://github.com/tasneemp-sa">Tasneem Patrawala</a> |
 <a href="https://github.com/cshemerda">Chance Hemerda</a> 
+<br>
   
   
   <p>
