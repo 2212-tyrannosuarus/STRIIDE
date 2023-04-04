@@ -2,10 +2,10 @@
 
    <!-- <img src="https://i.imgur.com/vad5L2s.png" alt="logo" width="10%" height="10%" /> -->
   <h1>Welcome to Striide!</h1>
-  By: <a href="https://github.com/yaosterg">Yao Guan</a>
-<a href="https://github.com/miro-maleb">Miro Malebranche</a>
-<a href="https://github.com/tasneemp-sa">Tasneem Patrawala</a>
-<a href="https://github.com/cshemerda">Chance Hemerda</a> |Demo: <a href="https://www.youtube.com/watch?v=I7bHfXvryAI&ab_channel=TasneemPatrawala" >Youtube </a>
+  By: <a href="https://github.com/yaosterg">Yao Guan</a> |
+<a href="https://github.com/miro-maleb">Miro Malebranche</a> |
+<a href="https://github.com/tasneemp-sa">Tasneem Patrawala</a> |
+<a href="https://github.com/cshemerda">Chance Hemerda</a> 
   
   
   <p>
@@ -22,6 +22,8 @@
     <a href="https://striiide.onrender.com/"> View Demo </a>
   <span> · </span>
     <a href="https://github.com/2212-tyrannosuarus/grace-shopper.git"> Code </a>
+      <span> · </span>
+    <a href="https://www.youtube.com/watch?v=I7bHfXvryAI&ab_channel=TasneemPatrawala"> Youtube </a>
   </h4>
 </div>
 
@@ -36,23 +38,23 @@
 ### :camera: Screenshots
 
 <div> 
-  <img src="https://imgur.com/XkfVT8B alt="homepage screenshot" width="700" height="auto"" />
+  <img src="https://i.imgur.com/XkfVT8B.png alt="homepage screenshot" width="700" height="auto"" />
 </div>
 
 <div> 
-  <img src="https://imgur.com/tuzTL7a alt="homepage screenshot" width="700" height="auto"" />
+  <img src="https://i.imgur.com/tuzTL7a.png alt="homepage screenshot" width="700" height="auto"" />
 </div>
 <div> 
-  <img src="https://imgur.com/LNvIam6 alt="Allproducts screenshot" width="700" height="auto"" />
+  <img src="https://i.imgur.com/LNvIam6.png alt="Allproducts screenshot" width="700" height="auto"" />
 </div>
 <div> 
-  <img src="https://imgur.com/C6Hxit9 alt="singleproduct screenshot" width="700" height="auto"" />
+  <img src="https://i.imgur.com/C6Hxit9.png alt="singleproduct screenshot" width="700" height="auto"" />
 </div>
 <div> 
-  <img src="https://imgur.com/NoGvRuDg alt="cart screenshot" width="700" height="auto"" />
+  <img src="https://i.imgur.com/NoGvRuD.png alt="cart screenshot" width="700" height="auto"" />
 </div>
 <div> 
-  <img src="https://imgur.com/oDUruWA alt="stripe screenshot" width="700" height="auto"" />
+  <img src="https://i.imgur.com/oDUruWA.png alt="stripe screenshot" width="700" height="auto"" />
 </div>
 
 <!-- TechStack -->
@@ -100,6 +102,8 @@
 ```
 To run this project, you will need to add and set the following environment variables to your .env file
   JWT
+  STRIPE_SK
+  STRIPE_PK
 ```
 
 ```bash
@@ -111,7 +115,7 @@ To run this project, you will need to add and set the following environment vari
 
 <!-- Contact -->
 
-## :handshake: Contact
+## :handshake: Connect with Us!
 
 <a href="https://www.linkedin.com/in/yaozguan/">Yao Guan</a>
 <a href="https://www.linkedin.com/in/miro-malebranche/">Miro Malebranche</a>
