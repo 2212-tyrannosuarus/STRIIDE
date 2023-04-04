@@ -115,7 +115,7 @@ To run this project, you will need to add and set the following environment vari
 
 <!-- Contact -->
 
-## :handshake: Contact
+## :handshake: Connect with Us!
 
 <a href="https://www.linkedin.com/in/yaozguan/">Yao Guan</a>
 <a href="https://www.linkedin.com/in/miro-malebranche/">Miro Malebranche</a>
