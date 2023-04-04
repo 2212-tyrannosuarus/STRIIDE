@@ -2,10 +2,10 @@
 
    <!-- <img src="https://i.imgur.com/vad5L2s.png" alt="logo" width="10%" height="10%" /> -->
   <h1>Welcome to Striide!</h1>
-  By: <a href="https://github.com/yaosterg">Yao Guan</a>
-<a href="https://github.com/miro-maleb">Miro Malebranche</a>
-<a href="https://github.com/tasneemp-sa">Tasneem Patrawala</a>
-<a href="https://github.com/cshemerda">Chance Hemerda</a> |Demo: <a href="https://www.youtube.com/watch?v=I7bHfXvryAI&ab_channel=TasneemPatrawala" >Youtube </a>
+  By: <a href="https://github.com/yaosterg">Yao Guan</a> |
+<a href="https://github.com/miro-maleb">Miro Malebranche</a> |
+<a href="https://github.com/tasneemp-sa">Tasneem Patrawala</a> |
+<a href="https://github.com/cshemerda">Chance Hemerda</a> 
   
   
   <p>
@@ -22,6 +22,8 @@
     <a href="https://striiide.onrender.com/"> View Demo </a>
   <span> · </span>
     <a href="https://github.com/2212-tyrannosuarus/grace-shopper.git"> Code </a>
+      <span> · </span>
+    <a href="https://www.youtube.com/watch?v=I7bHfXvryAI&ab_channel=TasneemPatrawala"> Youtube </a>
   </h4>
 </div>
 
@@ -100,6 +102,8 @@
 ```
 To run this project, you will need to add and set the following environment variables to your .env file
   JWT
+  STRIPE_SK
+  STRIPE_PK
 ```
 
 ```bash
