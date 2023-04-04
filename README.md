@@ -38,23 +38,23 @@
 ### :camera: Screenshots
 
 <div> 
-  <img src="https://imgur.com/XkfVT8B alt="homepage screenshot" width="700" height="auto"" />
+  <img src="https://i.imgur.com/XkfVT8B.png alt="homepage screenshot" width="700" height="auto"" />
 </div>
 
 <div> 
-  <img src="https://imgur.com/tuzTL7a alt="homepage screenshot" width="700" height="auto"" />
+  <img src="https://i.imgur.com/tuzTL7a.png alt="homepage screenshot" width="700" height="auto"" />
 </div>
 <div> 
-  <img src="https://imgur.com/LNvIam6 alt="Allproducts screenshot" width="700" height="auto"" />
+  <img src="https://i.imgur.com/LNvIam6.png alt="Allproducts screenshot" width="700" height="auto"" />
 </div>
 <div> 
-  <img src="https://imgur.com/C6Hxit9 alt="singleproduct screenshot" width="700" height="auto"" />
+  <img src="https://i.imgur.com/C6Hxit9.png alt="singleproduct screenshot" width="700" height="auto"" />
 </div>
 <div> 
-  <img src="https://imgur.com/NoGvRuDg alt="cart screenshot" width="700" height="auto"" />
+  <img src="https://i.imgur.com/NoGvRuD.png alt="cart screenshot" width="700" height="auto"" />
 </div>
 <div> 
-  <img src="https://imgur.com/oDUruWA alt="stripe screenshot" width="700" height="auto"" />
+  <img src="https://i.imgur.com/oDUruWA.png alt="stripe screenshot" width="700" height="auto"" />
 </div>
 
 <!-- TechStack -->
