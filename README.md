@@ -11,7 +11,7 @@
   
   
   <p>
-        Striide is a fullstack e-commerce website that specializes in selling trendy, in-season shoe collections. The website allows users to browse through a wide variety of shoes, filter their search results based on various criteria, and select specific shoes to purchase. The platform provides detailed information about each shoe, including its size, colorway, and other relevant information. Users have the option to browse the website as a guest or create a login account for more personalized shopping experiences. Platform allows for actual checkout function through Stripe integration. 
+        Striide is a fullstack e-commerce website that specializes in selling trendy, in-season shoe collections. The website allows users to browse through a wide variety of shoes, filter their search results based on various criteria, and select specific shoes to purchase. The platform provides detailed information about each shoe, including its size, colorway, and other relevant information. Users have the option to browse the website as a guest or create a login account for more personalized shopping experiences. It incorporates a seamless cart and checkout process using Stripe for payment processing.
   </p>
   <p>
         To ensure security, authentication is completed using JWTwebtoken and Bcrypt, which ensures that user accounts are kept safe and secure. The website also has an admin section where store owners can view sales history, manage inventory, and create, update, or delete user and product information. 
